@@ -31,7 +31,7 @@
             <textarea name="address" placeholder="Adresinizi Giriniz..." wrap="soft" rows="4" class="address-input"></textarea>
     
             <label for="userType"><b>Kullanıcı Tipi</b></label>
-            <select id="userType" name="userType">
+            <select id="userType" name="userType" >
                 <option value="USER">Kullanıcı</option>
                 <option value="ADMIN">Yönetici</option>
             </select>
@@ -63,6 +63,9 @@
                     window.location.href = 'index.html';
                 } else if(urlParams.has('signupFailed')) {
                     alert('Kayıt oluşturulamadı. Lütfen tekrar deneyiniz.');
+                }
+                if(urlParams.has('isAdmin')) {
+                    
                 }
             }
 
