@@ -6,6 +6,9 @@ const { raw } = require("express");
 conn = new Connection();
 util = new UsefulUtilities();
 
+/**
+ * @class User 
+ */
 class User {
     constructor() {
         this.name = "";
@@ -17,6 +20,14 @@ class User {
         this.password = "";
         this.id = 0;
         this.role = "USER";
+    }
+
+    get Password() {
+        return this.password;
+    }
+
+    set Password(password) {
+        this.password = util.encrypt(password);
     }
 
     async VerifyLogin(email, password) {
@@ -175,6 +186,42 @@ class User {
         } finally {
             conn.close();
         }
+    }
+
+    async BringBackUser() {
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+
+            request.input("id", sql.Int, this.id);
+            let result = await request.execute("RetrieveDeletedUser");
+        } catch (error) {
+            console.error(error);
+            return false;
+        } finally {
+            conn.close();
+        }
+    }
+
+    GenerateRandomPassword() {
+        let pwd = "";
+        for (let i = 0; i < 8; i++) {
+            let chance = Math.floor(Math.random() * 100);
+
+            if (chance < 20) { // for upper cases
+                let randomChar = Math.floor(Math.random() * 26) + 65;
+                pwd += String.fromCharCode(randomChar);
+            } else if (chance < 80) { // for lower cases
+                let randomChar = Math.floor(Math.random() * 26) + 97;
+                pwd += String.fromCharCode(randomChar);
+            } else { // for numbers
+                let randomChar = Math.floor(Math.random() * 10) + 48;
+                pwd += String.fromCharCode(randomChar);
+            }
+        }
+        this.Password = pwd;
+
+        return pwd;
     }
 
     async ListUsers(searchWord, activeState) {

@@ -1,6 +1,5 @@
 const sql = require("mssql/msnodesqlv8");
 const Connection = require("./connection");
-const { raw } = require("express");
 
 conn = new Connection();
 
@@ -17,10 +16,91 @@ class Contact {
 
     }
 
+    async CreateContact(userId) {
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+    
+            request.input("userId", sql.Int, userId);
+            request.input("name", sql.VarChar(100), this.name);
+            request.input("surname", sql.VarChar(100), this.surname);
+            request.input("gsmNum", sql.VarChar(100), this.phoneNumber);
+            request.input("email", sql.VarChar(100), this.email);
+            request.input("address", sql.VarChar(100), this.address);
+    
+            request.output("id", sql.Int, this.id);
+    
+            let result = await request.execute("CreateContact");
+        } catch (error) {
+            console.error(error);
+            return false;
+        } finally {
+            conn.close();
+        }
+
+        return true;
+    }
+
+    async UpdateContact() {
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+
+            request.input("id", sql.Int, this.id);
+            request.input("name", sql.VarChar(100), this.name);
+            request.input("surname", sql.VarChar(100), this.surname);
+            request.input("gsmNum", sql.VarChar(100), this.phoneNumber);
+            request.input("email", sql.VarChar(100), this.email);
+            request.input("address", sql.VarChar(100), this.address);
+
+            let result = await request.execute("UpdateContact");
+
+        } catch (error) {
+            console.error(error);
+            return false;
+        } finally {
+            conn.close();
+        }
+    }
+
+    async SoftDeleteContact() {
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+
+            request.input("id", sql.Int, this.id);
+
+            let result = await request.execute("SoftDeleteFromContacts");
+
+        } catch (error) {
+            console.error(error);
+            return false;
+        } finally {
+            conn.close();
+        }
+    }
+
+    async SevereUserContact(userId) {
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+
+            request.input("userId", sql.Int, userId);
+            request.input("contactId", sql.Int, this.id);
+
+            let result = await request.execute("SevereUserContact");
+        } catch (error) {
+            console.log(error);
+            return false;
+        } finally {
+            conn.close();
+        }
+    }
+
     async ListContacts(id, contactSearch, activeState) {
         try {
-            await this.conn.open();
-            let request = new sql.Request(this.conn.pool);
+            await conn.open();
+            let request = new sql.Request(conn.pool);
 
             request.input("id", sql.Int, id);
             request.input("contactSearch", sql.VarChar(100), contactSearch);
@@ -57,21 +137,23 @@ class Contact {
     }
 }
 
+module.exports = Contact;
 
-async function main() {
-    let id = 1;
-    let contactSearch = "";
-    let activeState = true;
+/* For testing. */
+// async function main() {
+//     let id = 1;
+//     let contactSearch = "";
+//     let activeState = true;
 
-    let contact = new Contact();
-    let contactsList = []
-    contactsList = await contact.ListContacts(id, contactSearch, activeState)
+//     let contact = new Contact();
+//     let contactsList = []
+//     contactsList = await contact.ListContacts(id, contactSearch, activeState)
 
-    console.log(contactsList);
+//     console.log(contactsList);
 
-    let i = 4;
-}
+//     let i = 4;
+// }
 
-main.catch((error) => console.error(error));
+// main.catch((error) => console.error(error));
 
 
