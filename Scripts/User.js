@@ -43,6 +43,7 @@ class User {
             let result = await request.execute("VerifyUnamePwd");
 
             if (result.recordsets[0] && result.recordsets[0][0]) {
+                
                 this.name = result.recordsets[0][0].firstName;
                 this.surname = result.recordsets[0][0].lastName;
                 this.phoneNumber = result.recordsets[0][0].gsmNumber;
@@ -238,19 +239,21 @@ class User {
 
             let rawUsers = result.recordsets[0];
 
-            users = rawUsers.map((user) => ({
-                id: user.id,
-                name: user.firstName,
-                surname: user.lastName,
-                phoneNumber: user.gsmNumber,
-                email: user.email,
-                address: user.address,
-                username: user.username,
-                active: user.activeState,
-                role: user.role,
-            }));
 
-            
+            rawUsers.forEach(user => {
+                let tempUser = new User();
+                tempUser.id = user.id;
+                tempUser.name = user.firstName;
+                tempUser.surname =  user.lastName;
+                tempUser.phoneNumber = user.gsmNumber;
+                tempUser.email = user.email;
+                tempUser.address = user.address;
+                tempUser.username = user.username;
+                tempUser.role = user.role;
+
+                users.push(tempUser)
+            });
+
 
         } catch (error) {
             console.error(error);
@@ -267,11 +270,11 @@ class User {
 
 module.exports = User;
 
-async function test() {
-    myList = await new User().ListUsers("", true);
+// async function test() {
+//     myList = await new User().ListUsers("", true);
 
-    let i = 5;
+//     let i = 5;
 
-}
+// }
 
-test();
+// test();

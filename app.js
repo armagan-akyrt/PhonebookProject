@@ -68,6 +68,17 @@ app.post('/signup', async (req, res) => {
 
 });
 
+app.get('/getUsers', async (req, res) => {
+
+    let user = new User();
+    let users = await user.ListUsers('', true);
+
+    let testval = 0;
+
+    res.json({usersList: users});
+
+});
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });

@@ -76,6 +76,15 @@ ul li:hover ul.dropdown {
     padding: 0; /* Remove padding from the list */
     list-style-type: none; /* Remove bullet points */
 }
+#listToShowUser li {
+    display: block;
+    position: relative;
+}
+
+#listToShowUser li:hover{
+    background: #81e3fc;
+    border-radius: 10px;
+}
 
 #listToShow li {
     padding: 10px; /* Add padding to each list item */
