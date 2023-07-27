@@ -40,7 +40,8 @@
                 <script>
                     window.onload = function() {
                         let users = []; // This array will store all the user data
-                    
+                        let contacts = []; // This array will store all the contact data
+
                         fetch('/getUsers')
                             .then(response => response.json())
                             .then(data => {
@@ -54,16 +55,40 @@
                                 });
                             })
                             .catch(error => console.error('Error:', error));
+
+                        fetch('/getContacts')
+                        .then(response => response.json())
+                        .then(data => {
+                            contacts = data.contactsList;
+                            const listToShowContact = document.getElementById('listToShowContact');
+                            contacts.forEach((contact, index) => {
+                                const li = document.createElement('li');
+                                li.textContent = `${contact.name} ${contact.surname}`; // Display the user's name and surname
+                                li.addEventListener('click', () => fillForm(contact)); // When this list item is clicked, fill the form with this user's data
+                                listToShowContact.appendChild(li);
+                            });
+                        });
+
                     }
                     
                     function fillForm(user) {
                         document.getElementsByName('name')[0].value = user.name;
                         document.getElementsByName('surname')[0].value = user.surname;
-                        document.getElementsByName('gsmNum')[0].value = user.gsmNum;
+                        document.getElementsByName('gsmNum')[0].value = user.phoneNumber;
                         document.getElementsByName('email')[0].value = user.email;
                         document.getElementsByName('address')[0].value = user.address;
                         document.getElementById('updateUserButton').addEventListener('click', (event) => updateUser(event, user));
                         document.getElementById('deleteUserButton').addEventListener('click', (event) => deleteUser(event, user));
+                    }
+
+                    function fillContactForm(contact) {
+                        document.getElementsByName('contactName')[0].value = contact.contactName;
+                        document.getElementsByName('contactSurname')[0].value = contact.contactSurname;
+                        document.getElementsByName('contactPhoneNumber')[0].value = contact.contactGsmNum;
+                        document.getElementsByName('contactEmail')[0].value = contact.contactEmail;
+                        document.getElementsByName('contactAddress')[0].value = contact.contactAddress;
+                        document.getElementById('updateContactButton').addEventListener('click', (event) => updateUser(event, user));
+                        document.getElementById('deleteContactButton').addEventListener('click', (event) => deleteUser(event, user));
                     }
 
                 </script>
@@ -74,7 +99,7 @@
             <h2>Kullanıcı Bilgileri</h2>
             <form action="/updateUser" method="POST">
                 <label for="name"><b>Ad</b></label>
-                <input type="text" name="surname" required>
+                <input type="text" name="name" required>
 
                 <label for="surname"><b>Soyad</b></label>
                 <input type="text" name="surname" required>
@@ -101,6 +126,7 @@
                 <ul id="listToShowContact">
                     <!-- List items will be populated dynamically here -->
                 </ul>
+
             </div>
         </div>
         <div class = "right-container">

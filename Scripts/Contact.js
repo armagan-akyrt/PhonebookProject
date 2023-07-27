@@ -98,6 +98,8 @@ class Contact {
     }
 
     async ListContacts(id, contactSearch, activeState) {
+
+        let contacts = [];
         try {
             await conn.open();
             let request = new sql.Request(conn.pool);
@@ -113,47 +115,34 @@ class Contact {
 
             let rawContacts = result.recordsets[0];
 
-            let contacts = [];
-            contacts = rawContacts.map((contact) => ({
-                id: contact.id,
-                name: contact.firstName,
-                surame: contact.lastName,
-                phoneNumber: contact.gsmNumber,
-                email: contact.email,
-                address: contact.address,
-                username: contact.username,
-                active: contact.activeState,
-            }));
+            rawContacts.forEach((contact) => {
+                let tempContact = new Contact();
 
-            //   result.recordsets.forEach((contact, index) => {
-            //     console.log(`Contact ${index + 1}:`, contact);
-            //   });
-            return contacts;
+                tempContact.id = contact.id;
+                tempContact.name = contact.firstName;
+                tempContact.surname = contact.lastName;
+                tempContact.phoneNumber = contact.gsmNumber;
+                tempContact.email = contact.email;
+                tempContact.address = contact.address;
+                tempContact.username = contact.username;
+                tempContact.active = contact.activeState;
+
+                contacts.push(tempContact);
+            });
+
+            
+
         } catch (error) {
             console.error(error);
         } finally {
-            this.conn.close();
+            conn.close();
         }
+
+        return contacts;
     }
 }
 
 module.exports = Contact;
 
-/* For testing. */
-// async function main() {
-//     let id = 1;
-//     let contactSearch = "";
-//     let activeState = true;
-
-//     let contact = new Contact();
-//     let contactsList = []
-//     contactsList = await contact.ListContacts(id, contactSearch, activeState)
-
-//     console.log(contactsList);
-
-//     let i = 4;
-// }
-
-// main.catch((error) => console.error(error));
 
 

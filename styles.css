@@ -76,12 +76,12 @@ ul li:hover ul.dropdown {
     padding: 0; /* Remove padding from the list */
     list-style-type: none; /* Remove bullet points */
 }
-#listToShowUser li {
+#listToShowUser li, #listToShowContact li {
     display: block;
     position: relative;
 }
 
-#listToShowUser li:hover{
+#listToShowUser li:hover, #listToShowContact li:hover{
     background: #81e3fc;
     border-radius: 10px;
 }

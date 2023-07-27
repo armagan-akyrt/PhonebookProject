@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const User = require('./Scripts/User');
+const Contact = require('./Scripts/Contact');
 const session = require('express-session');
 
 const app = express();
@@ -70,6 +71,7 @@ app.post('/signup', async (req, res) => {
 
 app.get('/getUsers', async (req, res) => {
 
+
     let user = new User();
     let users = await user.ListUsers('', true);
 
@@ -77,6 +79,14 @@ app.get('/getUsers', async (req, res) => {
 
     res.json({usersList: users});
 
+});
+
+app.get('/getContacts', async (req, res) => {
+
+    let contact = new Contact();
+    let contacts = await contact.ListContacts(1, '', true);
+
+    res.json({contactsList: contacts});
 });
 
 app.listen(port, () => {
