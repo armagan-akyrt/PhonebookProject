@@ -5,7 +5,7 @@ class UsefulUtilities {
      * @param {* input password to - be encrpyted} input 
      * @returns sha256 encrypted password
      */
-    async encrypt(input) {
+    encrypt(input) {
         const hash = crypto.createHash('sha256');
         hash.update(input)
 

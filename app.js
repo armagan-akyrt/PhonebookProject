@@ -42,9 +42,30 @@ app.get('/userdata', function (req, res) {
 
 app.get('/generatePassword', function (req, res) {
     let user = new User();
-    let password = user.GeneratePassword();
+    let password = user.GenerateRandomPassword();
 
     res.json({ password: password });
+});
+
+app.post('/signup', async (req, res) => {
+
+    let user = new User();
+    user.name = req.body.name;
+    user.surname = req.body.surname;
+    user.phoneNumber = req.body.gsmNumber;
+    user.email = req.body.email;
+    user.address = req.body.address;
+    user.Password = req.body.password;
+    user.role = req.body.userType;
+
+    let signupSuccessful = await user.CreateUser();
+
+    if (signupSuccessful) {
+        res.redirect('/createNewUser.html?signupSuccessful=true')
+    } else {
+        res.redirect('/createNewUser.html?signupFailed=true');
+    }
+
 });
 
 app.listen(port, () => {

@@ -35,7 +35,7 @@ class User {
             await conn.open();
             let request = new sql.Request(conn.pool);
 
-            let hashedPwd = await util.encrypt(password);
+            let hashedPwd = util.encrypt(password);
 
             request.input("email", sql.VarChar(100), email);
             request.input("password", sql.VarChar(100), hashedPwd);
@@ -71,7 +71,7 @@ class User {
             await conn.open();
             let request = new sql.Request(conn.pool);
 
-            let hashedPwd = await util.encrypt(this.password);
+            //let hashedPwd = await util.encrypt(this.password);
 
             request.input("name", sql.VarChar(100), this.name);
             request.input("surname", sql.VarChar(100), this.surname);
@@ -79,7 +79,7 @@ class User {
             request.input("email", sql.VarChar(100), this.email);
             request.input("address", sql.VarChar(100), this.address);
             request.input("username", sql.VarChar(100), this.username);
-            request.input("password", sql.VarChar(100), hashedPwd);
+            request.input("password", sql.VarChar(100), this.password);
             request.input("role", sql.VarChar(100), this.role);
 
             request.output("id", sql.Int, this.id);
@@ -131,7 +131,7 @@ class User {
             return false;
         }
 
-        let newHashedPwd = await util.encrypt(newPassword);
+        let newHashedPwd = util.encrypt(newPassword);
         try {
             await conn.open();
             let request = new sql.Request(conn.pool);
