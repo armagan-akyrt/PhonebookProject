@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Kullanıcı</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="centre-container">
+        <label for="name"><b>Ad</b></label>
+        <input type="text" placeholder="Adınızı Giriniz..." name="name" required>
+
+        <label for="surname"><b>Soyad</b></label>
+        <input type="text" placeholder="Soyadınızı Giriniz..." name = "surname" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="E-postanızı Giriniz..." name="email" required>
+
+
+        <label for="password"><b>Şifre</b></label>
+        <div class = "password-container">
+            <input type="text" id ="passwordPrompt" placeholder="Şifrenizi Giriniz..." name = "password" readonly>
+            <button type="button" id="refreshButton">Yenile</button>
+        </div>
+
+        <label for="address"> <b>Adres</b></label>
+
+        <textarea name="address" placeholder="Adresinizi Giriniz..." wrap="soft" rows="4" class="address-input"></textarea>
+
+        <label for="userType"><b>Kullanıcı Tipi</b></label>
+        <select id="userType">
+            <option value="user">USER</option>
+            <option value="admin">ADMIN</option>
+        </select>
+
+        <button type="submit" style="margin-top: 10px;">Kayıt Ol</button>
+
+
+
+    </div>
+</body>
+</html>

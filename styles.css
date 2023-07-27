@@ -1,3 +1,78 @@
-h1 {
-    color: red;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #bfbcbc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
+h2 {
+    text-align: center;
+}
+.centre-container {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    max-width: 300px;
+    margin: auto;
+}
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.address-input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+    resize: vertical;
+}
+
+button[type=submit], button[type=button] {
+    background-color: #4ca3af;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 10px;
+}
+button[type=submit]:hover, button[type=button]:hover {
+    opacity: 0.8;
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  #passwordPrompt {
+    flex-grow: 2; 
+  }
+
+  #refreshButton {
+    flex-grow: 1; 
+    margin-left: 10px;
+  }

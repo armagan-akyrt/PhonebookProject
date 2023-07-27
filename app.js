@@ -40,6 +40,12 @@ app.get('/userdata', function (req, res) {
     }
 });
 
+app.get('/generatePassword', function (req, res) {
+    let user = new User();
+    let password = user.GeneratePassword();
+
+    res.json({ password: password });
+});
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
