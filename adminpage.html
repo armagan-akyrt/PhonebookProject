@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    
+    <div class="flex-container">
+        <div class="left-container">
+            <input type="text" id="searchInput" onkeyup="filterList()" placeholder="Kullanıcı araması...">
+            <div class = "scrollable-list">
+                <ul id="listToShow">
+                    <!-- List items will be populated dynamically here -->
+                </ul>
+            </div>
+    
+        </div>
+        <div class="centre-container1">
+            <h2>Kullanıcı Bilgileri</h2>
+            <form action="/updateUser" method="POST">
+                <label for="name"><b>Ad</b></label>
+                <input type="text" name="surname" required>
+
+                <label for="surname"><b>Soyad</b></label>
+                <input type="text" name="surname" required>
+
+                <label for="gsmNum"> Telefon Numarası</label>
+                <input type="text" name="gsmNum" required>
+
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" name="email" required>
+                
+                <label for="address"><b>Adres</b></label>
+                <textarea name="address" id="address" rows="4" class="address-input"></textarea>
+
+
+                <button type="submit" style="margin-top: 10px;">Giriş</button>
+                <button type="button" style="margin-top: 10px;" onclick="location.href='createNewUser.html';">Yeni Kullanıcı</button>
+            </form>
+        </div>
+    
+        <div class = "centre-container2">
+            <input type="text" id="searchInput" onkeyup="filterList()" placeholder="Bağlantı araması...">
+            <div class = "scrollable-list">
+                <ul id="listToShow">
+                    <!-- List items will be populated dynamically here -->
+                </ul>
+            </div>
+        </div>
+        <div class = "right-container">
+            <h2>Bağlantı Bilgileri</h2>
+            <form action="/updateUser" method="POST">
+                <label for="name"><b>Ad</b></label>
+                <input type="text" name="surname" required>
+
+                <label for="surname"><b>Soyad</b></label>
+                <input type="text" name="surname" required>
+
+                <label for="gsmNum"> Telefon Numarası</label>
+                <input type="text" name="gsmNum" required>
+
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" name="email" required>
+                
+                <label for="address"><b>Adres</b></label>
+                <textarea name="address" id="address" rows="4" class="address-input"></textarea>
+
+
+                <button type="submit" style="margin-top: 10px;">Giriş</button>
+                <button type="button" style="margin-top: 10px;" onclick="location.href='createNewUser.html';">Yeni Kullanıcı</button>
+            </form>
+        </div>
+
+    </div>
+
+    
+    
+    
+</body>
+</html>
