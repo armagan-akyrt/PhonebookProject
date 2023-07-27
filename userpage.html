@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kullanıcı Ekranı</title>
+</head>
+<body>
+    <h2>Welcome</h2>
+    <div id="user-data"></div>
+    <script>
+        /***********THIS IS A FETCH DATA EXAMPLE  *******************/
+        fetch('/userdata')
+            .then(response => response.json())
+            .then(user => {
+                if (Object.keys(user).length > 0) {
+                    // Create a list and append user data to it
+                    const list = document.createElement('ul');
+                    Object.entries(user).forEach(([key, value]) => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${key}: ${value}`;
+                        list.appendChild(listItem);
+                    });
+
+                    // Append the list to the user-data div
+                    document.getElementById('user-data').appendChild(list);
+                } else {
+                    // If there's no user data, display a message
+                    document.getElementById('user-data').textContent = 'No user data available';
+                }
+            });
+    </script>
+</body>
+</html>

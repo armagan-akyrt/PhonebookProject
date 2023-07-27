@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2>Giriş Ekranı</h2>
+
+    <form action="http://localhost:3000/action_page" method="POST" style="display: flex; flex-direction: column;">
+        <div class="container">
+          <label for="email"><b>Email</b></label>
+          <input type="text" placeholder="E-postanızı Giriniz..." name="email" required>
+      
+          <label for="psw" style="margin-top: 10px;"><b>Şifre</b></label>
+          <input type="password" placeholder="Şifrenizi Giriniz..." name="psw" required>
+              
+          
+        </div>
+        <div class = "container">
+          <button type="button" style="margin-top: 10px;" onclick="location.href='createNewUser.html';">Yeni Kullanıcı</button>
+          <button type="submit" style="margin-top: 10px;">Giriş</button>
+        </div>
+      </form>
+
+
+      <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.has('loginFailed')) {
+                alert('Login failed. Please check your email and password and try again.');
+            }
+        }
+        </script>
+        
+
+</body>
+</html>
