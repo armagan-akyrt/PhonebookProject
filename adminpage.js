@@ -5,8 +5,8 @@ let currentUser = null;
             let usersData = []; // An array to store all users data
             let contactsData = [];
 
-            function fetchContacts(userId, contactSearchWord) {
-                fetch(`/getContacts?userId=${userId}&searchWord=${contactSearchWord}`)
+            function fetchContacts(userId, contactSearchWord, isActive) {
+                fetch(`/getContacts?userId=${userId}&searchWord=${contactSearchWord}&isActive=${isActive}`)
                     .then(response => response.json())
                     .then(data => {
                         let contactList = document.getElementById('listToShowContact');
@@ -33,8 +33,8 @@ let currentUser = null;
                     .catch(error => console.error('Error:', error));
             }
 
-            function fetchUsers(searchWord) {
-                fetch(`/getUsers?searchWord=${searchWord}`)
+            function fetchUsers(searchWord, isActive) {
+                fetch(`/getUsers?searchWord=${searchWord}&isActive=${isActive}`)
                     .then(response => response.json())
                     .then(data => {
                         let userList = document.getElementById('listToShowUser');
@@ -48,7 +48,7 @@ let currentUser = null;
                                 selectedUserIndex = data.usersList.indexOf(user);
 
                                 // Call fetchContacts when a user item is clicked
-                                fetchContacts(user.id, '');
+                                fetchContacts(user.id, '', true);
                                 document.getElementById('userFirstName').value = user.name;
                                 document.getElementById('userLastName').value = user.surname;
                                 document.getElementById('userGsmNum').value = user.phoneNumber;
@@ -166,7 +166,7 @@ let currentUser = null;
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({'contactId': contactId}),
+                    body: JSON.stringify({'contactId': contactId})
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -203,17 +203,17 @@ let currentUser = null;
             
             document.getElementById('searchInputUser').addEventListener('keyup', function() {
                 let searchWord = document.getElementById('searchInputUser').value;
-                fetchUsers(searchWord);
+                fetchUsers(searchWord, true);
             });
 
             document.getElementById('searchInputContact').addEventListener('keyup', function() {
                 let searchWord = document.getElementById('searchInputContact').value;
-                fetchContacts(currentUser, searchWord);
+                fetchContacts(currentUser, searchWord, true);
             });
 
 
             window.addEventListener('load', function() {
-                fetchUsers(''); // Fetch all users on load
+                fetchUsers('', true); // Fetch all users on load
             });            
             
             

@@ -79,9 +79,7 @@ app.get('/getUsers', async (req, res) => {
     let user = new User();
 
     let normalizedSearchWord = util.convertTurkishToAscii(req.query.searchWord)
-    let users = await user.ListUsers(normalizedSearchWord, true);
-
-    let testval = 0;
+    let users = await user.ListUsers(normalizedSearchWord, req.query.isActive);
 
     res.json({ usersList: users });
 
@@ -194,9 +192,10 @@ app.get('/getContacts', async (req, res) => {
 
     let contact = new Contact();
 
+
     let normalizedSearchWord = util.convertTurkishToAscii(req.query.searchWord)
 
-    let contacts = await contact.ListContacts(req.query.userId, normalizedSearchWord, true);
+    let contacts = await contact.ListContacts(req.query.userId, normalizedSearchWord, req.query.isActive);
 
     res.json({ contactsList: contacts });
 });
