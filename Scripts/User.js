@@ -187,6 +187,8 @@ class User {
         } finally {
             conn.close();
         }
+
+        return true;
     }
 
     async BringBackUser() {
@@ -272,7 +274,11 @@ class User {
 module.exports = User;
 
 // async function test() {
-//     myList = await new User().ListUsers("", true);
+    
+//     let user = new User();
+//     user.id = 18;
+
+//     let result = await user.SoftDeleteUser();
 
 //     let i = 5;
 

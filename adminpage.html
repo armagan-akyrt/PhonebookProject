@@ -132,7 +132,6 @@
                         userList.innerHTML = ''; // Clear the list before displaying new results
             
                         data.usersList.forEach(user => {
-                            console.log(usersList);
                             let li = document.createElement('li');
                             li.textContent = `${user.name} ${user.surname}`; 
                             li.addEventListener('click', function() {
@@ -140,7 +139,7 @@
                                 selectedUserIndex = data.usersList.indexOf(user);
 
                                 // Call fetchContacts when a user item is clicked
-                                fetchContacts(user.id, ''); // Assuming user name is unique and can be used to fetch contacts
+                                fetchContacts(user.id, '');
                                 document.getElementById('userFirstName').value = user.name;
                                 document.getElementById('userLastName').value = user.surname;
                                 document.getElementById('userGsmNum').value = user.phoneNumber;
@@ -153,6 +152,7 @@
                     })
                     .catch(error => console.error('Error:', error));
             }
+            
             function updateUser() {
                 // Get the data of the selected user
                 const selectedUser = usersData[selectedUserIndex];
@@ -167,7 +167,6 @@
                     gsmNum: document.getElementById('userGsmNum').value,
                     email: document.getElementById('userEmail').value,
                     address: document.getElementById('userAddress').value,
-                    // Include any other fields you have
                 };
 
 
@@ -189,6 +188,38 @@
                 });
             }
         
+            function softDeleteUser() {
+                const selectedUser = usersData[selectedUserIndex];
+
+                let userId = selectedUser.id;
+
+                fetch('/softDeleteUser', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({'userId': userId}),
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+
+            }
+
+
+            // Attacch the softDeleteUser function to the button's click event
+            document.getElementById('deleteUserButton').addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the form from being submitted normally
+                softDeleteUser();
+            });
+
             // Attach the updateUser function to the button's click event
             document.getElementById('updateUserButton').addEventListener('click', function(event) {
                 event.preventDefault(); // Prevent the form from being submitted normally
@@ -205,9 +236,7 @@
                 fetchContacts(currentUser, searchWord);
             });
 
-
             
-            // Now you can also call this function elsewhere in your code, like on page load
             window.addEventListener('load', function() {
                 fetchUsers(''); // Fetch all users on load
             });            

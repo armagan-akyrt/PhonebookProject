@@ -29,7 +29,7 @@ app.post('/action_page', async (req, res) => {
     if (loginSuccessful && user.role == "ADMIN") {
         req.session.user = user;  // Save the user to the session
         res.redirect('/adminpage.html');
-    } else if (loginSuccessful && user.role == "USER") { 
+    } else if (loginSuccessful && user.role == "USER") {
         req.session.user = user;  // Save the user to the session
         res.redirect('/userpage.html');
     } else {
@@ -83,7 +83,7 @@ app.get('/getUsers', async (req, res) => {
 
     let testval = 0;
 
-    res.json({usersList: users});
+    res.json({ usersList: users });
 
 });
 
@@ -118,15 +118,37 @@ app.post('/updateUser', async (req, res) => {
     }
 });
 
+app.post('/softDeleteUser', async (req, res) => {
+    // Get the user id from the request body
+    let userId = req.body.userId;
+
+    try {
+        // Create a new User instance
+        let userToDelete = new User();
+        userToDelete.id = userId;
+
+        console.log(userToDelete.id);
+        const result = await userToDelete.SoftDeleteUser();
+
+        if (result) {
+            res.json({ success: true, message: 'User deleted successfully' });
+        } else {
+            throw new Error('User not found');
+        }
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
 app.get('/getContacts', async (req, res) => {
 
     let contact = new Contact();
 
     let normalizedSearchWord = util.convertTurkishToAscii(req.query.searchWord)
 
-    let contacts = await contact.ListContacts(req.query.userId,normalizedSearchWord, true);
+    let contacts = await contact.ListContacts(req.query.userId, normalizedSearchWord, true);
 
-    res.json({contactsList: contacts});
+    res.json({ contactsList: contacts });
 });
 
 app.listen(port, () => {
