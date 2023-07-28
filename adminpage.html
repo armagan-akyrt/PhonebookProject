@@ -97,8 +97,10 @@
             let currentUser = null;
             let selectedUserIndex = 0;
 
+            let usersData = []; // An array to store all users data
+
             function fetchContacts(userId, contactSearchWord) {
-                fetch(`/getContacts/${userId}/${contactSearchWord}`)
+                fetch(`/getContacts?userId=${userId}&searchWord=${contactSearchWord}`)
                     .then(response => response.json())
                     .then(data => {
                         let contactList = document.getElementById('listToShowContact');
@@ -123,21 +125,25 @@
             }
 
             function fetchUsers(searchWord) {
-                fetch(`/getUsers/${searchWord}`)
+                fetch(`/getUsers?searchWord=${searchWord}`)
                     .then(response => response.json())
                     .then(data => {
                         let userList = document.getElementById('listToShowUser');
                         userList.innerHTML = ''; // Clear the list before displaying new results
             
                         data.usersList.forEach(user => {
+                            console.log(usersList);
                             let li = document.createElement('li');
                             li.textContent = `${user.name} ${user.surname}`; 
                             li.addEventListener('click', function() {
+                                usersData = data.usersList;
+                                selectedUserIndex = data.usersList.indexOf(user);
+
                                 // Call fetchContacts when a user item is clicked
-                                fetchContacts(user.id, ); // Assuming user name is unique and can be used to fetch contacts
+                                fetchContacts(user.id, ''); // Assuming user name is unique and can be used to fetch contacts
                                 document.getElementById('userFirstName').value = user.name;
                                 document.getElementById('userLastName').value = user.surname;
-                                document.getElementById('userGsmNum').value = user.gsmNum;
+                                document.getElementById('userGsmNum').value = user.phoneNumber;
                                 document.getElementById('userEmail').value = user.email;
                                 document.getElementById('userAddress').value = user.address;
                             });
@@ -147,6 +153,47 @@
                     })
                     .catch(error => console.error('Error:', error));
             }
+            function updateUser() {
+                // Get the data of the selected user
+                const selectedUser = usersData[selectedUserIndex];
+
+                const userData = {
+                    id: selectedUser.id,
+                    password: selectedUser.password,
+                    username: selectedUser.username,
+                    role: selectedUser.role,  
+                    name: document.getElementById('userFirstName').value,
+                    surname: document.getElementById('userLastName').value,
+                    gsmNum: document.getElementById('userGsmNum').value,
+                    email: document.getElementById('userEmail').value,
+                    address: document.getElementById('userAddress').value,
+                    // Include any other fields you have
+                };
+
+
+                fetch('/updateUser', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData),
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            }
+        
+            // Attach the updateUser function to the button's click event
+            document.getElementById('updateUserButton').addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the form from being submitted normally
+                updateUser();
+            });
             
             document.getElementById('searchInputUser').addEventListener('keyup', function() {
                 let searchWord = document.getElementById('searchInputUser').value;

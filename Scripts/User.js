@@ -250,6 +250,7 @@ class User {
                 tempUser.address = user.address;
                 tempUser.username = user.username;
                 tempUser.role = user.role;
+                tempUser.password = user.password;
 
                 users.push(tempUser)
             });

@@ -12,6 +12,7 @@ const port = 3000;
 
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use(session({
     secret: 'totally-secret-key-api-123',
@@ -72,12 +73,12 @@ app.post('/signup', async (req, res) => {
 
 });
 
-app.get('/getUsers/:searchWord', async (req, res) => {
+app.get('/getUsers', async (req, res) => {
 
 
     let user = new User();
 
-    let normalizedSearchWord = util.convertTurkishToAscii(req.params.searchWord)
+    let normalizedSearchWord = util.convertTurkishToAscii(req.query.searchWord)
     let users = await user.ListUsers(normalizedSearchWord, true);
 
     let testval = 0;
@@ -86,13 +87,44 @@ app.get('/getUsers/:searchWord', async (req, res) => {
 
 });
 
-app.get('/getContacts/:userId/:searchWord', async (req, res) => {
+app.post('/updateUser', async (req, res) => {
+    // Get the new user data from the request body
+    let userData = req.body;
+
+    try {
+        // Create a new User instance and set the fields to the new values
+        let user = new User();
+        user.name = userData.name;
+        user.surname = userData.surname;
+        user.phoneNumber = userData.gsmNum;
+        user.email = userData.email;
+        user.address = userData.address;
+        user.username = userData.username;
+        user.password = userData.password;
+        user.role = userData.role;
+        user.id = userData.id;
+        // Don't forget to set other fields you might have on the User object
+
+        // Now call the UpdateUser method
+        const result = await user.UpdateUser();
+
+        if (result) {
+            res.json({ success: true, message: 'User updated successfully' });
+        } else {
+            throw new Error('User not found');
+        }
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+app.get('/getContacts', async (req, res) => {
 
     let contact = new Contact();
 
-    let normalizedSearchWord = util.convertTurkishToAscii(req.params.searchWord)
+    let normalizedSearchWord = util.convertTurkishToAscii(req.query.searchWord)
 
-    let contacts = await contact.ListContacts(req.params.userId,normalizedSearchWord, true);
+    let contacts = await contact.ListContacts(req.query.userId,normalizedSearchWord, true);
 
     res.json({contactsList: contacts});
 });
