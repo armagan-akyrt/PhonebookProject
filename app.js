@@ -140,6 +140,56 @@ app.post('/softDeleteUser', async (req, res) => {
     }
 });
 
+app.post('/updateContact', async (req, res) => {
+
+    let contactData = req.body;
+    console.log(contactData);
+    try {
+        let contact = new Contact();
+        contact.name = contactData.name;
+        contact.surname = contactData.surname;
+        contact.phoneNumber = contactData.gsmNum;
+        contact.email = contactData.email;
+        contact.address = contactData.address;
+        contact.userId = contactData.userId;
+        contact.id = contactData.id;
+
+        const result = await contact.UpdateContact();
+
+        if (result) {
+            res.json({ success: true, message: 'Contact updated successfully' });
+        } else {
+            throw new Error('Contact not found');
+        }
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+
+});
+
+app.post('/softDeleteContact', async (req, res) => { 
+    // Get the contact id from the request body
+    let contactId = req.body.contactId;
+
+    try {
+        // Create a new Contact instance
+        let contactToDelete = new Contact();
+        contactToDelete.id = contactId;
+
+        console.log(contactToDelete.id);
+        const result = await contactToDelete.SoftDeleteContact();
+
+        if (result) {
+            res.json({ success: true, message: 'Contact deleted successfully' });
+        } else {
+            throw new Error('Contact not found');
+        }
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+
 app.get('/getContacts', async (req, res) => {
 
     let contact = new Contact();

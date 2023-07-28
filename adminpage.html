@@ -96,8 +96,10 @@
         <script>
             let currentUser = null;
             let selectedUserIndex = 0;
+            let selectedContactIndex = 0;
 
             let usersData = []; // An array to store all users data
+            let contactsData = [];
 
             function fetchContacts(userId, contactSearchWord) {
                 fetch(`/getContacts?userId=${userId}&searchWord=${contactSearchWord}`)
@@ -112,10 +114,13 @@
                             contactList.appendChild(li);
 
                             li.addEventListener('click', function() {
+                                contactsData = data.contactsList
+                                selectedContactIndex = data.contactsList.indexOf(contact);
+
                                 // Call fetchContacts when a user item is clicked
                                 document.getElementById('contactFirstName').value = contact.name;
                                 document.getElementById('contactLastName').value = contact.surname;
-                                document.getElementById('contactGsmNum').value = contact.gsmNum;
+                                document.getElementById('contactGsmNum').value = contact.phoneNumber;
                                 document.getElementById('contactEmail').value = contact.email;
                                 document.getElementById('contactAddress').value = contact.address;
                             });
@@ -213,6 +218,72 @@
 
             }
 
+            function updateContact() {
+                const selectedContact = contactsData[selectedContactIndex]
+
+                const contactData = {
+                    id: selectedContact.id,
+                    username: selectedContact.username,
+                    name: document.getElementById('contactFirstName').value,
+                    surname: document.getElementById('contactLastName').value,
+                    gsmNum: document.getElementById('contactGsmNum').value,
+                    email: document.getElementById('contactEmail').value,
+                    address: document.getElementById('contactAddress').value,
+    };
+
+                fetch('/updateContact', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(contactData),
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+            
+            }
+
+            function softDeleteContact() {
+                const selectedContact = contactsData[selectedContactIndex]
+
+                let contactId = selectedContact.id;
+
+                fetch('/softDeleteContact', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({'contactId': contactId}),
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+            }
+
+            document.getElementById('deleteContactButton').addEventListener('click', function(event) {
+                event.preventDefault();
+                softDeleteContact();
+            });
+
+            document.getElementById('updateContactButton').addEventListener('click', function(event) {
+                event.preventDefault();
+                updateContact();
+            });
 
             // Attacch the softDeleteUser function to the button's click event
             document.getElementById('deleteUserButton').addEventListener('click', function(event) {
@@ -236,7 +307,7 @@
                 fetchContacts(currentUser, searchWord);
             });
 
-            
+
             window.addEventListener('load', function() {
                 fetchUsers(''); // Fetch all users on load
             });            

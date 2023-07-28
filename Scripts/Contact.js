@@ -61,6 +61,8 @@ class Contact {
         } finally {
             conn.close();
         }
+
+        return true;
     }
 
     async SoftDeleteContact() {
@@ -78,6 +80,8 @@ class Contact {
         } finally {
             conn.close();
         }
+
+        return true;
     }
 
     async SevereUserContact(userId) {
@@ -95,6 +99,8 @@ class Contact {
         } finally {
             conn.close();
         }
+
+        return true;
     }
 
     async ListContacts(id, contactSearch, activeState) {
