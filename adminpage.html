@@ -7,15 +7,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <script>
-        fetch('/userdata')
-        .then(response => response.json())
-        .then(user => {
-            if (user.role !== 'ADMIN') {
-                window.location.href = '/index.html';
-            }
-        });
-    </script>
+
+    
 
     <ul class = "navbar">
         <li><a href="/index.html">Ana Sayfa</a></li>
@@ -32,7 +25,7 @@
 
     <div class="flex-container">
         <div class="left-container">
-            <input type="text" id="searchInputUser" name = "searchInputUser" onkeyup="filterList()" placeholder="Kullanıcı araması...">
+            <input type="text" id="searchInputUser" name = "searchInputUser" placeholder="Kullanıcı araması...">
             <div class = "scrollable-list">
                 <ul id="listToShowUser">
                     <!-- List items will be populated dynamically here -->
@@ -45,20 +38,20 @@
             <h2>Kullanıcı Bilgileri</h2>
             <form action="/updateUser" method="POST">
                 <label for="name"><b>Ad</b></label>
-                <input type="text" name="name" required>
+                <input type="text" name="name" id="userFirstName" required>
 
                 <label for="surname"><b>Soyad</b></label>
-                <input type="text" name="surname" required>
+                <input type="text" name="surname" id="userLastName" required>
 
                 <label for="gsmNum"> Telefon Numarası</label>
-                <input type="text" name="gsmNum" required>
+                <input type="text" name="gsmNum" id="userGsmNum" required>
 
 
                 <label for="email"><b>Email</b></label>
-                <input type="text" name="email" required>
+                <input type="text" name="email" id="userEmail" required>
                 
                 <label for="address"><b>Adres</b></label>
-                <textarea name="address" id="address" rows="4" class="address-input"></textarea>
+                <textarea name="address" id="userAddress" rows="4" class="address-input"></textarea>
 
 
                 <button type="submit" style="margin-top: 10px;" name="updateUserButton" id="updateUserButton">Güncelle</button>
@@ -67,7 +60,7 @@
         </div>
     
         <div class = "centre-container2">
-            <input type="text" id="searchInputContact" name="searchInputContact" onkeyup="filterList()" placeholder="Bağlantı araması...">
+            <input type="text" id="searchInputContact" name="searchInputContact" placeholder="Bağlantı araması...">
             <div class = "scrollable-list">
                 <ul id="listToShowContact">
                     <!-- List items will be populated dynamically here -->
@@ -79,20 +72,20 @@
             <h2>Bağlantı Bilgileri</h2>
             <form action="/updateContact" method="POST">
                 <label for="name"><b>Ad</b></label>
-                <input type="text" name="contactName" required>
+                <input type="text" name="contactName", id="contactFirstName" required>
 
                 <label for="surname"><b>Soyad</b></label>
-                <input type="text" name="contactSurname" required>
+                <input type="text" name="contactSurname" id="contactLastName" required>
 
                 <label for="gsmNum"> Telefon Numarası</label>
-                <input type="text" name="contactGsmNum" required>
+                <input type="text" name="contactGsmNum" id="contactGsmNum" required>
 
 
                 <label for="email"><b>Email</b></label>
-                <input type="text" name="contactEmail" required>
+                <input type="text" name="contactEmail" id="contactEmail" required>
                 
                 <label for="address"><b>Adres</b></label>
-                <textarea name="contactAddress" id="address" rows="4" class="address-input"></textarea>
+                <textarea name="contactAddress" id="contactAddress" rows="4" class="address-input"></textarea>
 
 
                 <button type="submit" style="margin-top: 10px;" name="updateContactButton" id="updateContactButton">Güncelle</button>
@@ -101,71 +94,80 @@
         </div>
 
         <script>
+            let currentUser = null;
+            let selectedUserIndex = 0;
 
-            const User = require ('./Scripts/User');
-            let currentUser = new User();
-
-            window.onload = function() {
-                let users = []; // This array will store all the user data
-                let contacts = []; // This array will store all the contact data
-
-                fetch('/userdata')
-                    .then(response => response.json())
-                    .then(user => {
-                        currentUser = user;
-                    });
-                
-                fetch('/getUsers')
+            function fetchContacts(userId, contactSearchWord) {
+                fetch(`/getContacts/${userId}/${contactSearchWord}`)
                     .then(response => response.json())
                     .then(data => {
-                        users = data.usersList;
-                        const listToShowUser = document.getElementById('listToShowUser');
-                        users.forEach((user, index) => {
-                            const li = document.createElement('li');
-                            li.textContent = `${user.name} ${user.surname}`; // Display the user's name and surname
-                            li.addEventListener('click', () => fillForm(user)); // When this list item is clicked, fill the form with this user's data
-                            listToShowUser.appendChild(li);
+                        let contactList = document.getElementById('listToShowContact');
+                        contactList.innerHTML = ''; // Clear the list before displaying new results
+            
+                        data.contactsList.forEach(contact => {
+                            let li = document.createElement('li');
+                            li.textContent = `${contact.name} ${contact.surname}`; 
+                            contactList.appendChild(li);
+
+                            li.addEventListener('click', function() {
+                                // Call fetchContacts when a user item is clicked
+                                document.getElementById('contactFirstName').value = contact.name;
+                                document.getElementById('contactLastName').value = contact.surname;
+                                document.getElementById('contactGsmNum').value = contact.gsmNum;
+                                document.getElementById('contactEmail').value = contact.email;
+                                document.getElementById('contactAddress').value = contact.address;
+                            });
                         });
                     })
                     .catch(error => console.error('Error:', error));
+            }
 
-                fetch('/getContacts')
-                .then(require => require.json())
-                .then(response => response.json())
-                .then(data => {
-                    contacts = data.contactsList;
-                    const listToShowContact = document.getElementById('listToShowContact');
-                    contacts.forEach((contact, index) => {
-                        const li = document.createElement('li');
-                        li.textContent = `${contact.name} ${contact.surname}`; // Display the user's name and surname
-                        li.addEventListener('click', () => fillContactForm(contact)); // When this list item is clicked, fill the form with this user's data
-                        listToShowContact.appendChild(li);
-                    });
-                });
+            function fetchUsers(searchWord) {
+                fetch(`/getUsers/${searchWord}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let userList = document.getElementById('listToShowUser');
+                        userList.innerHTML = ''; // Clear the list before displaying new results
+            
+                        data.usersList.forEach(user => {
+                            let li = document.createElement('li');
+                            li.textContent = `${user.name} ${user.surname}`; 
+                            li.addEventListener('click', function() {
+                                // Call fetchContacts when a user item is clicked
+                                fetchContacts(user.id, ); // Assuming user name is unique and can be used to fetch contacts
+                                document.getElementById('userFirstName').value = user.name;
+                                document.getElementById('userLastName').value = user.surname;
+                                document.getElementById('userGsmNum').value = user.gsmNum;
+                                document.getElementById('userEmail').value = user.email;
+                                document.getElementById('userAddress').value = user.address;
+                            });
 
+                            userList.appendChild(li);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
             }
             
-            function fillForm(user) {
-                document.getElementsByName('name')[0].value = user.name;
-                document.getElementsByName('surname')[0].value = user.surname;
-                document.getElementsByName('gsmNum')[0].value = user.phoneNumber;
-                document.getElementsByName('email')[0].value = user.email;
-                document.getElementsByName('address')[0].value = user.address;
-                document.getElementById('updateUserButton').addEventListener('click', (event) => updateUser(event, user));
-                document.getElementById('deleteUserButton').addEventListener('click', (event) => deleteUser(event, user));
-            }
+            document.getElementById('searchInputUser').addEventListener('keyup', function() {
+                let searchWord = document.getElementById('searchInputUser').value;
+                fetchUsers(searchWord);
+            });
 
-            function fillContactForm(contact) {
-                document.getElementsByName('contactName')[0].value = contact.name;
-                document.getElementsByName('contactSurname')[0].value = contact.surname;
-                document.getElementsByName('contactGsmNum')[0].value = contact.phoneNumber;
-                document.getElementsByName('contactEmail')[0].value = contact.email;
-                document.getElementsByName('contactAddress')[0].value = contact.address;
-                document.getElementById('updateContactButton').addEventListener('click', (event) => updateUser(event, user));
-                document.getElementById('deleteContactButton').addEventListener('click', (event) => deleteUser(event, user));
-            }
+            document.getElementById('searchInputContact').addEventListener('keyup', function() {
+                let searchWord = document.getElementById('searchInputContact').value;
+                fetchContacts(currentUser, searchWord);
+            });
 
+
+            
+            // Now you can also call this function elsewhere in your code, like on page load
+            window.addEventListener('load', function() {
+                fetchUsers(''); // Fetch all users on load
+            });            
+            
+            
         </script>
+        
 
     </div>
 

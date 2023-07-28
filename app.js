@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const User = require('./Scripts/User');
 const Contact = require('./Scripts/Contact');
 const session = require('express-session');
+const UsefulUtilities = require('./Scripts/UsefulUtilities');
+
+let util = new UsefulUtilities();
 
 const app = express();
 const port = 3000;
@@ -69,11 +72,13 @@ app.post('/signup', async (req, res) => {
 
 });
 
-app.get('/getUsers', async (req, res) => {
+app.get('/getUsers/:searchWord', async (req, res) => {
 
 
     let user = new User();
-    let users = await user.ListUsers('', true);
+
+    let normalizedSearchWord = util.convertTurkishToAscii(req.params.searchWord)
+    let users = await user.ListUsers(normalizedSearchWord, true);
 
     let testval = 0;
 
@@ -81,10 +86,13 @@ app.get('/getUsers', async (req, res) => {
 
 });
 
-app.get('/getContacts', async (req, res) => {
+app.get('/getContacts/:userId/:searchWord', async (req, res) => {
 
     let contact = new Contact();
-    let contacts = await contact.ListContacts(req.body.id, '', true);
+
+    let normalizedSearchWord = util.convertTurkishToAscii(req.params.searchWord)
+
+    let contacts = await contact.ListContacts(req.params.userId,normalizedSearchWord, true);
 
     res.json({contactsList: contacts});
 });
