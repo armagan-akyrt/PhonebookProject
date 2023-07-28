@@ -37,61 +37,7 @@
                 <ul id="listToShowUser">
                     <!-- List items will be populated dynamically here -->
                 </ul>
-                <script>
-                    window.onload = function() {
-                        let users = []; // This array will store all the user data
-                        let contacts = []; // This array will store all the contact data
 
-                        fetch('/getUsers')
-                            .then(response => response.json())
-                            .then(data => {
-                                users = data.usersList;
-                                const listToShowUser = document.getElementById('listToShowUser');
-                                users.forEach((user, index) => {
-                                    const li = document.createElement('li');
-                                    li.textContent = `${user.name} ${user.surname}`; // Display the user's name and surname
-                                    li.addEventListener('click', () => fillForm(user)); // When this list item is clicked, fill the form with this user's data
-                                    listToShowUser.appendChild(li);
-                                });
-                            })
-                            .catch(error => console.error('Error:', error));
-
-                        fetch('/getContacts')
-                        .then(response => response.json())
-                        .then(data => {
-                            contacts = data.contactsList;
-                            const listToShowContact = document.getElementById('listToShowContact');
-                            contacts.forEach((contact, index) => {
-                                const li = document.createElement('li');
-                                li.textContent = `${contact.name} ${contact.surname}`; // Display the user's name and surname
-                                li.addEventListener('click', () => fillForm(contact)); // When this list item is clicked, fill the form with this user's data
-                                listToShowContact.appendChild(li);
-                            });
-                        });
-
-                    }
-                    
-                    function fillForm(user) {
-                        document.getElementsByName('name')[0].value = user.name;
-                        document.getElementsByName('surname')[0].value = user.surname;
-                        document.getElementsByName('gsmNum')[0].value = user.phoneNumber;
-                        document.getElementsByName('email')[0].value = user.email;
-                        document.getElementsByName('address')[0].value = user.address;
-                        document.getElementById('updateUserButton').addEventListener('click', (event) => updateUser(event, user));
-                        document.getElementById('deleteUserButton').addEventListener('click', (event) => deleteUser(event, user));
-                    }
-
-                    function fillContactForm(contact) {
-                        document.getElementsByName('contactName')[0].value = contact.contactName;
-                        document.getElementsByName('contactSurname')[0].value = contact.contactSurname;
-                        document.getElementsByName('contactPhoneNumber')[0].value = contact.contactGsmNum;
-                        document.getElementsByName('contactEmail')[0].value = contact.contactEmail;
-                        document.getElementsByName('contactAddress')[0].value = contact.contactAddress;
-                        document.getElementById('updateContactButton').addEventListener('click', (event) => updateUser(event, user));
-                        document.getElementById('deleteContactButton').addEventListener('click', (event) => deleteUser(event, user));
-                    }
-
-                </script>
             </div>
     
         </div>
@@ -139,7 +85,7 @@
                 <input type="text" name="contactSurname" required>
 
                 <label for="gsmNum"> Telefon Numarası</label>
-                <input type="text" name="contacgsmNum" required>
+                <input type="text" name="contactGsmNum" required>
 
 
                 <label for="email"><b>Email</b></label>
@@ -149,10 +95,77 @@
                 <textarea name="contactAddress" id="address" rows="4" class="address-input"></textarea>
 
 
-                <button type="submit" style="margin-top: 10px;" name="updateContactButton" id="updateUserButton">Güncelle</button>
-                <button type="button" style="margin-top: 10px;" name="deleteContactButton" id="deleteUserButton">Sil</button>
+                <button type="submit" style="margin-top: 10px;" name="updateContactButton" id="updateContactButton">Güncelle</button>
+                <button type="button" style="margin-top: 10px;" name="deleteContactButton" id="deleteContactButton">Sil</button>
             </form>
         </div>
+
+        <script>
+
+            const User = require ('./Scripts/User');
+            let currentUser = new User();
+
+            window.onload = function() {
+                let users = []; // This array will store all the user data
+                let contacts = []; // This array will store all the contact data
+
+                fetch('/userdata')
+                    .then(response => response.json())
+                    .then(user => {
+                        currentUser = user;
+                    });
+                
+                fetch('/getUsers')
+                    .then(response => response.json())
+                    .then(data => {
+                        users = data.usersList;
+                        const listToShowUser = document.getElementById('listToShowUser');
+                        users.forEach((user, index) => {
+                            const li = document.createElement('li');
+                            li.textContent = `${user.name} ${user.surname}`; // Display the user's name and surname
+                            li.addEventListener('click', () => fillForm(user)); // When this list item is clicked, fill the form with this user's data
+                            listToShowUser.appendChild(li);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+
+                fetch('/getContacts')
+                .then(require => require.json())
+                .then(response => response.json())
+                .then(data => {
+                    contacts = data.contactsList;
+                    const listToShowContact = document.getElementById('listToShowContact');
+                    contacts.forEach((contact, index) => {
+                        const li = document.createElement('li');
+                        li.textContent = `${contact.name} ${contact.surname}`; // Display the user's name and surname
+                        li.addEventListener('click', () => fillContactForm(contact)); // When this list item is clicked, fill the form with this user's data
+                        listToShowContact.appendChild(li);
+                    });
+                });
+
+            }
+            
+            function fillForm(user) {
+                document.getElementsByName('name')[0].value = user.name;
+                document.getElementsByName('surname')[0].value = user.surname;
+                document.getElementsByName('gsmNum')[0].value = user.phoneNumber;
+                document.getElementsByName('email')[0].value = user.email;
+                document.getElementsByName('address')[0].value = user.address;
+                document.getElementById('updateUserButton').addEventListener('click', (event) => updateUser(event, user));
+                document.getElementById('deleteUserButton').addEventListener('click', (event) => deleteUser(event, user));
+            }
+
+            function fillContactForm(contact) {
+                document.getElementsByName('contactName')[0].value = contact.name;
+                document.getElementsByName('contactSurname')[0].value = contact.surname;
+                document.getElementsByName('contactGsmNum')[0].value = contact.phoneNumber;
+                document.getElementsByName('contactEmail')[0].value = contact.email;
+                document.getElementsByName('contactAddress')[0].value = contact.address;
+                document.getElementById('updateContactButton').addEventListener('click', (event) => updateUser(event, user));
+                document.getElementById('deleteContactButton').addEventListener('click', (event) => deleteUser(event, user));
+            }
+
+        </script>
 
     </div>
 

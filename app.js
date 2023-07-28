@@ -84,7 +84,7 @@ app.get('/getUsers', async (req, res) => {
 app.get('/getContacts', async (req, res) => {
 
     let contact = new Contact();
-    let contacts = await contact.ListContacts(1, '', true);
+    let contacts = await contact.ListContacts(req.body.id, '', true);
 
     res.json({contactsList: contacts});
 });
