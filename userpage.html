@@ -11,10 +11,29 @@
         <ul class="navbar">
             <li><a href="/index.html">Ana Sayfa</a></li>
             <li>
-                <a href="#">Kullanıcı</a>
+                <a href="#">Bağlantılar</a>
                 <ul class="dropdown">
-                    <li><a href="/userpage.html">Kullanıcı Görünümü</a></li>
-                    <li><a href="/createNewUser.html?isAdmin=true">Yeni Kullanıcı Oluştur</a></li>
+                    <li><a href="#">Yeni Bağlantı Oluştur</a></li>
+                    <li><a href="#">Silinen Bağlantılar</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Yönetici</a>
+                <ul class="dropdown">
+                    <li><a href="/adminpage.html">Yönetici Ekranı</a></li>
+                </ul>
+            </li>
+
+            <li><a href="/index.html">Şifre Değiştir</a></li>
+
+
+            <li>
+                <a href="#">Toplantılar</a>
+                <ul class="dropdown">
+                    <li><a href="#">Yeni Bağlantı Oluştur</a></li>
+                    <li><a href="#">Silinen Bağlantılar</a></li>
+                    <li><a href="#">Geçmiş Bağlantılar</a></li>
+
                 </ul>
             </li>
         </ul>
@@ -47,7 +66,7 @@
                 <input type="text" name="email" id="contactEmail" required>
 
                 <label for="address"><b>Adres</b></label>
-                <textarea name="address" id="contactAdress" rows="4" class="address-input"></textarea>
+                <textarea name="address" id="contactAddress" rows="4" class="address-input"></textarea>
 
 
                 <button type="submit" style="margin-top: 10px;" name="updateContactButton"
@@ -67,21 +86,17 @@
                 </div>
             </div>
             <div class="right-container">
-                <h2>Bağlantı Bilgileri</h2>
-                <label for="name"><b>Ad</b></label>
-                <input type="text" name="meetingName" , id="meetingFirstName" required>
+                <h2>Toplantı Bilgileri</h2>
+                <label for="name"><b>Ad Soyad</b></label>
+                <input type="text" name="meetingContactFullname" , id="meetingContactFullname" required>
 
-                <label for="surname"><b>Soyad</b></label>
-                <input type="text" name="meetingSurname" id="meetingLastName" required>
+                <label for="surname"><b>Başlangıç Tarihi</b></label>
+                <input type="datetime-local" name="meetingStartDate" id="meetingStartDate" required>
 
-                <label for="gsmNum"> Telefon Numarası</label>
-                <input type="text" name="meetingGsmNum" id="meetingGsmNum" required>
+                <label for="gsmNum"> <b>Bitiş Tarihi</b></label>
+                <input type="datetime-local" name="meetingEndDate" id="meetingEndDate" required>
 
-
-                <label for="email"><b>Email</b></label>
-                <input type="text" name="meetingEmail" id="meetingEmail" required>
-
-                <label for="address"><b>Adres</b></label>
+                <label for="notes"><b>Notlar</b></label>
                 <textarea name="meetingAddress" id="meetingAddress" rows="4" class="address-input"></textarea>
 
 

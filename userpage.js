@@ -25,6 +25,17 @@ document.getElementById('searchInputContact').addEventListener('keyup', function
     fetchContacts(currentUser.id, searchWord);
 });
 
+document.getElementById('updateContactButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    updateContact();
+});
+
+document.getElementById('deleteContactButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    softDeleteContact();
+});
+
+
 function fetchContacts(userId, contactSearchWord) {
     fetch(`/getContacts?userId=${userId}&searchWord=${contactSearchWord}`)
         .then(response => response.json())
@@ -46,9 +57,66 @@ function fetchContacts(userId, contactSearchWord) {
                     document.getElementById('contactLastName').value = contact.surname;
                     document.getElementById('contactGsmNum').value = contact.phoneNumber;
                     document.getElementById('contactEmail').value = contact.email;
-                    document.getElementById('contactAdress').value = contact.address;
+                    document.getElementById('contactAddress').value = contact.address;
                 });
             });
         })
         .catch(error => console.error('Error:', error));
+}
+
+function updateContact() {
+    const selectedContact = contactsData[selectedContactIndex]
+
+    const contactData = {
+        id: selectedContact.id,
+        username: selectedContact.username,
+        name: document.getElementById('contactFirstName').value,
+        surname: document.getElementById('contactLastName').value,
+        gsmNum: document.getElementById('contactGsmNum').value,
+        email: document.getElementById('contactEmail').value,
+        address: document.getElementById('contactAddress').value,
+    };
+
+    fetch('/updateContact', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(contactData),
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+
+}
+
+function softDeleteContact() {
+    const selectedContact = contactsData[selectedContactIndex]
+
+    let contactId = selectedContact.id;
+
+    fetch('/softDeleteContact', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({'contactId': contactId}),
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
 }

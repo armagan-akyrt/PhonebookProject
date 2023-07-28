@@ -133,7 +133,7 @@ let currentUser = null;
                     gsmNum: document.getElementById('contactGsmNum').value,
                     email: document.getElementById('contactEmail').value,
                     address: document.getElementById('contactAddress').value,
-    };
+            };
 
                 fetch('/updateContact', {
                     method: 'POST',
