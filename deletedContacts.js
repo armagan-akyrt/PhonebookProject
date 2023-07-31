@@ -16,6 +16,21 @@ window.onload = function() {
 
 };
 
+document.getElementById('searchInputContact').addEventListener('keyup', function() {
+    let searchWord = document.getElementById('searchInputContact').value;
+    fetchContacts(selectedUserId, searchWord, false);
+});
+
+document.getElementById('updateContactButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    updateAndBringContact();
+});
+
+document.getElementById('deleteContactButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    hardDeleteContact();
+});
+
 function fetchContacts(userId, contactSearchWord, isActive) {
     fetch(`/getContacts?userId=${userId}&searchWord=${contactSearchWord}&isActive=${isActive}`)
         .then(response => response.json())
@@ -44,3 +59,74 @@ function fetchContacts(userId, contactSearchWord, isActive) {
         .catch(error => console.error('Error:', error));
 }
 
+function updateAndBringContact() {
+    const selectedContact = contactsData[selectedContactIndex]
+
+    const contactData = {
+        id: selectedContact.id,
+        username: selectedContact.username,
+        name: document.getElementById('contactFirstName').value,
+        surname: document.getElementById('contactLastName').value,
+        gsmNum: document.getElementById('contactGsmNum').value,
+        email: document.getElementById('contactEmail').value,
+        address: document.getElementById('contactAddress').value,
+    };
+
+    fetch('/updateContact', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(contactData),
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+    fetch('/bringContact', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({contactId: selectedContact.id}),
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+}
+
+function hardDeleteContact() {
+
+    const selectedContact = contactsData[selectedContactIndex]
+
+    fetch('/hardDeleteContact', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({contactId: selectedContact.id,
+                              userId: selectedUserId}),
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}

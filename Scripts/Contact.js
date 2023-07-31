@@ -112,7 +112,15 @@ class Contact {
 
             request.input("id", sql.Int, id);
             request.input("contactSearch", sql.VarChar(100), contactSearch);
-            request.input("activeState", sql.Bit, activeState);
+
+            let activeStateBit = 1;
+            
+            if (activeState == "false") {
+                activeStateBit = 0;
+            }
+
+            console.log(`Active State: ${activeStateBit}`);
+            request.input("activeState", sql.Bit, activeStateBit);
 
             let result = await request.execute("RetrieveData");
 
@@ -145,6 +153,25 @@ class Contact {
         }
 
         return contacts;
+    }
+
+    async BringBackContact() {
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+
+            request.input("id", sql.Int, this.id);
+
+            let result = await request.execute("RetrieveDeletedContact");
+
+        } catch (error) {
+            console.error(error);
+            return false;
+        } finally {
+            conn.close();
+        }
+
+        return true;
     }
 }
 

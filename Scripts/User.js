@@ -236,7 +236,15 @@ class User {
             let request = new sql.Request(conn.pool);
 
             request.input("userSearch", sql.VarChar(100), searchWord);
-            request.input("activeState", sql.Bit, activeState);
+
+            let activeStateBit = 1;
+
+            if (activeState == "false") {
+                activeStateBit = 0;
+            }
+            
+
+            request.input("activeState", sql.Bit, activeStateBit);
 
             let result = await request.execute("RetrieveUsers");
 

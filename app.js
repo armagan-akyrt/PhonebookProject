@@ -219,12 +219,37 @@ app.get('/getContacts', async (req, res) => {
 
     let contact = new Contact();
 
+    console.log(req.query.isActive);
 
     let normalizedSearchWord = util.convertTurkishToAscii(req.query.searchWord)
 
     let contacts = await contact.ListContacts(req.query.userId, normalizedSearchWord, req.query.isActive);
 
+
     res.json({ contactsList: contacts });
+});
+
+app.post('/bringContact', async (req, res) => { 
+
+    let contact = new Contact();
+
+    contact.id = req.body.contactId;
+
+    let contactData = await contact.BringBackContact();
+
+    res.json({ isSuccessful: contactData });
+});
+
+app.post('/hardDeleteContact', async (req, res) => { 
+
+    let contact = new Contact();
+
+    contact.id = req.body.contactId;
+
+    let contactData = await contact.SevereUserContact(req.body.userId);
+
+    res.json({ isSuccessful: contactData });
+
 });
 
 app.listen(port, () => {

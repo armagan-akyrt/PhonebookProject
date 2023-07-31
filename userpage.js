@@ -47,14 +47,12 @@ function fetchContacts(userId, contactSearchWord, isActive) {
 
             data.contactsList.forEach(contact => {
                 let li = document.createElement('li');
-                li.textContent = `${contact.name} ${contact.surname}`; 
+                li.textContent = `${contact.name} ${contact.surname}`;
                 contactList.appendChild(li);
 
-                li.addEventListener('click', function() {
+                li.addEventListener('click', function () {
                     contactsData = data.contactsList
                     selectedContactIndex = data.contactsList.indexOf(contact);
-
-
 
                     // Call fetchContacts when a user item is clicked
                     document.getElementById('contactFirstName').value = contact.name;
