@@ -205,6 +205,8 @@ class User {
         } finally {
             conn.close();
         }
+
+        return true;
     }
 
     GenerateRandomPassword() {

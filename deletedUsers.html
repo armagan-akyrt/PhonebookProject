@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silinen Bağlantılar</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <ul class="navbar">
+        <li><a href="/index.html">Ana Sayfa</a></li>
+        <li>
+            <a href="#">Bağlantılar</a>
+            <ul class="dropdown">
+                <li><a href="createNewContact.html">Yeni Bağlantı Oluştur</a></li>
+                <li><a href="#">Silinen Bağlantılar</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Yönetici</a>
+            <ul class="dropdown">
+                <li><a href="/adminpage.html">Yönetici Ekranı</a></li>
+            </ul>
+        </li>
+
+        <li><a href="/index.html">Şifre Değiştir</a></li>
+        <li>
+            <a href="#">Toplantılar</a>
+            <ul class="dropdown">
+                <li><a href="#">Yeni Bağlantı Oluştur</a></li>
+                <li><a href="#">Silinen Bağlantılar</a></li>
+                <li><a href="#">Geçmiş Bağlantılar</a></li>
+
+            </ul>
+        </li>
+    </ul>
+
+    
+    <div class="flex-container">
+        <div class="left-container">
+            <input type="text" id="searchInputUser" name="searchInputUser" placeholder="Kullanıcı araması...">
+            <div class="scrollable-list">
+                <ul id="listToShowUser">
+                    <!-- List items will be populated dynamically here -->
+                </ul>
+
+            </div>
+
+        </div>
+        <div class="left-container">
+            <h2>Kullanıcı Bilgileri</h2>
+            <form action="/updateUser" method="POST">
+                <label for="name"><b>Ad</b></label>
+                <input type="text" name="name" id="userFirstName" required>
+
+                <label for="surname"><b>Soyad</b></label>
+                <input type="text" name="surname" id="userLastName" required>
+
+                <label for="gsmNum"> Telefon Numarası</label>
+                <input type="text" name="gsmNum" id="userGsmNum" required>
+
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" name="email" id="userEmail" required>
+
+                <label for="address"><b>Adres</b></label>
+                <textarea name="address" id="userAddress" rows="4" class="address-input"></textarea>
+
+
+                <button type="submit" style="margin-top: 10px;" name="updateUserButton"
+                    id="updateUserButton">Güncelle</button>
+                <button type="button" style="margin-top: 10px;" name="deleteUserButton"
+                    id="deleteUserButton">Sil</button>
+            </form>
+        </div>
+
+</div>
+    
+<script src="deletedUsers.js" type="module"></script>
+
+</body>
+</html>

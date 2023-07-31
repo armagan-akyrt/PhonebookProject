@@ -143,6 +143,21 @@ app.post('/updateUser', async (req, res) => {
     }
 });
 
+app.post('/bringUser', async (req, res) => { 
+    
+        let user = new User();
+
+        user.id = req.body.userId;
+
+        let result = await user.BringBackUser();
+    
+        if (result) {
+            res.json({ success: true, message: 'User updated successfully' });
+        } else {
+            throw new Error('User not found');
+        }
+});
+
 app.post('/softDeleteUser', async (req, res) => {
     // Get the user id from the request body
     let userId = req.body.userId;
@@ -154,6 +169,28 @@ app.post('/softDeleteUser', async (req, res) => {
 
         console.log(userToDelete.id);
         const result = await userToDelete.SoftDeleteUser();
+
+        if (result) {
+            res.json({ success: true, message: 'User deleted successfully' });
+        } else {
+            throw new Error('User not found');
+        }
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+app.post('/hardDeleteUser', async (req, res) => {
+    // Get the user id from the request body
+    let userId = req.body.userId;
+
+    try {
+        // Create a new User instance
+        let userToDelete = new User();
+        userToDelete.id = userId;
+
+        console.log(userToDelete.id);
+        const result = await userToDelete.HardDeleteUser();
 
         if (result) {
             res.json({ success: true, message: 'User deleted successfully' });
