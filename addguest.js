@@ -1,37 +1,19 @@
+import {fetchUsers} from "./Scripts/ClientFunctionsUser.js";
+
 window.onload = function () {
-    fetchUsers('', false);
+    fetchUsers('', true);
 };
 
 document.getElementById('searchInputUser').addEventListener('keyup', function () {
     let searchWord = document.getElementById('searchInputUser').value;
-    fetchUsers(searchWord, false);
+    fetchUsers(searchWord, true);
 });
 
-function fetchUsers(searchWord, isActive) {
-    fetch(`/getUsers?searchWord=${searchWord}&isActive=${isActive}`)
-        .then(response => response.json())
-        .then(data => {
-            let userList = document.getElementById('listToShowUser');
-            userList.innerHTML = ''; // Clear the list before displaying new results
+document.getElementById('listToShowUser').addEventListener('click', function (event) { 
+    if (event.target && event.target.nodeName === 'LI') {  // Check if a list item was clicked
+        let userId = sessionStorage.getItem('selectedUserId');
+        document.getElementById('visitingUser').value = userId;
+    }
+});
 
-            data.usersList.forEach(user => {
-                let li = document.createElement('li');
-                li.textContent = `${user.name} ${user.surname}`;
-                li.addEventListener('click', function () {
-                    usersData = data.usersList;
-                    selectedUserIndex = data.usersList.indexOf(user);
 
-                    sessionStorage.setItem('selectedUserId', user.id);
-
-                    document.getElementById('userFirstName').value = user.name;
-                    document.getElementById('userLastName').value = user.surname;
-                    document.getElementById('userGsmNum').value = user.phoneNumber;
-                    document.getElementById('userEmail').value = user.email;
-                    document.getElementById('userAddress').value = user.address;
-                });
-
-                userList.appendChild(li);
-            });
-        })
-        .catch(error => console.error('Error:', error));
-}

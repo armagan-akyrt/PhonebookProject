@@ -1,5 +1,6 @@
 const sql = require("mssql/msnodesqlv8");
 const Connection = require("./connection");
+const User = require("./User");
 const UsefulUtilities = require("./UsefulUtilities");
 const { raw } = require("express");
 
@@ -28,9 +29,10 @@ class Guest {
             await conn.open();
             let request = new sql.Request(conn.pool);
     
+            request.input("firstName", sql.VarChar(100), this.name);
+            request.input("lastName", sql.VarChar(100), this.surname);
+            request.input("companyName", sql.VarChar(100), this.companyName);
             request.input("userId", sql.Int, this.visiting.id);
-            request.input("name", sql.VarChar(100), this.name);
-            request.input("surname", sql.VarChar(100), this.surname);
             request.input("cardId", sql.Int, this.cardId);
     
             request.output("id", sql.Int, this.id);

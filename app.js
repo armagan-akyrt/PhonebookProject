@@ -6,6 +6,7 @@ const Guest = require('./Scripts/Guest');
 const session = require('express-session');
 const UsefulUtilities = require('./Scripts/UsefulUtilities');
 const { DateTime } = require('msnodesqlv8');
+const sql = require('msnodesqlv8');
 
 let util = new UsefulUtilities();
 
@@ -293,20 +294,25 @@ app.post('/hardDeleteContact', async (req, res) => {
 app.post('/createGuest', async (req, res) => {
     
         let guest = new Guest();
-    
+
         guest.name = req.body.name;
         guest.surname = req.body.surname;
         guest.cardId = req.body.cardId;
-        guest.cardAcquisitionDate = DateTime.now();
+
+        let currentDate = new Date();
+        let sqlDate = currentDate.toISOString().replace('T', ' ').replace('Z', '');
+
+        guest.cardAcquisitionDate = sqlDate; // 2023-07-31 17:41:43.880
+        
+        console.log(guest.cardAcquisitionDate);
 
         guest.companyName = req.body.companyName;
+        guest.visiting.id = req.body.visitingUser;
 
         let guestSuccessful = await guest.CreateGuest();
     
         if (guestSuccessful) {
-            res.redirect('/createNewGuest.html?guestSuccessful=true')
         } else {
-            res.redirect('/createNewGuest.html?guestFailed=true');
         }
     
 });
