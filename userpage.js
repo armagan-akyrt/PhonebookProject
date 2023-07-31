@@ -16,13 +16,13 @@ fetch('/userdata').then(response => response.json())
 
     console.log(currentUser);
 
-    fetchContacts(currentUser.id, '');
+    fetchContacts(currentUser.id, '', true);
 
 });
 
 document.getElementById('searchInputContact').addEventListener('keyup', function() {
     let searchWord = document.getElementById('searchInputContact').value;
-    fetchContacts(currentUser.id, searchWord);
+    fetchContacts(currentUser.id, searchWord, true);
 });
 
 document.getElementById('updateContactButton').addEventListener('click', function(event) {
@@ -36,8 +36,8 @@ document.getElementById('deleteContactButton').addEventListener('click', functio
 });
 
 
-function fetchContacts(userId, contactSearchWord) {
-    fetch(`/getContacts?userId=${userId}&searchWord=${contactSearchWord}`)
+function fetchContacts(userId, contactSearchWord, isActive) {
+    fetch(`/getContacts?userId=${userId}&searchWord=${contactSearchWord}&isActive=${isActive}`)
         .then(response => response.json())
         .then(data => {
             let contactList = document.getElementById('listToShowContact');
