@@ -73,6 +73,27 @@ app.post('/signup', async (req, res) => {
 
 });
 
+app.post('/addcontact', async (req, res) => { 
+
+    let contact = new Contact();
+
+    contact.name = req.body.name;
+    contact.surname = req.body.surname;
+    contact.phoneNumber = req.body.gsmNumber;
+    contact.email = req.body.email;
+    contact.address = req.body.address;
+    req.body.userId;
+
+    let contactSuccessful = await contact.CreateContact(req.body.userId);
+
+    if (contactSuccessful) {
+        res.redirect('/createNewContact.html?contactSuccessful=true')
+    } else {
+        res.redirect('/createNewContact.html?contactFailed=true');
+    }
+
+});
+
 app.get('/getUsers', async (req, res) => {
 
 

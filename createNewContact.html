@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Yeni Bağlantı</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <div class="centre-container">
+
+            <label for="currentUser"><b>Mevcut Kullanıcı</b></label>
+            <input type="text" placeholder="kullancı adı" name="currentUser" required>
+
+            <form action="/addcontact" method="POST">
+
+                <input type="hidden" name="userId" id="userId" value="">
+
+                <label for="name"><b>Ad</b></label>
+                <input type="text" placeholder="Bağlantı Adı Giriniz..." name="name" required>
+
+                <label for="surname"><b>Soyad</b></label>
+                <input type="text" placeholder="Bağlantı Soyadı Giriniz..." name="surname" required>
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="Bağlantı E-posta Giriniz..." name="email" required>
+
+                <label for="gsmNumber"><b>Telefon Numarası</b></label>
+                <input type="text" placeholder="Bağlantı GSM Numarası Giriniz..." name="gsmNumber" required>
+
+                <label for="address"> <b>Adres</b></label>
+
+                <textarea name="address" placeholder="Bağlantı Adresi Giriniz..." wrap="soft" rows="4"
+                    class="address-input"></textarea>
+
+                <button type="submit" style="margin-top: 10px;" id="createContactButton">Kayıt Ekle</button>
+            </form>
+
+        </div>
+
+        <script>
+            window.onload = function() {
+            fetch('/userdata')
+            .then(response => response.json())
+            .then(data => {
+              if (Object.keys(data).length !== 0) {
+                document.getElementById('userId').value = data.id; 
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+            }
+        </script>
+
+    </body>
+
+</html>
