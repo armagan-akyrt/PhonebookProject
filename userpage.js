@@ -4,15 +4,17 @@ let currentUser = null;
 let contactsData = [];
 let selectedContactIndex = 0;
 
+
 fetch('/userdata').then(response => response.json())
 .then(data => {
 
     currentUser = data;
 
+    let currUsr = JSON.parse(sessionStorage.getItem('currentUser'));
+
     if (currentUser.id == 0) {
         window.location.href = '/index.html';
-    }
-
+    } 
 
     console.log(currentUser);
 
@@ -51,6 +53,8 @@ function fetchContacts(userId, contactSearchWord, isActive) {
                 li.addEventListener('click', function() {
                     contactsData = data.contactsList
                     selectedContactIndex = data.contactsList.indexOf(contact);
+
+
 
                     // Call fetchContacts when a user item is clicked
                     document.getElementById('contactFirstName').value = contact.name;

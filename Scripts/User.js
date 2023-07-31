@@ -54,7 +54,6 @@ class User {
                 this.password = result.recordsets[0][0].password;
                 this.role = result.recordsets[0][0].role;
 
-                return true;
             } else {
                 console.log("No user found with the provided credentials");
                 return false;
@@ -65,6 +64,8 @@ class User {
         } finally {
             conn.close();
         }
+
+        return true;
     }
 
     async CreateUser() {

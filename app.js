@@ -22,24 +22,30 @@ app.use(session({
 }));
 
 app.post('/action_page', async (req, res) => {
-
     let user = new User();
+
     let loginSuccessful = await user.VerifyLogin(req.body.email, req.body.psw);
 
-    if (loginSuccessful && user.role == "ADMIN") {
-        req.session.user = user;  // Save the user to the session
-        res.redirect('/adminpage.html');
-    } else if (loginSuccessful && user.role == "USER") {
-        req.session.user = user;  // Save the user to the session
-        res.redirect('/userpage.html');
+    if (loginSuccessful) {
+        req.session.user = user; // Save the user to the session
+        res.json(user );
     } else {
-        res.redirect('/index.html?loginFailed=true');
+        res.json({ error: 'Login failed. Please check your email and password.' });
     }
 });
+
 
 app.get('/userdata', function (req, res) {
     if (req.session.user) {
         res.json(req.session.user);
+    } else {
+        res.json({});
+    }
+});
+
+app.get('/currentuser', function (req, res) { 
+    if (req.session.selectedUser) {
+        res.json(req.session.selectedUser);
     } else {
         res.json({});
     }

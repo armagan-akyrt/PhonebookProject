@@ -16,7 +16,7 @@
 
             <form action="/addcontact" method="POST">
 
-                <input type="hidden" name="userId" id="userId" value="">
+                <input type="text" name="userId" id="userId" value="">
 
                 <label for="name"><b>Ad</b></label>
                 <input type="text" placeholder="Bağlantı Adı Giriniz..." name="name" required>
@@ -42,16 +42,9 @@
 
         <script>
             window.onload = function() {
-            fetch('/userdata')
-            .then(response => response.json())
-            .then(data => {
-              if (Object.keys(data).length !== 0) {
-                document.getElementById('userId').value = data.id; 
-              }
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
+                let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                document.getElementById('userId').value = currentUser.id;
+                
             }
         </script>
 

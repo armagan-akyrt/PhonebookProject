@@ -10,25 +10,18 @@
     <div class="centre-container">
         <h2>Giriş Ekranı</h2>
 
-        <form action="/action_page" method="POST">
+        <form id="loginForm">
             <label for="email"><b>Email</b></label>
             <input type="text" placeholder="E-postanızı Giriniz..." name="email" required>
 
             <label for="psw" style="margin-top: 10px;"><b>Şifre</b></label>
             <input type="password" placeholder="Şifrenizi Giriniz..." name="psw" required>
 
-            <button type="submit" style="margin-top: 10px;">Giriş</button>
+            <button type="submit" style="margin-top: 10px;" id="loginButton">Giriş</button>
             <button type="button" style="margin-top: 10px;" onclick="location.href='createNewUser.html';">Yeni Kullanıcı</button>
         </form>
     </div>
 
-    <script>
-    window.onload = function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        if(urlParams.has('loginFailed')) {
-            alert('Giriş başarısız! Lütfen email ve şifrenizi kontrol ediniz.');
-        }
-    }
-    </script>
+    <script src="index.js" type="module"></script>
 </body>
 </html>

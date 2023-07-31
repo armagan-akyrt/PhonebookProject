@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silinen Bağlantılar</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    
+    <div class="flex-container">
+        <div class="left-container">
+            <input type="text" id="searchInputContact" name="searchInputContact" placeholder="Kullanıcı araması...">
+            <div class="scrollable-list">
+                <ul id="listToShowContact">
+                    <!-- List items will be populated dynamically here -->
+                </ul>
+    
+        </div>
+    </div>
+
+    <div class="centre-container">
+        <h2>Bağlantı Bilgileri</h2>
+        <label for="name"><b>Ad</b></label>
+        <input type="text" name="contactName" , id="contactFirstName" required>
+
+        <label for="surname"><b>Soyad</b></label>
+        <input type="text" name="contactSurname" id="contactLastName" required>
+
+        <label for="gsmNum"> Telefon Numarası</label>
+        <input type="text" name="contactGsmNum" id="contactGsmNum" required>
+
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" name="contactEmail" id="contactEmail" required>
+
+        <label for="address"><b>Adres</b></label>
+        <textarea name="contactAddress" id="contactAddress" rows="4" class="address-input"></textarea>
+
+
+        <button type="submit" style="margin-top: 10px;" name="updateContactButton"
+            id="updateContactButton">Güncelle ve Geri Getir</button>
+        <button type="button" style="margin-top: 10px;" name="deleteContactButton"
+            id="deleteContactButton">Temelli Sil</button>
+
+    </div>
+
+</div>
+    
+<script src="deletedContacts.js" type="module"></script>
+
+</body>
+</html>
