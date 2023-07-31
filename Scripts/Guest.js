@@ -13,11 +13,13 @@ class Guest {
     this.surname = "";
     this.cardId = 0;
     this.id = 0;
-
+    
+    this.companyName = "";
+    
     this.visiting = new User();
     
-    cardAcquisitionDate = new Date();
-    cardSubmitDate = new Date();
+    this.cardAcquisitionDate = new Date();
+    this.cardSubmitDate = new Date();
 
     }
 
@@ -33,7 +35,7 @@ class Guest {
     
             request.output("id", sql.Int, this.id);
     
-            let result = await request.execute("CreateGuest");
+            let result = await request.execute("AddGuest");
         } catch (error) {
             console.error(error);
             return false;
@@ -44,8 +46,30 @@ class Guest {
         return true;
     }
 
-    async GuestListAll(searchWord, startDate, endDate, companyName) {
+    /**
+     * 
+     * @param {*} searchWord search by associated user's username.
+     * @param {*} startDate start date
+     * @param {*} endDate end date
+     * @param {*} companyName search by company name
+     * @param {*} inOutOrAll in => 0, out => 1, all => 2
+     * @returns list of guests
+     */
+    async GuestList(searchWord, startDate, endDate, companyName, inOutOrAll) {
         let guests = [];
+        
+        let procedureString = ""
+        if (inOutOrAll == 2) {
+            procedureString = "RetrieveGuests";
+        } else if (inOutOrAll == 1) {
+            procedureString = "RetrieveGuestsOutside";
+        } else if (inOutOrAll == 0) { 
+            procedureString = "RetrieveGuestsInside";
+        } else { 
+            console.error("Invalid inOutOrAll parameter \n in => 0, out => 1, all => 2");
+            return null;
+        }
+
         try {
             await conn.open();
             let request = new sql.Request(conn.pool);
@@ -55,7 +79,7 @@ class Guest {
             request.input("endDate", sql.DateTime, endDate);
             request.input("companyName", sql.VarChar(100), companyName);
 
-            let result = await request.execute("RetrieveGuests");
+            let result = await request.execute(procedureString);
 
             let rawGuests = result.recordset[0];
 
@@ -66,6 +90,7 @@ class Guest {
                 tempGuest.name = rawGuest.firstName;
                 tempGuest.surname = rawGuest.lastName;
                 tempGuest.cardId = rawGuest.cardId;
+                tempGuest.companyName = rawGuest.companyName;
                 tempGuest.cardAcquisitionDate = rawGuest.acquisitionTime;
                 tempGuest.cardSubmitDate = rawGuest.cardSubmitDate;
                 tempGuestcompanyName = rawGuest.companyName;
@@ -120,6 +145,7 @@ class Guest {
                 tempGuest.name = rawGuest.firstName;
                 tempGuest.surname = rawGuest.lastName;
                 tempGuest.cardId = rawGuest.cardId;
+                tempGuest.companyName = rawGuest.companyName;
                 tempGuest.cardAcquisitionDate = rawGuest.acquisitionTime;
                 tempGuest.cardSubmitDate = rawGuest.cardSubmitDate;
                 tempGuestcompanyName = rawGuest.companyName;
@@ -175,6 +201,7 @@ class Guest {
                 tempGuest.name = rawGuest.firstName;
                 tempGuest.surname = rawGuest.lastName;
                 tempGuest.cardId = rawGuest.cardId;
+                tempGuest.companyName = rawGuest.companyName;
                 tempGuest.cardAcquisitionDate = rawGuest.acquisitionTime;
                 tempGuest.cardSubmitDate = rawGuest.cardSubmitDate;
                 tempGuestcompanyName = rawGuest.companyName;

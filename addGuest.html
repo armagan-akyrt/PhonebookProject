@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Misafir Ekle</title>
+        <link rel="stylesheet" href="styles.css">
+
+    </head>
+
+    <body>
+
+        <ul class="navbar">
+            <li><a href="/index.html">Ana Sayfa</a></li>
+            <li>
+                <a href="#">Kullanıcı</a>
+                <ul class="dropdown">
+                    <li><a href="/userpage.html">Kullanıcı Görünümü</a></li>
+                    <li><a href="/createNewUser.html?isAdmin=true">Yeni Kullanıcı Oluştur</a></li>
+                    <li><a href="/deletedUsers.html">Silinen Kullanıcılar</a></li>
+
+                </ul>
+            </li>
+            <li>
+                <a href="#">Bağlantı</a>
+                <ul class="dropdown">
+                    <li><a href="/createNewContact.html">Bağlantı Oluştur</a></li>
+                    <li><a href="/deletedContacts.html">Silinen Bağlantılar</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="squash-container">
+            <div class="left-container">
+                <input type="text" id="searchInputUser" name="searchInputUser" placeholder="Kullanıcı araması...">
+                <div class="scrollable-list">
+                    <ul id="listToShowUser">
+                        <!-- List items will be populated dynamically here -->
+                    </ul>
+
+                </div>
+
+            </div>
+            <div class="centre-container1">
+                <h2>Misafir Bilgileri</h2>
+                <form action="/createGuest" method="POST">
+                    <label for="name"><b>Ad</b></label>
+                    <input type="text" name="name" id="name" required>
+
+                    <label for="surname"><b>Soyad</b></label>
+                    <input type="text" name="surname" id="surname" required>
+
+                    <label for="companyName"> <b>Firma Adı</b></label>
+                    <input type="text" name="companyName" id="companyName" required>
+
+                    <label for="cardId"><b>Verilecek Kart</b></label>
+                    <input type="text" name="cardId" id="cardId" required>
+                    
+                    <input type="hidden" name="visitingUser" id="visitingUser">
+
+                    <button type="submit" style="margin-top: 10px;" name="createGuestButton"
+                        id="createGuestButton">Oluştur</button>
+
+                </form>
+            </div>
+        </div>
+
+        <script src="addGuest.js" type="module"></script>
+
+    </body>
+
+</html>

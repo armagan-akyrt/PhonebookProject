@@ -2,8 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const User = require('./Scripts/User');
 const Contact = require('./Scripts/Contact');
+const Guest = require('./Scripts/Guest');
 const session = require('express-session');
 const UsefulUtilities = require('./Scripts/UsefulUtilities');
+const { DateTime } = require('msnodesqlv8');
 
 let util = new UsefulUtilities();
 
@@ -251,7 +253,6 @@ app.post('/softDeleteContact', async (req, res) => {
     }
 });
 
-
 app.get('/getContacts', async (req, res) => {
 
     let contact = new Contact();
@@ -288,6 +289,28 @@ app.post('/hardDeleteContact', async (req, res) => {
     res.json({ isSuccessful: contactData });
 
 });
+
+app.post('/createGuest', async (req, res) => {
+    
+        let guest = new Guest();
+    
+        guest.name = req.body.name;
+        guest.surname = req.body.surname;
+        guest.cardId = req.body.cardId;
+        guest.cardAcquisitionDate = DateTime.now();
+
+        guest.companyName = req.body.companyName;
+
+        let guestSuccessful = await guest.CreateGuest();
+    
+        if (guestSuccessful) {
+            res.redirect('/createNewGuest.html?guestSuccessful=true')
+        } else {
+            res.redirect('/createNewGuest.html?guestFailed=true');
+        }
+    
+});
+
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);

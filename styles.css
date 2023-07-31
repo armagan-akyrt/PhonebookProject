@@ -118,6 +118,14 @@ ul li:hover ul.dropdown {
     width: 100%; 
 }
 
+.squash-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: auto;
+    width: 40%;
+}
+
 input[type=text], input[type=password], input[type=datetime-local]{
     width: 100%;
     padding: 12px 20px;
