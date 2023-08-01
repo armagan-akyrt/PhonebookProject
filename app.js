@@ -82,6 +82,24 @@ app.post('/signup', async (req, res) => {
 
 });
 
+app.post('/changePassword', async (req, res) => {
+    let user = new User();
+
+    user.id = req.body.userId;
+    user.password = req.body.password;
+
+    let newPassword = util.encrypt(req.body.newPassword);
+    let confirmPassword = util.encrypt(req.body.confirmPassword);
+
+    let passwordChanged = await user.ChangePassword(confirmPassword, newPassword);
+
+    if (passwordChanged) {
+        res.json({ message: "Şifre başarıyla değiştirildi.", success: true });
+    } else {
+        res.json({ message: "Şifre değiştirilemedi. Lütfen tekrar deneyin.", success: false });
+    }
+});
+
 app.post('/addcontact', async (req, res) => { 
 
     let contact = new Contact();
