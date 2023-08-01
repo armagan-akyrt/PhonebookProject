@@ -54,24 +54,16 @@ class Guest {
      * @param {*} startDate start date
      * @param {*} endDate end date
      * @param {*} companyName search by company name
-     * @param {*} inOutOrAll in => 0, out => 1, all => 2
+     * @param {*} isInside search by inside or all
      * @returns list of guests
      */
-    async GuestList(searchWord, startDate, endDate, companyName, inOutOrAll) {
+    async GuestList(searchWord, startDate, endDate, companyName, isInside) {
         let guests = [];
         
-        let procedureString = ""
-        if (inOutOrAll == 2) {
-            procedureString = "RetrieveGuests";
-        } else if (inOutOrAll == 1) {
-            procedureString = "RetrieveGuestsOutside";
-        } else if (inOutOrAll == 0) { 
+        let procedureString = "RetrieveGuests"
+        if (isInside == true) {
             procedureString = "RetrieveGuestsInside";
-        } else { 
-            console.error("Invalid inOutOrAll parameter \n in => 0, out => 1, all => 2");
-            return null;
         }
-
         try {
             await conn.open();
             let request = new sql.Request(conn.pool);
@@ -83,9 +75,9 @@ class Guest {
 
             let result = await request.execute(procedureString);
 
-            let rawGuests = result.recordset[0];
+            let rawGuests = result.recordsets[0];
 
-            rawGuests.forEach(rawGuest => {
+            rawGuests.forEach((rawGuest) => {
 
                 let tempGuest = new Guest();
                 tempGuest.id = rawGuest.id;
@@ -95,7 +87,7 @@ class Guest {
                 tempGuest.companyName = rawGuest.companyName;
                 tempGuest.cardAcquisitionDate = rawGuest.acquisitionTime;
                 tempGuest.cardSubmitDate = rawGuest.cardSubmitDate;
-                tempGuestcompanyName = rawGuest.companyName;
+                tempGuest.companyName = rawGuest.companyName;
 
                 let user = new User();
                 user.id = rawGuest.userId;

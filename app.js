@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const User = require('./Scripts/User');
 const Contact = require('./Scripts/Contact');
 const Guest = require('./Scripts/Guest');
-const session = require('express-session');
 const UsefulUtilities = require('./Scripts/UsefulUtilities');
+const session = require('express-session');
 const { DateTime } = require('msnodesqlv8');
 const sql = require('msnodesqlv8');
 
@@ -317,6 +317,21 @@ app.post('/createGuest', async (req, res) => {
     
 });
 
+app.get('/getGuests', async (req, res) => {
+    
+        let guest = new Guest();
+
+        let searchWord = util.convertTurkishToAscii(req.query.searchWord);
+        let companyName = util.convertTurkishToAscii(req.query.companyName);
+        let startDate = req.query.startDate;
+        let endDate = req.query.endDate;
+
+        
+
+        let guests = await guest.GuestList(searchWord, startDate, endDate, companyName, req.query.isActive)
+    
+        res.json({ guestsList: guests });
+});
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
