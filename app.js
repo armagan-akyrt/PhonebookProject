@@ -328,7 +328,7 @@ app.get('/getGuests', async (req, res) => {
 
         
 
-        let guests = await guest.GuestList(searchWord, startDate, endDate, companyName, req.query.isActive)
+        let guests = await guest.GuestList(searchWord, startDate, endDate, companyName, req.query.isInside)
     
         res.json({ guestsList: guests });
 });

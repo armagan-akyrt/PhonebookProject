@@ -34,12 +34,11 @@
         <div class="squash-container">
             <div class="left-container">
                 <select name="selectGuestType" id="selectGuestType">
-                    <option value="2"> Tümü</option>
-                    <option value="1"> Dışarıda</option>
-                    <option value="0"> İçerde</option>
+                    <option value="false"> Tümü</option>
+                    <option value="true"> İçerde</option>
                 </select>
-                <input type="text" id="searchInputUsername" name="searchInputUsername" placeholder="Kullanıcı Adıyla Ara">
-                <input type="text" id="searchInputCompanyName" name="searchInputCompanyName" placeholder="Firma Adıyla Ara">
+                <input type="text" id="searchInputUsernameGuest" name="searchInputUsernameGuest" placeholder="Kullanıcı Adıyla Ara">
+                <input type="text" id="searchInputCompanyNameGuest" name="searchInputCompanyNameGuest" placeholder="Firma Adıyla Ara">
 
                 <div class="scrollable-list">
                     <ul id="listToShowGuest">
@@ -48,7 +47,7 @@
 
                 </div>
             </div>
-            <div class="right-container">
+            <div class="centre-container">
                 <h2>Misafir Bilgileri</h2>
                 
                     <label for="name"><b>Ad</b></label>
@@ -60,13 +59,16 @@
                     <label for="companyName"> <b>Firma Adı</b></label>
                     <input type="text" name="companyName" id="guestCompanyName" readonly>
 
-                    <label for="cardId"><b>Verilecek Kart</b></label>
+                    <label for="cardId"><b>Verilen Kart</b></label>
                     <input type="text" name="cardId" id="guestCardId" readonly>
                     
+                    <label for="visitingUserFullName"><b>Ziyaret Edilen Kişi</b></label>
+                    <input type="text" name="visitingUserFullName" id="guestVisitingUserFullName" readonly>
+
                     <label for="cardGrantDate"><b>Kart Verilme Tarihi</b></label>
                     <input type="datetime-local" name="cardGrantDate" id="guestCardGrantDate" required>
                     
-                    <label for="cardSubmitDate"><b>Kart Teslim Tarihi</b></label>
+                    <label for="cardSubmitDate" id="labelForCardSubmitDate"><b>Kart Teslim Tarihi</b></label>
                     <input type="datetime-local" name="cardSubmitDate" id="guestCardSubmitDate" required>
 
 
@@ -74,6 +76,14 @@
 
                     <button type="submit" style="margin-top: 10px;" name="createGuestButton"
                         id="createGuestButton">Oluştur</button>
+
+            </div>
+            <div class="centre-container">
+                <label for="startIntervalGuest"><b>Başlangıç Tarihi</b></label>
+                <input type="datetime-local" name="startIntervalGuest" id="startIntervalGuest" required>
+
+                <label for="endIntervalGuest"><b>Bitiş Tarihi</b></label>
+                <input type="datetime-local" name="endIntervalGuest" id="endIntervalGuest" required>
 
             </div>
         </div>

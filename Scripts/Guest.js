@@ -61,7 +61,7 @@ class Guest {
         let guests = [];
         
         let procedureString = "RetrieveGuests"
-        if (isInside == true) {
+        if (isInside == 'true') {
             procedureString = "RetrieveGuestsInside";
         }
         try {
@@ -91,9 +91,9 @@ class Guest {
 
                 let user = new User();
                 user.id = rawGuest.userId;
-                user.username = rawGuest.username;
-                user.name = rawGuest.firstName;
-                user.surname = rawGuest.lastName;
+                user.username = rawGuest.userUsername;
+                user.name = rawGuest.userFirstname;
+                user.surname = rawGuest.userLastname;
                 user.email = rawGuest.email;
                 user.phoneNumber = rawGuest.gsmNumber;
                 user.address = rawGuest.address;

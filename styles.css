@@ -76,12 +76,12 @@ ul li:hover ul.dropdown {
     padding: 0; /* Remove padding from the list */
     list-style-type: none; /* Remove bullet points */
 }
-#listToShowUser li, #listToShowContact li {
+#listToShowUser li, #listToShowContact li, #listToShowGuest li {
     display: block;
     position: relative;
 }
 
-#listToShowUser li:hover, #listToShowContact li:hover{
+#listToShowUser li:hover, #listToShowContact li:hover, #listToShowGuest li:hover{
     background: #81e3fc;
     border-radius: 10px;
 }
@@ -123,7 +123,7 @@ ul li:hover ul.dropdown {
     display: flex;
     justify-content: space-between;
     margin-right: auto;
-    width: 40%;
+    width: 60%;
 }
 
 input[type=text], input[type=password], input[type=datetime-local]{
