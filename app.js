@@ -337,7 +337,7 @@ app.post('/deleteGuest', async (req, res) => {
         
             let guest = new Guest();
     
-            guest.id = req.query.guestId;
+            guest.id = req.body.guestId;
     
             let guestSuccessful = await guest.DeleteGuest();
         

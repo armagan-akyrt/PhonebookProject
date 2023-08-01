@@ -2,6 +2,12 @@
 let guestsData = [];
 let selectedGuestIndex = 0;
 
+let searchWord = "";
+let companyName = "";
+let startDate = "";
+let endDate = "";
+let isInside = document.getElementById('selectGuestType').value;
+
 window.onload = function () {
     let startDate = new Date();
     startDate.setUTCFullYear(startDate.getUTCFullYear() - 100);
@@ -11,61 +17,26 @@ window.onload = function () {
     endDate.setUTCFullYear(endDate.getUTCFullYear() + 100);
     endDate = endDate.toISOString().replace('T', ' ').replace('Z', '');
     fetchGuests('', startDate, endDate, '', '');
-    let isInside = document.getElementById('selectGuestType').value;
+    isInside = document.getElementById('selectGuestType').value;
 
 }
 
 document.getElementById('selectGuestType').addEventListener('change', function () { 
 
-    let isInside = document.getElementById('selectGuestType').value;
-    if (isInside == 'true') {
-        document.getElementById('guestCardSubmitDate').style.display = 'none';
-        document.getElementById('labelForCardSubmitDate').style.display = 'none';
-        document.getElementById('getGuestCard').style.display = 'block';
-
-    } else {
-        document.getElementById('guestCardSubmitDate').style.display = 'block';
-        document.getElementById('labelForCardSubmitDate').style.display = 'block';
-        document.getElementById('getGuestCard').style.display = 'none';
-
-    }
-
-    let searchWord = document.getElementById('searchInputUsernameGuest').value;
-    let companyName = document.getElementById('searchInputCompanyNameGuest').value;
-
-    let startDate = document.getElementById('startIntervalGuest').value;
-    startDate = (startDate == "") ? new Date().getUTCFullYear() - 100: startDate;
-    let endDate = document.getElementById('endIntervalGuest').value;
-    endDate = (endDate == "") ? new Date().getUTCFullYear() + 100 : endDate;
+    setData();
 
     fetchGuests(searchWord, startDate, endDate, companyName, isInside);
 
 });
 
 document.getElementById('searchInputUsernameGuest').addEventListener('keyup', function () {
-    let searchWord = document.getElementById('searchInputUsernameGuest').value;
-    let companyName = document.getElementById('searchInputCompanyNameGuest').value;
-
-    let startDate = document.getElementById('startIntervalGuest').value;
-    startDate = (startDate == "") ? new Date().getUTCFullYear() - 100 : startDate;
-    let endDate = document.getElementById('endIntervalGuest').value;
-    endDate = (endDate == "") ? new Date().getUTCFullYear() + 100 : endDate;
-
-    let isInside = document.getElementById('selectGuestType').value;
+    setData();
 
     fetchGuests(searchWord, startDate, endDate, companyName, isInside);
 });
 
 document.getElementById('searchInputCompanyNameGuest').addEventListener('keyup', function () {
-    let searchWord = document.getElementById('searchInputUsernameGuest').value;
-    let companyName = document.getElementById('searchInputCompanyNameGuest').value;
-
-    let startDate = document.getElementById('startIntervalGuest').value;
-    startDate = (startDate == "") ? new Date().getUTCFullYear() - 100 : startDate;
-    let endDate = document.getElementById('endIntervalGuest').value;
-    endDate = (endDate == "") ? new Date().getUTCFullYear() + 100 : endDate;
-
-    let isInside = document.getElementById('selectGuestType').value;
+    setData();
 
     fetchGuests(searchWord, startDate, endDate, companyName, isInside);
 });
@@ -112,7 +83,35 @@ document.getElementById('getGuestCard').addEventListener('click', function () {
         });
 });
 
+document.getElementById('guestApplyIntervalButton').addEventListener('click', function () {
+    setData();
 
+    fetchGuests(searchWord, startDate, endDate, companyName, isInside);
+});
+
+function setData() {
+    isInside = document.getElementById('selectGuestType').value;
+    if (isInside == 'true') {
+        document.getElementById('guestCardSubmitDate').style.display = 'none';
+        document.getElementById('labelForCardSubmitDate').style.display = 'none';
+        document.getElementById('getGuestCard').style.display = 'block';
+
+    } else {
+        document.getElementById('guestCardSubmitDate').style.display = 'block';
+        document.getElementById('labelForCardSubmitDate').style.display = 'block';
+        document.getElementById('getGuestCard').style.display = 'none';
+
+    }
+
+    searchWord = document.getElementById('searchInputUsernameGuest').value;
+    companyName = document.getElementById('searchInputCompanyNameGuest').value;
+
+    startDate = document.getElementById('startIntervalGuest').value;
+    startDate = (startDate == "") ? (new Date().getUTCFullYear() - 100): startDate;
+    endDate = document.getElementById('endIntervalGuest').value;
+    endDate = (endDate == "") ? (new Date().getUTCFullYear() + 100) : endDate;
+
+}
 
 function fetchGuests(searchWord, startDate, endDate, companyName, isInside) {
     fetch(`/getGuests?searchWord=${searchWord}&startDate=${startDate}&endDate=${endDate}&companyName=${companyName}&isInside=${isInside}`)
