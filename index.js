@@ -20,12 +20,15 @@ window.onload = function() {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.loginFailed) {
+            let currentUser = sessionStorage.getItem('currentUser');
+            if (data.loginSuccessful === false) {
                 alert('Giriş başarısız! Lütfen email ve şifrenizi kontrol ediniz.');
             } else {
-                sessionStorage.setItem('currentUser', JSON.stringify(data));
-                if 
-                    (data.role === 'ADMIN') window.location.href = '/adminpage.html';
+                alert('Giriş başarılı! Hoşgeldiniz ' + data.user.name + ' ' + data.user.surname);
+                sessionStorage.setItem('currentUser', JSON.stringify(data.user));
+
+                if (data.user.role === 'ADMIN')
+                    window.location.href = '/adminpage.html';
                 else
                     window.location.href = '/userpage.html';
             }

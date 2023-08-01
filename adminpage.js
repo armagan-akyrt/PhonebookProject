@@ -1,7 +1,8 @@
 
 import { fetchUsers, updateUser, softDeleteUser } from './Scripts/ClientFunctionsUser.js'
-
 import { fetchContacts, updateContact, softDeleteContact } from './Scripts/ClientFunctionsContact.js';
+import { checkLogin, checkAdmin } from './Scripts/ClientFunctions.js';
+
 
 let currentUser = null;
 
@@ -50,6 +51,12 @@ document.getElementById('searchInputContact').addEventListener('keyup', function
 
 
 window.addEventListener('load', function () {
+
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+
+    checkLogin();
+    checkAdmin();
+
     fetchUsers('', true); // Fetch all users on load
 });
 

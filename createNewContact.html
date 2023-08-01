@@ -41,7 +41,12 @@
         </div>
 
         <script>
+    import { checkLogin } from './Scripts/ClientFunctions.js';
+
+
             window.onload = function() {
+                checkLogin();
+
                 let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
                 document.getElementById('userId').value = currentUser.id;
                 

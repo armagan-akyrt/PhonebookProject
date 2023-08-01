@@ -17,6 +17,19 @@ app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
+// app.get('/logout', (req, res) => {
+//     req.session.destroy(err => {
+//         if(err) {
+//             return res.send('An error occurred while logging out');
+//         }
+
+//         // If using cookies for authentication
+//         res.clearCookie(); // Replace 'session-name' with the name of your session
+
+//         return res.redirect('/index.html'); // Redirect to the home page after logging out
+//     });
+// });
+
 app.use(session({
     secret: 'totally-secret-key-api-123',
     resave: false,
@@ -31,12 +44,11 @@ app.post('/action_page', async (req, res) => {
 
     if (loginSuccessful) {
         req.session.user = user; // Save the user to the session
-        res.json(user );
+        res.json({user: user, loginSuccessful: true});
     } else {
-        res.json({ error: 'Login failed. Please check your email and password.' });
+        res.json({user: null, loginSuccessful: false});
     }
 });
-
 
 app.get('/userdata', function (req, res) {
     if (req.session.user) {
@@ -82,6 +94,20 @@ app.post('/signup', async (req, res) => {
 
 });
 
+app.get('/logout', function (req, res) {
+    req.session.destroy(function(err) {
+        if (err) {
+            console.log(err);
+            // handle error here
+        } else {
+            res.clearCookie('session-name');
+
+            res.send('<script>window.sessionStorage.clear(); window.location.href = "/index.html";</script>');
+        }
+    });
+});
+
+
 app.post('/changePassword', async (req, res) => {
     let user = new User();
 
@@ -95,6 +121,7 @@ app.post('/changePassword', async (req, res) => {
     } else {
         res.json({ message: "Şifre değiştirilemedi. Lütfen tekrar deneyin.", success: false });
     }
+    
 });
 
 app.post('/addcontact', async (req, res) => { 

@@ -68,7 +68,14 @@
 
         </div>
 
-        <script src="addGuest.js" type="module"></script>
+        <script src="addGuest.js" type="module">
+            import { checkLogin, checkAdmin } from './Scripts/ClientFunctions.js';
+
+            window.onload = function () {
+                checkLogin();
+                checkAdmin();
+            };
+        </script>
 
     </body>
 

@@ -77,7 +77,16 @@
 
 </div>
     
-<script src="deletedUsers.js" type="module"></script>
+<script src="deletedUsers.js" type="module">
+
+    import { checkLogin, checkAdmin } from './Scripts/ClientFunctions.js';
+
+    window.onload = function () {
+        checkLogin();
+        checkAdmin();
+    };
+
+</script>
 
 </body>
 </html>

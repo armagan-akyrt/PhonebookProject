@@ -1,9 +1,16 @@
 
 import { fetchContacts, updateContact, softDeleteContact } from './Scripts/ClientFunctionsContact.js';
+import { checkLogin } from './Scripts/ClientFunctions.js';
 
 let currentUser = null;
 
+window.onload = function() { 
+    checkLogin();
+}
 
+function isEmptyObject(obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
 
 fetch('/userdata').then(response => response.json())
 .then(data => {

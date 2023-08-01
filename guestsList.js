@@ -8,7 +8,14 @@ let startDate = "";
 let endDate = "";
 let isInside = document.getElementById('selectGuestType').value;
 
+import { checkLogin, checkAdmin } from './Scripts/ClientFunctions.js';
+
+
 window.onload = function () {
+
+    checkLogin();
+    checkAdmin();
+
     let startDate = new Date();
     startDate.setUTCFullYear(startDate.getUTCFullYear() - 100);
     startDate = startDate.toISOString().replace('T', ' ').replace('Z', '');

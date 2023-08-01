@@ -76,7 +76,15 @@
 
 </div>
     
-<script src="deletedContacts.js" type="module"></script>
+<script src="deletedContacts.js" type="module">
+
+    import { checkLogin } from './Scripts/ClientFunctions.js';
+
+    window.onload = function () {
+        checkLogin();
+    };
+
+</script>
 
 </body>
 </html>
