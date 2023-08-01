@@ -333,6 +333,35 @@ app.get('/getGuests', async (req, res) => {
         res.json({ guestsList: guests });
 });
 
+app.post('/deleteGuest', async (req, res) => {
+        
+            let guest = new Guest();
+    
+            guest.id = req.query.guestId;
+    
+            let guestSuccessful = await guest.DeleteGuest();
+        
+            if (guestSuccessful) {
+            } else {
+            }
+        
+});
+
+app.post('/obtainCard', async (req, res) => {
+        
+            let guest = new Guest();
+    
+            guest.id = req.body.guestId;
+            guest.cardId = req.body.cardId;
+    
+            let guestSuccessful = await guest.ObtainCard();
+        
+            if (guestSuccessful) {
+            } else {
+            }
+        
+});
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });

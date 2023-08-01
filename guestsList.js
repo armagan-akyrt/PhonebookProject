@@ -13,10 +13,6 @@ window.onload = function () {
     fetchGuests('', startDate, endDate, '', '');
     let isInside = document.getElementById('selectGuestType').value;
 
-    if (isInside == 'false') {
-        document.getElementById('guestCardSubmitDate').style.display = 'none';
-        document.getElementById('labelForCardSubmitDate').style.display = 'none';
-    }
 }
 
 document.getElementById('selectGuestType').addEventListener('change', function () { 
@@ -25,9 +21,13 @@ document.getElementById('selectGuestType').addEventListener('change', function (
     if (isInside == 'true') {
         document.getElementById('guestCardSubmitDate').style.display = 'none';
         document.getElementById('labelForCardSubmitDate').style.display = 'none';
+        document.getElementById('getGuestCard').style.display = 'block';
+
     } else {
         document.getElementById('guestCardSubmitDate').style.display = 'block';
         document.getElementById('labelForCardSubmitDate').style.display = 'block';
+        document.getElementById('getGuestCard').style.display = 'none';
+
     }
 
     let searchWord = document.getElementById('searchInputUsernameGuest').value;
@@ -41,6 +41,77 @@ document.getElementById('selectGuestType').addEventListener('change', function (
     fetchGuests(searchWord, startDate, endDate, companyName, isInside);
 
 });
+
+document.getElementById('searchInputUsernameGuest').addEventListener('keyup', function () {
+    let searchWord = document.getElementById('searchInputUsernameGuest').value;
+    let companyName = document.getElementById('searchInputCompanyNameGuest').value;
+
+    let startDate = document.getElementById('startIntervalGuest').value;
+    startDate = (startDate == "") ? new Date().getUTCFullYear() - 100 : startDate;
+    let endDate = document.getElementById('endIntervalGuest').value;
+    endDate = (endDate == "") ? new Date().getUTCFullYear() + 100 : endDate;
+
+    let isInside = document.getElementById('selectGuestType').value;
+
+    fetchGuests(searchWord, startDate, endDate, companyName, isInside);
+});
+
+document.getElementById('searchInputCompanyNameGuest').addEventListener('keyup', function () {
+    let searchWord = document.getElementById('searchInputUsernameGuest').value;
+    let companyName = document.getElementById('searchInputCompanyNameGuest').value;
+
+    let startDate = document.getElementById('startIntervalGuest').value;
+    startDate = (startDate == "") ? new Date().getUTCFullYear() - 100 : startDate;
+    let endDate = document.getElementById('endIntervalGuest').value;
+    endDate = (endDate == "") ? new Date().getUTCFullYear() + 100 : endDate;
+
+    let isInside = document.getElementById('selectGuestType').value;
+
+    fetchGuests(searchWord, startDate, endDate, companyName, isInside);
+});
+
+document.getElementById('deleteGuest').addEventListener('click', function () {
+    let selectedGuest = guestsData[selectedGuestIndex];
+
+    fetch('/deleteGuest', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({guestId: selectedGuest.id}),
+    })
+        .then(response => response.json())
+        .then(data => {
+
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+});
+
+document.getElementById('getGuestCard').addEventListener('click', function () {
+    let selectedGuest = guestsData[selectedGuestIndex];
+
+    fetch('/obtainCard', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({guestId: selectedGuest.id, cardId: selectedGuest.cardId}),
+    })
+        .then(response => response.json())
+        .then(data => {
+
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+});
+
 
 
 function fetchGuests(searchWord, startDate, endDate, companyName, isInside) {
@@ -69,6 +140,9 @@ function fetchGuests(searchWord, startDate, endDate, companyName, isInside) {
                     document.getElementById('guestVisitingUser').value = guest.visiting.id;
                     document.getElementById('guestVisitingUserFullName').value = `${guest.visiting.name} ${guest.visiting.surname}`;
                     document.getElementById('guestCardGrantDate').value = guest.cardAcquisitionDate.replace('T', ' ').replace('Z', '');
+                    if (guest.cardSubmitDate != null)
+                        document.getElementById('guestCardSubmitDate').value = guest.cardSubmitDate.replace('T', ' ').replace('Z', '');
+                    
 
                 });
             });
