@@ -88,10 +88,7 @@ app.post('/changePassword', async (req, res) => {
     user.id = req.body.userId;
     user.password = req.body.password;
 
-    let newPassword = util.encrypt(req.body.newPassword);
-    let confirmPassword = util.encrypt(req.body.confirmPassword);
-
-    let passwordChanged = await user.ChangePassword(confirmPassword, newPassword);
+    let passwordChanged = await user.ChangePassword(req.body.confirmPassword, req.body.newPassword);
 
     if (passwordChanged) {
         res.json({ message: "Şifre başarıyla değiştirildi.", success: true });

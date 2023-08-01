@@ -129,7 +129,8 @@ class User {
     }
 
     async ChangePassword(oldPassword, newPassword) {
-        if (this.password != oldPassword) {
+        let hashedOldPassword = util.encrypt(oldPassword);
+        if (this.password != hashedOldPassword) {
             return false;
         }
 
