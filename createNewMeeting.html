@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Yeni Toplantı</title>
+        <link rel="stylesheet" href="styles.css">
+
+    </head>
+
+    <body>
+        <div class="squash-container">
+            <div class="left-container">
+                <input type="text" id="searchInputContact" name="searchInputContact" placeholder="Bağlantı araması...">
+                <div class="scrollable-list">
+                    <ul id="listToShowContact">
+                        <!-- List items will be populated dynamically here -->
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="centre-container">
+                <h2>Seçilen Bağlantı Bilgileri</h2>
+                <label for="name"><b>Ad</b></label>
+                <input type="text" name="name" id="contactFirstName" readonly>
+
+                <label for="surname"><b>Soyad</b></label>
+                <input type="text" name="surname" id="contactLastName" readonly>
+
+                <label for="gsmNum"> <b>Telefon Numarası</b></label>
+                <input type="text" name="gsmNum" id="contactGsmNum" readonly>
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" name="email" id="contactEmail" readonly>
+
+                <label for="address"><b>Adres</b></label>
+                <textarea name="address" id="contactAddress" rows="4" class="address-input" readonly></textarea>
+
+
+            </div>
+
+            <div class="left-container">
+                <form action="/addmeeting" method="POST">
+
+                    <h2>Toplantı Bilgileri</h2>
+
+                    <input type="hidden" name="userId" id="userId">
+                    <input type="hidden" name="contactId" id="contactId">
+
+                    <label for="startDate"><b>Toplantı Başlangıç Tarihi</b></label>
+                    <input type="datetime-local" name="startDate" required>
+
+                    <label for="endDate"><b>Toplantı Bitiş Tarihi</b></label>
+                    <input type="datetime-local" name="endDate" required>
+
+                    <label for="notes"> <b>Notlar</b></label>
+                    <textarea name="notes" wrap="soft" rows="6"
+                        class="address-input"></textarea>
+
+                    <button type="submit" style="margin-top: 10px;" id="createMeetingButton">Kayıt Ekle</button>
+
+                </form>
+            </div>
+
+        </div>
+
+        <script src="createNewMeeting.js" type="module"></script>
+    </body>
+
+</html>

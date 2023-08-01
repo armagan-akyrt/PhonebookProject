@@ -1,16 +1,27 @@
 
 import { fetchContacts, updateContact, softDeleteContact } from './Scripts/ClientFunctionsContact.js';
 import { checkLogin } from './Scripts/ClientFunctions.js';
+import { fetchMeetings } from './Scripts/ClientFunctionsMeeting.js';
 
 let currentUser = null;
 
 window.onload = function() { 
     checkLogin();
+
+    let startInterval = new Date();
+    startInterval = startInterval.setMonth(startInterval.getMonth() - 1).toISOString().slice(0, 10);
+    let endInterval = new Date();
+    endInterval = endInterval.setMonth(endInterval.getMonth() + 1).toISOString().slice(0, 10);
+    fetchMeetings('', true, startInterval, endInterval);
+
+    let currUsr = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (currUsr.role == "USER") {
+        document.getElementById('adminBar').style.display = "none";
+    }
+        
+    
 }
 
-function isEmptyObject(obj) {
-    return Object.keys(obj).length === 0 && obj.constructor === Object;
-}
 
 fetch('/userdata').then(response => response.json())
 .then(data => {

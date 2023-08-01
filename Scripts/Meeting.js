@@ -1,11 +1,9 @@
+const sql = require("mssql/msnodesqlv8");
 const { DateTime } = require("msnodesqlv8");
-const { User } = require("./User");
-const { Contact } = require("./Contact");
 const Connection = require("./connection");
 const UsefulUtilities = require("./UsefulUtilities");
 
 let conn = new Connection();
-let util = new UsefulUtilities();
 
 class Meeting {
 
@@ -18,8 +16,6 @@ class Meeting {
         this.meetingEndDate = new DateTime();
 
         this.meetingNotes = "";
-
-
     }
 
     async CreateMeeting() {
@@ -89,7 +85,6 @@ class Meeting {
         }
 
         return true;
-
     }
 
     async MeetingsList(searchWord, activeState, startInterval, endInterval) {
@@ -175,7 +170,6 @@ class Meeting {
         }
 
         return meetings;
-
     }
 
     async BringBackMeeting() {
@@ -196,7 +190,6 @@ class Meeting {
         }
 
         return true;
-
     }
 
 }

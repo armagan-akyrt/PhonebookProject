@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const User = require('./Scripts/User');
 const Contact = require('./Scripts/Contact');
 const Guest = require('./Scripts/Guest');
+const { Meeting } = require('./Scripts/Meeting');
 const UsefulUtilities = require('./Scripts/UsefulUtilities');
 const session = require('express-session');
 const { DateTime } = require('msnodesqlv8');
@@ -16,19 +17,6 @@ const port = 3000;
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
-
-// app.get('/logout', (req, res) => {
-//     req.session.destroy(err => {
-//         if(err) {
-//             return res.send('An error occurred while logging out');
-//         }
-
-//         // If using cookies for authentication
-//         res.clearCookie(); // Replace 'session-name' with the name of your session
-
-//         return res.redirect('/index.html'); // Redirect to the home page after logging out
-//     });
-// });
 
 app.use(session({
     secret: 'totally-secret-key-api-123',
@@ -44,9 +32,9 @@ app.post('/action_page', async (req, res) => {
 
     if (loginSuccessful) {
         req.session.user = user; // Save the user to the session
-        res.json({user: user, loginSuccessful: true});
+        res.json({ user: user, loginSuccessful: true });
     } else {
-        res.json({user: null, loginSuccessful: false});
+        res.json({ user: null, loginSuccessful: false });
     }
 });
 
@@ -58,7 +46,7 @@ app.get('/userdata', function (req, res) {
     }
 });
 
-app.get('/currentuser', function (req, res) { 
+app.get('/currentuser', function (req, res) {
     if (req.session.selectedUser) {
         res.json(req.session.selectedUser);
     } else {
@@ -95,7 +83,7 @@ app.post('/signup', async (req, res) => {
 });
 
 app.get('/logout', function (req, res) {
-    req.session.destroy(function(err) {
+    req.session.destroy(function (err) {
         if (err) {
             console.log(err);
             // handle error here
@@ -106,7 +94,6 @@ app.get('/logout', function (req, res) {
         }
     });
 });
-
 
 app.post('/changePassword', async (req, res) => {
     let user = new User();
@@ -121,10 +108,10 @@ app.post('/changePassword', async (req, res) => {
     } else {
         res.json({ message: "Şifre değiştirilemedi. Lütfen tekrar deneyin.", success: false });
     }
-    
+
 });
 
-app.post('/addcontact', async (req, res) => { 
+app.post('/addcontact', async (req, res) => {
 
     let contact = new Contact();
 
@@ -188,19 +175,19 @@ app.post('/updateUser', async (req, res) => {
     }
 });
 
-app.post('/bringUser', async (req, res) => { 
-    
-        let user = new User();
+app.post('/bringUser', async (req, res) => {
 
-        user.id = req.body.userId;
+    let user = new User();
 
-        let result = await user.BringBackUser();
-    
-        if (result) {
-            res.json({ success: true, message: 'User updated successfully' });
-        } else {
-            throw new Error('User not found');
-        }
+    user.id = req.body.userId;
+
+    let result = await user.BringBackUser();
+
+    if (result) {
+        res.json({ success: true, message: 'User updated successfully' });
+    } else {
+        throw new Error('User not found');
+    }
 });
 
 app.post('/softDeleteUser', async (req, res) => {
@@ -212,7 +199,6 @@ app.post('/softDeleteUser', async (req, res) => {
         let userToDelete = new User();
         userToDelete.id = userId;
 
-        console.log(userToDelete.id);
         const result = await userToDelete.SoftDeleteUser();
 
         if (result) {
@@ -234,7 +220,6 @@ app.post('/hardDeleteUser', async (req, res) => {
         let userToDelete = new User();
         userToDelete.id = userId;
 
-        console.log(userToDelete.id);
         const result = await userToDelete.HardDeleteUser();
 
         if (result) {
@@ -250,7 +235,6 @@ app.post('/hardDeleteUser', async (req, res) => {
 app.post('/updateContact', async (req, res) => {
 
     let contactData = req.body;
-    console.log(contactData);
     try {
         let contact = new Contact();
         contact.name = contactData.name;
@@ -274,7 +258,7 @@ app.post('/updateContact', async (req, res) => {
 
 });
 
-app.post('/softDeleteContact', async (req, res) => { 
+app.post('/softDeleteContact', async (req, res) => {
     // Get the contact id from the request body
     let contactId = req.body.contactId;
 
@@ -283,7 +267,6 @@ app.post('/softDeleteContact', async (req, res) => {
         let contactToDelete = new Contact();
         contactToDelete.id = contactId;
 
-        console.log(contactToDelete.id);
         const result = await contactToDelete.SoftDeleteContact();
 
         if (result) {
@@ -300,7 +283,6 @@ app.get('/getContacts', async (req, res) => {
 
     let contact = new Contact();
 
-    console.log(req.query.isActive);
 
     let normalizedSearchWord = util.convertTurkishToAscii(req.query.searchWord)
 
@@ -310,7 +292,7 @@ app.get('/getContacts', async (req, res) => {
     res.json({ contactsList: contacts });
 });
 
-app.post('/bringContact', async (req, res) => { 
+app.post('/bringContact', async (req, res) => {
 
     let contact = new Contact();
 
@@ -321,7 +303,7 @@ app.post('/bringContact', async (req, res) => {
     res.json({ isSuccessful: contactData });
 });
 
-app.post('/hardDeleteContact', async (req, res) => { 
+app.post('/hardDeleteContact', async (req, res) => {
 
     let contact = new Contact();
 
@@ -334,74 +316,99 @@ app.post('/hardDeleteContact', async (req, res) => {
 });
 
 app.post('/createGuest', async (req, res) => {
-    
-        let guest = new Guest();
 
-        guest.name = req.body.name;
-        guest.surname = req.body.surname;
-        guest.cardId = req.body.cardId;
+    let guest = new Guest();
 
-        let currentDate = new Date();
-        let sqlDate = currentDate.toISOString().replace('T', ' ').replace('Z', '');
+    guest.name = req.body.name;
+    guest.surname = req.body.surname;
+    guest.cardId = req.body.cardId;
 
-        guest.cardAcquisitionDate = sqlDate; // 2023-07-31 17:41:43.880
-        
-        console.log(guest.cardAcquisitionDate);
+    let currentDate = new Date();
+    let sqlDate = currentDate.toISOString().replace('T', ' ').replace('Z', '');
 
-        guest.companyName = req.body.companyName;
-        guest.visiting.id = req.body.visitingUser;
+    guest.cardAcquisitionDate = sqlDate; // 2023-07-31 17:41:43.880
 
-        let guestSuccessful = await guest.CreateGuest();
-    
-        if (guestSuccessful) {
-        } else {
-        }
-    
+
+    guest.companyName = req.body.companyName;
+    guest.visiting.id = req.body.visitingUser;
+
+    let guestSuccessful = await guest.CreateGuest();
+
+    if (guestSuccessful) {
+    } else {
+    }
+
 });
 
 app.get('/getGuests', async (req, res) => {
-    
-        let guest = new Guest();
 
-        let searchWord = util.convertTurkishToAscii(req.query.searchWord);
-        let companyName = util.convertTurkishToAscii(req.query.companyName);
-        let startDate = req.query.startDate;
-        let endDate = req.query.endDate;
+    let guest = new Guest();
 
-        
+    let searchWord = util.convertTurkishToAscii(req.query.searchWord);
+    let companyName = util.convertTurkishToAscii(req.query.companyName);
+    let startDate = req.query.startDate;
+    let endDate = req.query.endDate;
 
-        let guests = await guest.GuestList(searchWord, startDate, endDate, companyName, req.query.isInside)
-    
-        res.json({ guestsList: guests });
+
+
+    let guests = await guest.GuestList(searchWord, startDate, endDate, companyName, req.query.isInside)
+
+    res.json({ guestsList: guests });
 });
 
 app.post('/deleteGuest', async (req, res) => {
-        
-            let guest = new Guest();
-    
-            guest.id = req.body.guestId;
-    
-            let guestSuccessful = await guest.DeleteGuest();
-        
-            if (guestSuccessful) {
-            } else {
-            }
-        
+
+    let guest = new Guest();
+
+    guest.id = req.body.guestId;
+
+    let guestSuccessful = await guest.DeleteGuest();
+
+    if (guestSuccessful) {
+    } else {
+    }
+
 });
 
 app.post('/obtainCard', async (req, res) => {
-        
-            let guest = new Guest();
+
+    let guest = new Guest();
+
+    guest.id = req.body.guestId;
+    guest.cardId = req.body.cardId;
+
+    let guestSuccessful = await guest.ObtainCard();
+
+    if (guestSuccessful) {
+    } else {
+    }
+
+});
+
+app.post('/addmeeting', async (req, res) => {
+    let meeting = new Meeting();
+
+    meeting.contactId = req.body.contactId;
+    meeting.userId = req.body.userId;
+
+    meeting.meetingStartDate = req.body.startDate;
+    meeting.meetingEndDate = req.body.endDate;
+
+    meeting.meetingNotes = req.body.notes;
+
+    meeting.CreateMeeting();
+});
+
+app.post('getMeeting', async (req, res) => {
+    let meeting = new Meeting();
+
+    let searchWord = util.convertTurkishToAscii(req.query.searchWord);
     
-            guest.id = req.body.guestId;
-            guest.cardId = req.body.cardId;
-    
-            let guestSuccessful = await guest.ObtainCard();
-        
-            if (guestSuccessful) {
-            } else {
-            }
-        
+    let isActiveBool = req.query.isActive == 'true' ? true : false;
+
+    let meetingData = await meeting.MeetingsList(searchWord, isActiveBool, req.query.startDate, req.query.endDate)
+
+    res.json({ meetingData: meetingData });
 });
 
 app.listen(port, () => {

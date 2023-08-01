@@ -17,7 +17,7 @@ export function fetchContacts(userId, contactSearchWord, isActive) {
                 li.addEventListener('click', function () {
                     contactsData = data.contactsList
                     selectedContactIndex = data.contactsList.indexOf(contact);
-
+                    sessionStorage.setItem('selectedContactId', contact.id);
                     // Call fetchContacts when a user item is clicked
                     document.getElementById('contactFirstName').value = contact.name;
                     document.getElementById('contactLastName').value = contact.surname;

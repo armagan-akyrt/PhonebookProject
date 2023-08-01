@@ -5,6 +5,7 @@ conn = new Connection();
 
 class Contact {
     constructor() {
+
         this.name = "";
         this.surname = "";
         this.phoneNumber = "";
@@ -12,8 +13,7 @@ class Contact {
         this.address = "";
         this.username = "";
         this.id = 0;
-
-
+        
     }
 
     async CreateContact(userId) {

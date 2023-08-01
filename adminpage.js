@@ -8,7 +8,6 @@ let currentUser = null;
 
 let selectedUserId = 0;
 
-
 document.getElementById('listToShowUser').addEventListener('click', function(event) {
     if (event.target && event.target.nodeName === 'LI') {  // Check if a list item was clicked
         let userId = sessionStorage.getItem('selectedUserId');  // Get the ID of the selected user
@@ -48,7 +47,6 @@ document.getElementById('searchInputContact').addEventListener('keyup', function
     let searchWord = document.getElementById('searchInputContact').value;
     fetchContacts(userId, searchWord, true);
 });
-
 
 window.addEventListener('load', function () {
 
