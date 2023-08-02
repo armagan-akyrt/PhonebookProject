@@ -16,6 +16,7 @@ class Meeting {
         this.meetingEndDate = new DateTime();
 
         this.meetingNotes = "";
+        this.contactFullName = "";
     }
 
     async CreateMeeting() {
@@ -114,6 +115,7 @@ class Meeting {
                 tempMeeting.meetingStartDate = rawMeeting.startDate;
                 tempMeeting.meetingEndDate = rawMeeting.endDate;
                 tempMeeting.contactId = rawMeeting.contactId;
+                tempMeeting.contactFullName = rawMeeting.firstName + " " + rawMeeting.lastName;
 
                 meetings.push(tempMeeting);
 

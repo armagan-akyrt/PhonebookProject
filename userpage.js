@@ -4,13 +4,18 @@ import { checkLogin } from './Scripts/ClientFunctions.js';
 import { fetchMeetings } from './Scripts/ClientFunctionsMeeting.js';
 
 let currentUser = null;
+let startInterval = new Date();
+let endInterval = new Date();
 
 window.onload = function() { 
     currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     checkLogin();
 
-    let startInterval = new Date().getUTCFullYear() - 100;
-    let endInterval = new Date().getUTCFullYear() + 100;
+    startInterval.setUTCFullYear(startInterval.getUTCFullYear() - 100);
+    startInterval = startInterval.toISOString().replace('T', ' ').replace('Z', '');
+
+    endInterval.setUTCFullYear(endInterval.getUTCFullYear() + 100);
+    endInterval = endInterval.toISOString().replace('T', ' ').replace('Z', '');
     
     fetchMeetings('', true, startInterval, endInterval, currentUser.id);
 
