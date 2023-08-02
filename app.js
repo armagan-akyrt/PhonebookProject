@@ -418,6 +418,30 @@ app.get('/getMeetings', async (req, res) => {
     res.json({ meetingsList: meetingData });
 });
 
+app.post('/updateMeeting', async (req, res) => {
+    
+        let meeting = new Meeting();
+    
+        meeting.meetingId = req.body.meetingId;
+        meeting.contactId = req.body.contactId;
+        meeting.userId = req.body.userId;
+    
+        meeting.meetingStartDate = req.body.meetingStartDate;
+        meeting.meetingEndDate = req.body.meetingEndDate;
+    
+        meeting.meetingNotes = req.body.meetingNotes;
+    
+        await meeting.UpdateMeeting();
+});
+
+app.post('/softDeleteMeeting', async (req, res) => {
+    let meeting = new Meeting();
+
+    meeting.meetingId = req.body.meetingId;
+
+    await meeting.RemoveMeeting();
+});
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });

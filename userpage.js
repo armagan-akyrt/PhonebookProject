@@ -1,7 +1,7 @@
 
 import { fetchContacts, updateContact, softDeleteContact } from './Scripts/ClientFunctionsContact.js';
 import { checkLogin } from './Scripts/ClientFunctions.js';
-import { fetchMeetings } from './Scripts/ClientFunctionsMeeting.js';
+import { fetchMeetings, updateMeeting, softDeleteMeeting } from './Scripts/ClientFunctionsMeeting.js';
 
 let currentUser = null;
 let startInterval = new Date();
@@ -58,4 +58,19 @@ document.getElementById('updateContactButton').addEventListener('click', functio
 document.getElementById('deleteContactButton').addEventListener('click', function(event) {
     event.preventDefault();
     softDeleteContact();
+});
+
+document.getElementById('searchInputMeeting').addEventListener('keyup', function() {
+    let searchWord = document.getElementById('searchInputMeeting').value;
+    fetchMeetings(searchWord, true, startInterval, endInterval, currentUser.id);
+});
+
+document.getElementById('updateMeetingButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    updateMeeting();
+});
+
+document.getElementById('deleteMeetingButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    softDeleteMeeting();
 });

@@ -1,3 +1,4 @@
+
 let meetingsData = [];
 let selectedMeetingIndex = 0;
 
@@ -19,7 +20,7 @@ export function fetchMeetings(searchWord, isActive, startInterval, endInterval, 
                 li.addEventListener('click', function () {
                     meetingsData = data.meetingsList;
                     selectedMeetingIndex = data.meetingsList.indexOf(meeting);
-
+                    
                     document.getElementById('meetingContactFullname').value = meeting.contactFullName;
                     document.getElementById('meetingStartDate').value = meeting.meetingStartDate.replace('T', ' ').replace('Z', '');
                     document.getElementById('meetingEndDate').value = meeting.meetingEndDate.replace('T', ' ').replace('Z', '');
@@ -28,4 +29,56 @@ export function fetchMeetings(searchWord, isActive, startInterval, endInterval, 
             });
         })
         .catch(error => console.error('Error:', error));
+}
+
+export function updateMeeting() {
+    const selectedMeeting = meetingsData[selectedMeetingIndex];
+
+    const meetingData = {
+        meetingId: selectedMeeting.meetingId,
+        contactId: selectedMeeting.contactId,
+        userId: selectedMeeting.userId,
+        contactFullName: document.getElementById('meetingContactFullname').value,
+        meetingStartDate: document.getElementById('meetingStartDate').value,
+        meetingEndDate: document.getElementById('meetingEndDate').value,
+        meetingNotes: document.getElementById('meetingNotes').value,
+    };
+
+    fetch('/updateMeeting', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify(meetingData),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+export function softDeleteMeeting() {
+    const selectedMeeting = meetingsData[selectedMeetingIndex];
+
+    fetch('/softDeleteMeeting', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({meetingId: selectedMeeting.meetingId}),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
