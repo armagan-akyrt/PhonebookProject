@@ -6,13 +6,13 @@ import { fetchMeetings } from './Scripts/ClientFunctionsMeeting.js';
 let currentUser = null;
 
 window.onload = function() { 
+    currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     checkLogin();
 
-    let startInterval = new Date();
-    startInterval = startInterval.setMonth(startInterval.getMonth() - 1).toISOString().slice(0, 10);
-    let endInterval = new Date();
-    endInterval = endInterval.setMonth(endInterval.getMonth() + 1).toISOString().slice(0, 10);
-    fetchMeetings('', true, startInterval, endInterval);
+    let startInterval = new Date().getUTCFullYear() - 100;
+    let endInterval = new Date().getUTCFullYear() + 100;
+    
+    fetchMeetings('', true, startInterval, endInterval, currentUser.id);
 
     let currUsr = JSON.parse(sessionStorage.getItem('currentUser'));
     if (currUsr.role == "USER") {

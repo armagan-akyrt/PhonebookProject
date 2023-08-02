@@ -399,14 +399,17 @@ app.post('/addmeeting', async (req, res) => {
     meeting.CreateMeeting();
 });
 
-app.post('getMeeting', async (req, res) => {
+app.post('/getMeetings', async (req, res) => {
     let meeting = new Meeting();
 
-    let searchWord = util.convertTurkishToAscii(req.query.searchWord);
+    let searchWord = util.convertTurkishToAscii(req.body.searchWord);
     
-    let isActiveBool = req.query.isActive == 'true' ? true : false;
+    let isActiveBool = req.body.isActive == 'true' ? true : false;
 
-    let meetingData = await meeting.MeetingsList(searchWord, isActiveBool, req.query.startDate, req.query.endDate)
+    let startIntervalStr = req.body.startInterval.replace('T', ' ').replace('Z', '');
+    let endIntervalStr = req.body.endInterval.replace('T', ' ').replace('Z', '');
+
+    let meetingData = await meeting.MeetingsList(searchWord, isActiveBool, startIntervalStr, endIntervalStr, req.body.userId)
 
     res.json({ meetingData: meetingData });
 });

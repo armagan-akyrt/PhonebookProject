@@ -87,8 +87,8 @@ class Meeting {
         return true;
     }
 
-    async MeetingsList(searchWord, activeState, startInterval, endInterval) {
-        meetings = [];
+    async MeetingsList(searchWord, activeState, startInterval, endInterval, userId) {
+        let meetings = [];
 
         try {
             await conn.open();
@@ -99,11 +99,11 @@ class Meeting {
             request.input("activeState", sql.Bit, activeState);
             request.input("startInterval", sql.DateTime, startInterval);
             request.input("endInterval", sql.DateTime, endInterval);
-            request.input("userId", sql.Int, this.userId);
+            request.input("userId", sql.Int, userId);
 
             let result = await request.execute("RetrieveMeetings");
 
-            let rawMeetings = result.recordset[0];
+            let rawMeetings = result.recordsets[0];
 
             rawMeetings.forEach(rawMeeting => {
                 
