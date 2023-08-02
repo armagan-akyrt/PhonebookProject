@@ -418,6 +418,25 @@ app.get('/getMeetings', async (req, res) => {
     res.json({ meetingsList: meetingData });
 });
 
+app.get('/getPreviousMeetings', async (req, res) => {
+    let meeting = new Meeting();
+
+    let searchWord = util.convertTurkishToAscii(req.query.searchWord);
+
+    let isActiveBool = true;
+
+    if (req.query.isActive == 'false') {
+        isActiveBool = false;
+    }
+
+    let startIntervalStr = req.query.startInterval;
+    let endIntervalStr = req.query.endInterval;
+
+    let meetingData = await meeting.MeetingsListPrevious(searchWord, isActiveBool, startIntervalStr, endIntervalStr, req.query.userId)
+
+    res.json({ meetingsList: meetingData });
+});
+
 app.post('/updateMeeting', async (req, res) => {
     
         let meeting = new Meeting();

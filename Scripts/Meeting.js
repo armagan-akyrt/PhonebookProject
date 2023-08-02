@@ -132,8 +132,8 @@ class Meeting {
 
     }
 
-    async MeetingsListPrevious(searchWord, activeState, startInterval, endInterval) {
-        meetings = [];
+    async MeetingsListPrevious(searchWord, activeState, startInterval, endInterval, userId) {
+        let meetings = [];
 
         try {
             await conn.open();
@@ -144,11 +144,11 @@ class Meeting {
             request.input("activeState", sql.Bit, activeState);
             request.input("startInterval", sql.DateTime, startInterval);
             request.input("endInterval", sql.DateTime, endInterval);
-            request.input("userId", sql.Int, this.userId);
+            request.input("userId", sql.Int, userId);
 
             let result = await request.execute("RetrievePreviousMeetings");
 
-            let rawMeetings = result.recordset[0];
+            let rawMeetings = result.recordsets[0];
 
             rawMeetings.forEach(rawMeeting => {
                 
@@ -159,6 +159,7 @@ class Meeting {
                 tempMeeting.meetingStartDate = rawMeeting.startDate;
                 tempMeeting.meetingEndDate = rawMeeting.endDate;
                 tempMeeting.contactId = rawMeeting.contactId;
+                tempMeeting.contactFullName = rawMeeting.firstName + " " + rawMeeting.lastName;
 
                 meetings.push(tempMeeting);
 
