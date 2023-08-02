@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silinen Toplantılar</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <div class="squash-container">
+        <div class="left-container">
+            <input type="text" id="searchInputMeeting" name="searchInputMeeting" placeholder="Toplantı araması...">
+            <div class="scrollable-list">
+                <ul id="listToShowMeeting">
+                    <!-- List items will be populated dynamically here -->
+                </ul>
+    
+            </div>
+        </div>
+        <div class="right-container">
+            <h2>Toplantı Bilgileri</h2>
+            <label for="name"><b>Ad Soyad</b></label>
+            <input type="text" name="meetingContactFullname" , id="meetingContactFullname" required>
+    
+            <label for="surname"><b>Başlangıç Tarihi</b></label>
+            <input type="datetime-local" name="meetingStartDate" id="meetingStartDate" required>
+    
+            <label for="gsmNum"> <b>Bitiş Tarihi</b></label>
+            <input type="datetime-local" name="meetingEndDate" id="meetingEndDate" required>
+    
+            <label for="notes"><b>Notlar</b></label>
+            <textarea name="meetingNotes" id="meetingNotes" rows="4" class="address-input"></textarea>
+    
+    
+            <button type="submit" style="margin-top: 10px;" name="updateMeetingButton"
+                id="updateMeetingButton">Güncelle</button>
+            <button type="button" style="margin-top: 10px;" name="deleteMeetingButton"
+                id="deleteMeetingButton">Sil</button>
+    
+        </div>
+    </div>
+</body>
+</html>
+
+
