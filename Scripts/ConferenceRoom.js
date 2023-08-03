@@ -30,4 +30,23 @@ class ConferenceRoom {
 
         return true;
     }
+
+    async RemoveConferenceRoom() {
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+
+            request.input("roomId", sql.Int, this.roomId);
+
+            let result = await request.execute("RemoveConferenceRoom");
+
+        } catch (error) {
+            console.error(error);
+            return false;
+        } finally {
+            conn.close();
+        }
+
+        return true;
+    }
 }
