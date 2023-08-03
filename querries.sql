@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [PhoneDirectory]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  Database [PhoneDirectory]    Script Date: 03/08/2023 12:03:08 ******/
 CREATE DATABASE [PhoneDirectory]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,48 +84,73 @@ ALTER DATABASE [PhoneDirectory] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CL
 GO
 USE [PhoneDirectory]
 GO
-/****** Object:  Table [dbo].[Conference]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  Table [dbo].[ConferenceApprovals]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Conference](
+CREATE TABLE [dbo].[ConferenceApprovals](
+	[requestId] [int] NOT NULL,
+	[overseerId] [int] NOT NULL,
+	[approved] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[requestId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ConferenceParticipants]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ConferenceParticipants](
+	[requestId] [int] NOT NULL,
+	[participantId] [int] NOT NULL,
+	[accepted] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[requestId] ASC,
+	[participantId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ConferenceRequests]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ConferenceRequests](
+	[requestId] [int] IDENTITY(1,1) NOT NULL,
+	[conferenceId] [int] NOT NULL,
+	[requesterId] [int] NOT NULL,
+	[status] [varchar](20) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[requestId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Conferences]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Conferences](
 	[conferenceId] [int] IDENTITY(1,1) NOT NULL,
 	[roomId] [int] NOT NULL,
 	[topic] [varchar](255) NOT NULL,
-	[description] [varchar](1000) NOT NULL,
-	[notes] [varchar](1000) NULL,
+	[description] [varchar](255) NOT NULL,
+	[notes] [varchar](255) NOT NULL,
 	[startDate] [datetime] NOT NULL,
 	[endDate] [datetime] NOT NULL,
-	[isVisible] [binary](1) NOT NULL,
- CONSTRAINT [PK_Conference] PRIMARY KEY CLUSTERED 
+PRIMARY KEY CLUSTERED 
 (
 	[conferenceId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ConferenceRequest]    Script Date: 03/08/2023 09:01:47 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ConferenceRequest](
-	[requestId] [int] IDENTITY(1,1) NOT NULL,
-	[conferenceId] [int] NOT NULL,
-	[userId] [int] NOT NULL,
-	[isApproved] [binary](1) NULL,
-	[overseerId] [int] NOT NULL,
- CONSTRAINT [PK_ConferenceRequest] PRIMARY KEY CLUSTERED 
-(
-	[requestId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-UNIQUE NONCLUSTERED 
-(
-	[overseerId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Contacts]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  Table [dbo].[Contacts]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -153,7 +178,7 @@ CREATE TABLE [dbo].[Contacts](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Guests]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  Table [dbo].[Guests]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -175,38 +200,22 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[MeetingRoom]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  Table [dbo].[MeetingRooms]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[MeetingRoom](
+CREATE TABLE [dbo].[MeetingRooms](
 	[roomId] [int] IDENTITY(1,1) NOT NULL,
-	[roomCapacity] [int] NOT NULL,
 	[overseerId] [int] NOT NULL,
- CONSTRAINT [PK_MeetingRoom] PRIMARY KEY CLUSTERED 
+	[capacity] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
 (
 	[roomId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Participants]    Script Date: 03/08/2023 09:01:47 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Participants](
-	[participantId] [int] IDENTITY(1,1) NOT NULL,
-	[conferenceId] [int] NOT NULL,
-	[userId] [int] NOT NULL,
-	[isAccepted] [binary](1) NULL,
- CONSTRAINT [PK_Participants] PRIMARY KEY CLUSTERED 
-(
-	[participantId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[RandezvousIn]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  Table [dbo].[RandezvousIn]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -225,7 +234,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserContacts]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  Table [dbo].[UserContacts]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -235,7 +244,7 @@ CREATE TABLE [dbo].[UserContacts](
 	[contactId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,10 +278,6 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[Conference] ADD  DEFAULT ((0)) FOR [isVisible]
-GO
-ALTER TABLE [dbo].[ConferenceRequest] ADD  DEFAULT ((0)) FOR [isApproved]
-GO
 ALTER TABLE [dbo].[Contacts] ADD  DEFAULT ((1)) FOR [activeState]
 GO
 ALTER TABLE [dbo].[Guests] ADD  DEFAULT ((0)) FOR [cardId]
@@ -283,44 +288,48 @@ ALTER TABLE [dbo].[Guests] ADD  DEFAULT ((1)) FOR [activeState]
 GO
 ALTER TABLE [dbo].[Guests] ADD  DEFAULT ('NoCompanyName') FOR [companyName]
 GO
-ALTER TABLE [dbo].[Participants] ADD  DEFAULT ((0)) FOR [isAccepted]
-GO
 ALTER TABLE [dbo].[Users] ADD  DEFAULT ((1)) FOR [activeState]
 GO
-ALTER TABLE [dbo].[Conference]  WITH CHECK ADD  CONSTRAINT [FK_MeetingRoom] FOREIGN KEY([roomId])
-REFERENCES [dbo].[MeetingRoom] ([roomId])
-GO
-ALTER TABLE [dbo].[Conference] CHECK CONSTRAINT [FK_MeetingRoom]
-GO
-ALTER TABLE [dbo].[ConferenceRequest]  WITH CHECK ADD  CONSTRAINT [FK_Conference] FOREIGN KEY([conferenceId])
-REFERENCES [dbo].[Conference] ([conferenceId])
-GO
-ALTER TABLE [dbo].[ConferenceRequest] CHECK CONSTRAINT [FK_Conference]
-GO
-ALTER TABLE [dbo].[ConferenceRequest]  WITH CHECK ADD  CONSTRAINT [FK_User] FOREIGN KEY([userId])
+ALTER TABLE [dbo].[ConferenceApprovals]  WITH CHECK ADD FOREIGN KEY([overseerId])
 REFERENCES [dbo].[Users] ([id])
 GO
-ALTER TABLE [dbo].[ConferenceRequest] CHECK CONSTRAINT [FK_User]
+ALTER TABLE [dbo].[ConferenceApprovals]  WITH CHECK ADD FOREIGN KEY([requestId])
+REFERENCES [dbo].[ConferenceRequests] ([requestId])
+GO
+ALTER TABLE [dbo].[ConferenceApprovals]  WITH CHECK ADD  CONSTRAINT [FK_ConferenceApprovals_ConferenceRequests] FOREIGN KEY([requestId])
+REFERENCES [dbo].[ConferenceRequests] ([requestId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ConferenceApprovals] CHECK CONSTRAINT [FK_ConferenceApprovals_ConferenceRequests]
+GO
+ALTER TABLE [dbo].[ConferenceParticipants]  WITH CHECK ADD FOREIGN KEY([participantId])
+REFERENCES [dbo].[Users] ([id])
+GO
+ALTER TABLE [dbo].[ConferenceParticipants]  WITH CHECK ADD FOREIGN KEY([requestId])
+REFERENCES [dbo].[ConferenceRequests] ([requestId])
+GO
+ALTER TABLE [dbo].[ConferenceParticipants]  WITH CHECK ADD  CONSTRAINT [FK_ConferenceParticipants_ConferenceRequests] FOREIGN KEY([requestId])
+REFERENCES [dbo].[ConferenceRequests] ([requestId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ConferenceParticipants] CHECK CONSTRAINT [FK_ConferenceParticipants_ConferenceRequests]
+GO
+ALTER TABLE [dbo].[ConferenceRequests]  WITH CHECK ADD FOREIGN KEY([conferenceId])
+REFERENCES [dbo].[Conferences] ([conferenceId])
+GO
+ALTER TABLE [dbo].[ConferenceRequests]  WITH CHECK ADD FOREIGN KEY([requesterId])
+REFERENCES [dbo].[Users] ([id])
+GO
+ALTER TABLE [dbo].[Conferences]  WITH CHECK ADD FOREIGN KEY([roomId])
+REFERENCES [dbo].[MeetingRooms] ([roomId])
 GO
 ALTER TABLE [dbo].[Guests]  WITH CHECK ADD  CONSTRAINT [PK_Guests_Users] FOREIGN KEY([userId])
 REFERENCES [dbo].[Users] ([id])
 GO
 ALTER TABLE [dbo].[Guests] CHECK CONSTRAINT [PK_Guests_Users]
 GO
-ALTER TABLE [dbo].[MeetingRoom]  WITH CHECK ADD  CONSTRAINT [FK_Overseer] FOREIGN KEY([overseerId])
+ALTER TABLE [dbo].[MeetingRooms]  WITH CHECK ADD FOREIGN KEY([overseerId])
 REFERENCES [dbo].[Users] ([id])
-GO
-ALTER TABLE [dbo].[MeetingRoom] CHECK CONSTRAINT [FK_Overseer]
-GO
-ALTER TABLE [dbo].[Participants]  WITH CHECK ADD  CONSTRAINT [FK_Conference_Participant] FOREIGN KEY([conferenceId])
-REFERENCES [dbo].[Conference] ([conferenceId])
-GO
-ALTER TABLE [dbo].[Participants] CHECK CONSTRAINT [FK_Conference_Participant]
-GO
-ALTER TABLE [dbo].[Participants]  WITH CHECK ADD  CONSTRAINT [FK_User_Participant] FOREIGN KEY([userId])
-REFERENCES [dbo].[Users] ([id])
-GO
-ALTER TABLE [dbo].[Participants] CHECK CONSTRAINT [FK_User_Participant]
 GO
 ALTER TABLE [dbo].[RandezvousIn]  WITH CHECK ADD  CONSTRAINT [Fk_RandesvousIn_Contact] FOREIGN KEY([contactId])
 REFERENCES [dbo].[Contacts] ([id])
@@ -348,7 +357,7 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[UserContacts] CHECK CONSTRAINT [FK_UserContacts_Users]
 GO
-/****** Object:  StoredProcedure [dbo].[AddExistingContact]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[AddExistingContact]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -371,7 +380,7 @@ BEGIN
 	
 END
 GO
-/****** Object:  StoredProcedure [dbo].[AddGuest]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[AddGuest]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -402,7 +411,7 @@ BEGIN
 		END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[AddMeeting]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[AddMeeting]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -419,7 +428,7 @@ BEGIN
 	VALUES(@userId, @contactId, @startDate, @endDate, @notes, 1)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[BringMeetingBack]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[BringMeetingBack]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -434,7 +443,7 @@ BEGIN
  WHERE meetingId = @meetingId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ChangePassword]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[ChangePassword]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -449,7 +458,7 @@ BEGIN
 	WHERE id = @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CloseGuest]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[CloseGuest]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -464,49 +473,208 @@ BEGIN
 	WHERE id = id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateConference]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[ConferenceAcceptRequest]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[CreateConference]
+
+CREATE PROCEDURE [dbo].[ConferenceAcceptRequest]
+	@requestId INT,
+	@participantId INT
+
+AS
+BEGIN
+	UPDATE ConferenceParticipants
+	SET accepted = 1
+	WHERE requestId = @requestId AND participantId = @participantId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConferenceAddParticipant]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ConferenceAddParticipant]
+	@requestId INT,
+	@participantId INT
+AS
+BEGIN
+	INSERT INTO ConferenceParticipants(requestId, participantId, accepted)
+	VALUES (@requestId, @participantId, 0)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConferenceCheckAllParticipantsAccepted]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ConferenceCheckAllParticipantsAccepted]
+	@requestId INT
+AS
+BEGIN
+	IF NOT EXISTS (SELECT 1 FROM ConferenceParticipants WHERE requestId = @requestId AND accepted = 0)
+		BEGIN 
+			SELECT 1 AS AllAccepted
+		END
+		ELSE
+		BEGIN 
+			SELECT 0 AS AllAccepted
+		END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConferenceCheckApproved]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConferenceCheckApproved]
+	@requestId INT
+AS
+BEGIN
+	SELECT approved FROM ConferenceApprovals WHERE requestId = @requestId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConferenceCreate]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ConferenceCreate]
 	@roomId INT,
-	@topic VARCHAR(100),
-	@description VARCHAR(1000),
-	@notes VARCHAR(1000),
+	@topic VARCHAR(255),
+	@description VARCHAR(255),
+	@notes VARCHAR(255),
 	@startDate DATETIME,
-	@endDate DATETIME,
-	@conferenceId INT OUTPUT
+	@endDate DATETIME
 
 AS
 BEGIN
-	INSERT INTO Conference(topic, description, notes, startDate, endDate, roomId)
-	VALUES (@topic, @description, @notes, @startDate, @endDate, @roomId)
-	SET @conferenceId = SCOPE_IDENTITY()
-
-	EXEC CreateConferenceRequest @conferenceId, @roomId 
-
+	INSERT INTO Conferences(roomId, topic, description, notes, startDate, endDate)
+	VALUES (@roomId, @topic, @description, @notes, @startDate, @endDate)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateConferenceRequest]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[ConferenceListPendingApprovals]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConferenceListPendingApprovals]
+    @overseerId INT
+AS
+BEGIN
+    SELECT 
+        r.requestId,
+        c.conferenceId,
+        c.topic,
+        c.description,
+        c.notes,
+        c.startDate,
+        c.endDate,
+        u.firstName AS requesterFirstName,
+        u.lastName AS requesterLastName,
+        u.email AS requesterEmail,
+        p.participantId,
+        up.firstName AS participantFirstName,
+        up.lastName AS participantLastName,
+        up.email AS participantEmail
+    FROM 
+        ConferenceRequests r
+    INNER JOIN 
+        Conferences c ON r.conferenceId = c.conferenceId
+    INNER JOIN 
+        Users u ON r.requesterId = u.id
+    INNER JOIN 
+        ConferenceParticipants p ON r.requestId = p.requestId
+    INNER JOIN 
+        Users up ON p.participantId = up.id
+    WHERE 
+        c.roomId IN (SELECT roomId FROM MeetingRooms WHERE overseerId = @overseerId)
+    AND 
+        r.requestId NOT IN (SELECT requestId FROM ConferenceApprovals)
+    AND 
+        NOT EXISTS (SELECT 1 FROM ConferenceParticipants WHERE requestId = r.requestId AND accepted = 0)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConferenceNewMeetingRoom]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[CreateConferenceRequest]
-	@requestId INT, 
-	@conferenceId INT,
-	@roomId INT
+CREATE PROCEDURE [dbo].[ConferenceNewMeetingRoom]
+	@overseerId INT,
+	@capacity INT
 AS
 BEGIN
-	INSERT INTO ConferenceRequest(conferenceId, requestId, userId) 
-	VALUES (@conferenceId, @requestId, (
-	SELECT overseerId FROM MeetingRoom
-	WHERE roomId = @roomId))
+	INSERT INTO MeetingRooms(overseerId, capacity)
+	VALUES (@overseerId, @capacity)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateContact]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[ConferenceNewRequest]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ConferenceNewRequest]
+	@conferenceId INT,
+	@requesterId INT
+AS
+BEGIN
+	INSERT INTO ConferenceRequests (conferenceId, requesterId, status)
+	VALUES (@conferenceId, @requesterId, 'Pending')
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConferenceOverseerApprove]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ConferenceOverseerApprove]
+	@requestId INT,
+	@overseerId INT
+
+AS
+BEGIN
+	INSERT INTO ConferenceApprovals (requestId, overseerId, approved)
+	VALUES (@requestId, @overseerId, 1)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConferenceParticipantRejectRequest]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConferenceParticipantRejectRequest]
+	@requestId INT
+AS
+BEGIN
+	DELETE FROM ConferenceRequests WHERE requestId = @requestId
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[ConferenceRejectRequest]    Script Date: 03/08/2023 12:03:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ConferenceRejectRequest]
+	@requestId INT,
+	@overseerId INT
+AS
+BEGIN
+	IF EXISTS (SELECT 1 FROM ConferenceApprovals WHERE requestId = @requestId AND overseerId = @overseerId)
+	DELETE FROM ConferenceRequests WHERE requestId = @requestId
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[CreateContact]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -544,7 +712,7 @@ BEGIN
 	END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateMeetingRoom]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[CreateMeetingRoom]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -558,7 +726,7 @@ BEGIN
     VALUES (@roomCapacity, @overseerId)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateParticipantRequest]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[CreateParticipantRequest]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -573,7 +741,7 @@ BEGIN
 	VALUES (@userId, @conferenceId)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -595,7 +763,7 @@ BEGIN
 	SET @id = SCOPE_IDENTITY()
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteGuest]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteGuest]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -609,7 +777,7 @@ BEGIN
 	WHERE id = @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteMeeting]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteMeeting]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -634,7 +802,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GuestList]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[GuestList]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -650,49 +818,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ListConferenceRequests]    Script Date: 03/08/2023 09:01:47 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE PROCEDURE [dbo].[ListConferenceRequests]
-	@overseerId INT
-
-AS
-BEGIN
-	DECLARE @roomId INT;
-	
-	SELECT @roomId = roomId FROM MeetingRoom 
-	WHERE overseerId = @overseerId 
-
-	SELECT mr.roomId, c.topic, c.description, cr.isApproved FROM ConferenceRequest cr 
-	JOIN Conference c ON c.conferenceId = cr.conferenceId
-	JOIN Users u ON u.id = cr.userId
-	JOIN MeetingRoom mr ON mr.overseerId = @overseerId
-END
-GO
-/****** Object:  StoredProcedure [dbo].[ListConferences]    Script Date: 03/08/2023 09:01:47 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[ListConferences]
-	@roomId INT,
-	@startDate DATETIME,
-	@endDate DATETIME
-
-AS
-BEGIN
-	SELECT c.* FROM Conference c
-	JOIN ConferenceRequest cr ON c.conferenceId = cr.conferenceId
-	JOIN Participants p ON p.conferenceId = c.conferenceId
-	WHERE c.roomId = @roomId
-	AND p.isAccepted = 0x1
-	AND cr.isApproved = 0x1
-END
-GO
-/****** Object:  StoredProcedure [dbo].[ObtainCard]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[ObtainCard]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -709,7 +835,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RemoveContact]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RemoveContact]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -723,7 +849,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RemoveUser]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RemoveUser]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -737,7 +863,7 @@ BEGIN
 	WHERE id = @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RetrieveData]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RetrieveData]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -755,7 +881,7 @@ BEGIN
 	WHERE u.id = @id AND c.username LIKE '%' + @contactSearch + '%' AND c.activeState = @activeState
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RetrieveDeletedContact]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RetrieveDeletedContact]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -771,7 +897,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RetrieveDeletedUser]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RetrieveDeletedUser]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -786,7 +912,7 @@ BEGIN
 	WHERE id = @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RetrieveGuests]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RetrieveGuests]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -806,7 +932,7 @@ BEGIN
 	AND LOWER(companyName) LIKE '%' + LOWER(@companyName) + '%'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RetrieveGuestsInside]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RetrieveGuestsInside]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -826,7 +952,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[RetrieveMeetings]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RetrieveMeetings]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -848,7 +974,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RetrievePreviousMeetings]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RetrievePreviousMeetings]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -871,7 +997,7 @@ SELECT r.*, c.* FROM RandezvousIn r
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RetrieveUserContacts]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RetrieveUserContacts]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -889,7 +1015,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RetrieveUsers]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[RetrieveUsers]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -905,7 +1031,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SevereUserContact]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[SevereUserContact]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -922,7 +1048,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SoftDeleteFromContacts]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[SoftDeleteFromContacts]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -940,7 +1066,7 @@ WHERE id = @id
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SoftDeleteFromUsers]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[SoftDeleteFromUsers]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -959,7 +1085,7 @@ WHERE id = @id
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SoftDeleteMeeting]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[SoftDeleteMeeting]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -978,7 +1104,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateContact]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateContact]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1001,7 +1127,7 @@ BEGIN
 		WHERE id = @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateMeeting]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateMeeting]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1024,7 +1150,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateUser]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateUser]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1053,7 +1179,7 @@ BEGIN
 		WHERE id = @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[VerifyUnamePwd]    Script Date: 03/08/2023 09:01:47 ******/
+/****** Object:  StoredProcedure [dbo].[VerifyUnamePwd]    Script Date: 03/08/2023 12:03:08 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
