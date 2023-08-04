@@ -23,11 +23,11 @@ class ConferenceRoom {
             let request = new sql.Request(conn.pool);
 
             request.input("overseerId", sql.Int, this.overseerId);
-            request.input("roomCapacity", sql.Int, this.roomCapacity);
+            request.input("capacity", sql.Int, this.roomCapacity);
 
             request.output("roomId", sql.Int, this.roomId);
 
-            let result = await request.execute("CreateConferenceRoom");
+            let result = await request.execute("ConferenceNewMeetingRoom");
 
         } catch (error) {
             console.error(error);

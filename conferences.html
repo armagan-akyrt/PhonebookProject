@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
+
     <head>
-        <script src="conferences.js"></script>
+        <title>Konferanslar</title>
     </head>
+
     <body>
+        <div id="navbar-root"></div>
+        <div id="app-root"></div>
         <div id="dashboard"></div>
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
@@ -11,10 +15,42 @@
         <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
         <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
         <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        
+        <script type="text/babel">
+            function Navbar() {
+                return (
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                        <a className="navbar-brand" href="/index.html">Konferanslar</a>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul className="navbar-nav">
+                                <li className="nav-item active">
+                                    <a className="nav-link" href="/index.html">Ana Sayfa <span className="sr-only">(current)</span></a>
+                                </li>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Kullanıcı
+                                    </a>
+                                    <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a className="dropdown-item" href="/userpage.html">Kullanıcı Sayfası</a>
+                                        {/* Add more links as needed */}
+                                    </div>
+                                </li>
+                                {/* Add more dropdowns as needed */}
+                            </ul>
+                        </div>
+                    </nav>
+                );
+            }
+        
+            ReactDOM.render(<Navbar />, document.getElementById('navbar-root'));
+        </script>
 
         <script>
             function fetchMeetingRooms() {
-                return fetch('/getRooms') 
+                return fetch('/getRooms')
                     .then(response => response.json())
                     .then(data => data.roomsList)
                     .catch(error => console.error('Error:', error));
@@ -68,18 +104,27 @@
                     );
                 };
 
-                const addRoom = () => {
-                    setRooms((prevRooms) => [
-                        ...prevRooms,
-                        {
-                            id: prevRooms.length + 1,
-                            isEmpty: true,
-                            participants: [],
-                            startDate: null,
-                            endDate: null,
-                            capacity: 10
+                function addRoom() {
+                    // Retrieve the overseerId from sessionStorage
+                    const overseerId = JSON.parse(sessionStorage.getItem('currentUser')).id;
+
+                    // Prompt the user for the room capacity
+                    const roomcapacity = prompt('Enter room capacity:');
+                    console.log(`overseerId: ${overseerId}, roomcapacity: ${roomcapacity}`);
+
+                    // Make a POST request to /createRoom
+                    fetch('/createRoom', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
                         },
-                    ]);
+                        body: JSON.stringify({ overseerId: overseerId, roomCapacity: roomcapacity })
+                    })
+                        .then(response => response.text())
+                        .then(data => alert(data))
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
                 };
 
                 return (

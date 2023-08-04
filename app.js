@@ -470,6 +470,20 @@ app.get('/getRooms', async (req, res) => {
     res.json({ roomsList: rooms });
 });
 
+app.post('/createRoom', async (req, res) => {
+    let room = new ConferenceRoom();
+    room.overseerId = req.body.overseerId;
+    room.roomCapacity = req.body.roomCapacity;
+
+    await room.CreateConferenceRoom();
+});
+app.post('/deleteRoom', async (req, res) => {
+    let room = new ConferenceRoom();
+    room.roomId = req.body.roomId;
+
+    await room.RemoveConferenceRoom();
+});
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });
