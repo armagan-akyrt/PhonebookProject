@@ -49,4 +49,36 @@ class ConferenceRoom {
 
         return true;
     }
+
+    async ListMeetingRooms() {
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+
+            let result = await request.execute("ConferenceListMeetingRooms");
+        } catch (error) {
+            console.error(error);
+            return false;
+        } finally {
+            conn.close();
+        }
+
+        return true;
+    }
+
+    async ListConferenceRoomsFull() {
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+
+            let result = await request.execute("ConferenceListMeetingRooms");
+        } catch (error) {
+            console.error(error);
+            return false;
+        } finally {
+            conn.close();
+        }
+
+        return true;
+    }
 }
