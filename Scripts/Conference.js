@@ -172,7 +172,7 @@ class Conference {
 
             request.input("overseerId", sql.Int, currentUserId);
 
-            let result = await request.execute("ConferenceListPendingRequests");
+            let result = await request.execute("ConferenceListPendingApprovals");
 
             let rawRequests = result.recordsets[0];
 

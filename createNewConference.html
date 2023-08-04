@@ -9,6 +9,45 @@
     </head>
 
     <body>
+
+        <ul class="navbar">
+            <li><a href="/index.html">Ana Sayfa</a></li>
+            <li>
+                <a href="#">Kullanıcı</a>
+                <ul class="dropdown">
+                    <li><a href="/userpage.html">Kullanıcı Görünümü</a></li>
+                    <li><a href="/createNewUser.html?isAdmin=true">Yeni Kullanıcı Oluştur</a></li>
+                    <li><a href="/deletedUsers.html">Silinen Kullanıcılar</a></li>
+
+                </ul>
+            </li>
+            <li>
+                <a href="#">Bağlantı</a>
+                <ul class="dropdown">
+                    <li><a href="/createNewContact.html">Bağlantı Oluştur</a></li>
+                    <li><a href="/deletedContacts.html">Silinen Bağlantılar</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">Misafir</a>
+                <ul class="dropdown">
+                    <li><a href="/addguest.html">Misafir Oluştur</a></li>
+                    <li><a href="/guestsList.html">Misafirleri Görüntüle</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Konferans</a>
+                <ul class="dropdown">
+                    <li><a href="/conferences.html">Konferanslar</a></li>
+                    <li><a href="/createNewConference.html">Yeni Konfernas</a></li>
+                    <li><a href="/notifications.html"> Konferans Bildirimleri</a></li>
+                </ul>
+            </li>
+            <li><a href="/logout">Çıkış Yap</a></li>
+
+        </ul>
+
         <div class="flex-container">
             <div class="left-container">
                 <input type="text" id="searchInputUser" name="searchInputUser" placeholder="Kullanıcı araması...">

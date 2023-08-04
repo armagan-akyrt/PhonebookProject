@@ -31,17 +31,20 @@
                                 <li className="nav-item active">
                                     <a className="nav-link" href="/index.html">Ana Sayfa <span className="sr-only">(current)</span></a>
                                 </li>
-                                <li className="nav-item dropdown">
+                                <ul className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Kullanıcı
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <a className="dropdown-item" href="/userpage.html">Kullanıcı Sayfası</a>
-                                        {/* Add more links as needed */}
+ 
                                     </div>
-                                </li>
-                                {/* Add more dropdowns as needed */}
+                                </ul>
+                                <a className="nav-link" href="/adminPage.html" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Yönetici
+                                </a>
                             </ul>
+                            
                         </div>
                     </nav>
                 );

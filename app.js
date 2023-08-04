@@ -501,6 +501,22 @@ app.post('/conferenceRequest', async (req, res) => {
     await conferenceRequest.CreateConference();
 });
 
+app.get('/getPendingParticipations', async (req, res) => {
+    let conference = new Conference();
+
+    let pendingParticipations = await conference.ListParticipantRequests(req.query.userId);
+
+    res.json({ pendingParticipationsList: pendingParticipations });
+});
+
+app.get('/getApprovalRequests', async (req, res) => {
+    let conference = new Conference();
+
+    let result = await conference.ListPendingApprovals(req.query.userId);
+
+    res.json({ pendingApprovalsList: result });
+});
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Konferans Bildirimleri</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+
+        <ul class="navbar">
+            <li><a href="/index.html">Ana Sayfa</a></li>
+            <li>
+                <a href="#">Kullanıcı</a>
+                <ul class="dropdown">
+                    <li><a href="/userpage.html">Kullanıcı Görünümü</a></li>
+                    <li><a href="/createNewUser.html?isAdmin=true">Yeni Kullanıcı Oluştur</a></li>
+                    <li><a href="/deletedUsers.html">Silinen Kullanıcılar</a></li>
+
+                </ul>
+            </li>
+            <li>
+                <a href="#">Bağlantı</a>
+                <ul class="dropdown">
+                    <li><a href="/createNewContact.html">Bağlantı Oluştur</a></li>
+                    <li><a href="/deletedContacts.html">Silinen Bağlantılar</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">Misafir</a>
+                <ul class="dropdown">
+                    <li><a href="/addguest.html">Misafir Oluştur</a></li>
+                    <li><a href="/guestsList.html">Misafirleri Görüntüle</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Konferans</a>
+                <ul class="dropdown">
+                    <li><a href="/conferences.html">Konferanslar</a></li>
+                    <li><a href="/createNewConference.html">Yeni Konfernas</a></li>
+                    <li><a href="/notifications.html"> Konferans Bildirimleri</a></li>
+                </ul>
+            </li>
+            <li><a href="/logout">Çıkış Yap</a></li>
+
+        </ul>
+
+        <div class="flex-container">
+            <div class="left-container">
+                <h3>Onay İstekleri</h3>
+                <div class="scrollable-list">
+                    <ul id="listToShowApprovals">
+                        <!-- List items will be populated dynamically here -->
+                    </ul>
+
+                </div>
+                <div class="flex-container">
+                    <button type="button" name="approveRequest" id="approveRequest">Kabul</button>
+                    <button type="button" name="rejectRequest" id="rejectRequest">Ret</button>
+    
+                </div>
+            </div>
+
+            
+
+        <div class="centre-container1">
+            <h3>Katılım İstekleri</h3>
+            <div class="scrollable-list">
+                <ul id="listToShowParticipations">
+                    <!-- List items will be populated dynamically here -->
+                </ul>
+
+            </div>
+
+            <div class="flex-container">
+                <button type="button" name="acceptParticipation" id="acceptParticipation">Kabul</button>
+                <button type="button" name="rejectParticipation" id="rejectParticipation">Ret</button>
+
+            </div>
+
+        </div>
+
+        <div class="right-container">
+            <h3>Bildirimler</h3>
+            <div class="scrollable-list">
+                <ul id="listToShowNotifications">
+                    <!-- List items will be populated dynamically here -->
+                </ul>
+
+            </div>
+
+            <div class="flex-container">
+                <button type="button" name="acceptNotification" id="acceptNotification">Kabul</button>
+                <button type="button" name="rejectNotification" id="rejectNotification">Ret</button>
+            </div>
+        </div>
+
+    </div>
+    <script src="notifications.js" type="module"></script>
+    </body>
+
+</html>
