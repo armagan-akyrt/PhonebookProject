@@ -10,12 +10,14 @@
         <div id="app-root"></div>
         <div id="dashboard"></div>
 
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 
         <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
         <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
         <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
         
+
         <script type="text/babel">
             function Navbar() {
                 return (
@@ -58,6 +60,28 @@
         </script>
 
         <script type="text/babel">
+            function deleteRoom() {
+                // Retrieve the overseerId from sessionStorage
+                const overseerId = JSON.parse(sessionStorage.getItem('currentUser')).id;
+
+                // Prompt the user for the room capacity
+                const roomId = localStorage.getItem('roomId');
+                console.log(`roomid: ${roomId}`);
+
+                // Make a POST request to /createRoom
+                fetch('/deleteRoom', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ roomId: roomId })
+                })
+                    .then(response => response.text())
+                    .then(data => alert(data))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            }
             function Room({ room, toggleRoomStatus }) {
                 const { roomId, isEmpty, participants, startDate, endDate, roomCapacity } = room;
 
@@ -77,6 +101,8 @@
                                 </>
                             )}
                             <p className="card-text">Kapasite: {roomCapacity}</p>
+                            {localStorage.setItem('roomId', roomId)}
+                            <button className="btn btn-primary mb-1" onClick={deleteRoom}>Sil</button>
                         </div>
                     </div>
                 );
@@ -126,7 +152,21 @@
                             console.error('Error:', error);
                         });
                 };
+               
 
+                function RoomList({ rooms }) {
+                    return (
+                        <div>
+                            {rooms.map(room => (
+                                <div key={room.id}>
+                                    <input type="checkbox" id={`room-${room.id}`} />
+                                    <label htmlFor={`room-${room.id}`}>{room.name}</label>
+                                </div>
+                            ))}
+                        </div>
+                    );
+                }
+                
                 return (
                     <div className="container mt-3">
                         <button className="btn btn-primary mb-3" onClick={addRoom}>Oda Ekle</button>
@@ -140,6 +180,8 @@
                     </div>
                 );
             }
+
+            
 
             ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
         </script>

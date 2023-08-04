@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Yeni Konferans İsteği</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <div class="flex-container">
+            <div class="left-container">
+                <input type="text" id="searchInputUser" name="searchInputUser" placeholder="Kullanıcı araması...">
+                <div class="scrollable-list">
+                    <ul id="listToShowUser">
+                        <!-- List items will be populated dynamically here -->
+                    </ul>
+
+                </div>
+
+            </div>
+            <div class="centre-container1">
+                <h2>Kullanıcı Bilgileri</h2>
+                    <label for="name"><b>Ad</b></label>
+                    <input type="text" name="name" id="userFirstName" readonly>
+
+                    <label for="surname"><b>Soyad</b></label>
+                    <input type="text" name="surname" id="userLastName" readonly>
+
+                    <label for="gsmNum"> Telefon Numarası</label>
+                    <input type="text" name="gsmNum" id="userGsmNum" readonly>
+
+
+                    <label for="email"><b>Email</b></label>
+                    <input type="text" name="email" id="userEmail" readonly>
+
+                    <label for="address"><b>Adres</b></label>
+                    <textarea name="address" id="userAddress" rows="4" class="address-input"></textarea>
+
+                    <button type="submit" id="userAddToParticipants">Davet Et</button>
+            </div>
+
+            <div class="left-container">
+                <h2>Konferans Bilgileri</h2>
+                <form action="/conferenceRequest" method="POST">
+                    <input type="hidden" name="userId" id="conferenceUserId">
+
+                    <label for="topic"><b>Konu</b></label>
+                    <input type="text" name="topic" id="conferenceTopic" required>
+
+                    <label for="description"><b>Açıklama</b></label>
+                    <input type="text" name="description" id="conferenceDescription" required>
+
+                    <label for="notes"> <b>Notlar</b></label>
+                    <input type="text" name="notes" id="conferenceNotes" required>
+                    
+                    <label for="roomId"><b>Konferans Odası</b></label>
+                    <select name="roomId" id="conferenceRoomId">
+                        <!-- List items will be populated dynamically here -->
+                    </select>
+
+                    <label for="startDate" ><b>Başlangıç Tarihi</b></label>
+                    <input type="datetime-local" name="startDate" id="conferenceStartTime" required>
+
+                    <label for="endDate"><b>Bitiş Tarihi</b></label>
+                    <input type="datetime-local" name="endDate" id="conferenceEndTime" required>
+
+                    <input type="hidden" name="participants" id="conferenceParticipants">
+
+
+
+                    <button type="submit" style="margin-top: 10px;" name="createConferenceRequestButton"
+                        id="createConferenceRequest">İstek Yolla</button>
+                </form>
+            </div>
+        <script src="createNewConference.js" type="module"></script>
+    </body>
+
+</html>

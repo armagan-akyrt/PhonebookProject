@@ -5,6 +5,7 @@ const Contact = require('./Scripts/Contact');
 const Guest = require('./Scripts/Guest');
 const { Meeting } = require('./Scripts/Meeting');
 const ConferenceRoom = require('./Scripts/ConferenceRoom');
+const Conference = require('./Scripts/Conference');
 const UsefulUtilities = require('./Scripts/UsefulUtilities');
 const session = require('express-session');
 const { DateTime } = require('msnodesqlv8');
@@ -481,7 +482,23 @@ app.post('/deleteRoom', async (req, res) => {
     let room = new ConferenceRoom();
     room.roomId = req.body.roomId;
 
-    await room.RemoveConferenceRoom();
+    let result = await room.RemoveConferenceRoom();
+});
+
+app.post('/conferenceRequest', async (req, res) => {
+    let conferenceRequest = new Conference();
+
+    conferenceRequest.requesterId = req.body.userId;
+    conferenceRequest.roomId = req.body.roomId;
+    conferenceRequest.participantIds = JSON.parse(req.body.participants).participants;
+    conferenceRequest.startDate = req.body.startDate;
+    conferenceRequest.endDate = req.body.endDate;
+    conferenceRequest.notes = req.body.notes;
+    conferenceRequest.topic = req.body.topic;
+    conferenceRequest.description = req.body.description;
+    conferenceRequest.conferenceRoom.roomId = req.body.roomId;
+
+    await conferenceRequest.CreateConference();
 });
 
 app.listen(port, () => {

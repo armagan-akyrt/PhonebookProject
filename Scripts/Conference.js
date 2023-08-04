@@ -1,7 +1,7 @@
 
 const Connection = require("./Connection.js");
 const ConferenceRoom = require("./ConferenceRoom.js");
-const { raw } = require("express");
+const sql = require("mssql/msnodesqlv8");
 
 conn = new Connection();
 
@@ -41,7 +41,10 @@ class Conference {
 
         request.output("conferenceId", sql.Int, this.conferenceId);
 
-        result = await request.execute("ConferenceCreate");
+        let result = await request.execute("ConferenceCreate");
+        
+        this.conferenceId = result.output.conferenceId;
+
 
         } catch (error) {
             console.error(error);
@@ -56,11 +59,12 @@ class Conference {
 
             request.input("conferenceId", sql.Int, this.conferenceId);
             request.input("requesterId", sql.Int, this.requesterId);
+
             request.output("requestId", sql.Int, this.requestId);
 
             let result = await request.execute("ConferenceNewRequest");
+            this.requestId = result.output.requestId;
 
-            conn.console();
         } catch (error) {
             console.error(error);
             return false;
@@ -70,15 +74,15 @@ class Conference {
         try {
             await conn.open();
 
-            this.participantIds.forEach(async (participantId) => {
+            for (let i = 0; i < this.participantIds.length; i++) {
+                const participantId = this.participantIds[i];
                 let request = new sql.Request(conn.pool);
                 
                 request.input("requestId", sql.Int, this.requestId);
                 request.input("participantId", sql.Int, participantId);
 
                 let result = await request.execute("ConferenceAddParticipant");
-            });
-
+            }
 
         } catch (error) {
             console.error(error);
