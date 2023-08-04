@@ -4,6 +4,7 @@ const User = require('./Scripts/User');
 const Contact = require('./Scripts/Contact');
 const Guest = require('./Scripts/Guest');
 const { Meeting } = require('./Scripts/Meeting');
+const ConferenceRoom = require('./Scripts/ConferenceRoom');
 const UsefulUtilities = require('./Scripts/UsefulUtilities');
 const session = require('express-session');
 const { DateTime } = require('msnodesqlv8');
@@ -459,6 +460,14 @@ app.post('/softDeleteMeeting', async (req, res) => {
     meeting.meetingId = req.body.meetingId;
 
     await meeting.RemoveMeeting();
+});
+
+app.get('/getRooms', async (req, res) => {
+    let room = new ConferenceRoom();
+
+    let rooms = await room.ListMeetingRooms()
+
+    res.json({ roomsList: rooms });
 });
 
 app.listen(port, () => {
