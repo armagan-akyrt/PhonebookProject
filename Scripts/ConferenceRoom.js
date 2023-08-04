@@ -96,13 +96,3 @@ class ConferenceRoom {
         return rooms;
     }
 } module.exports = ConferenceRoom;
-
-
-async function main() {
-    let room = new ConferenceRoom();
-    let rooms = await room.ListMeetingRooms();
-
-    console.log(rooms);
-}
-
-main();
