@@ -87,7 +87,47 @@ function participationAnswer(participationAnswer) {
     }
 }
 
+function overseerAnswer(overseerAnswer) {
+    if (selectedOverseerRequestIndex != null) {
+        fetch('/overseerAnsw', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+    
+            body: JSON.stringify({requestId: selectedOverseerRequestIndex, response: overseerAnswer, overseerId: currentUser.id}),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchParticipationInvites();
+                fetchApprovalRequests();
+                fetchNotifications();
+            }
+        });
+    }
+}
 
+function clearNotifications() {
+    fetch('/clearNotifications', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({userId: currentUser.id}),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            fetchParticipationInvites();
+            fetchApprovalRequests();
+            fetchNotifications();
+        }
+    });
+}
 
 document.getElementById('acceptParticipation').addEventListener('click', function() {
     participationAnswer(document.getElementById('acceptParticipation').value);
@@ -95,5 +135,17 @@ document.getElementById('acceptParticipation').addEventListener('click', functio
 
 document.getElementById('rejectParticipation').addEventListener('click', function() {
     participationAnswer(document.getElementById('rejectParticipation').value);
+});
+
+document.getElementById('approveRequest').addEventListener('click', function() {
+    overseerAnswer(document.getElementById('approveRequest').value);
+});
+
+document.getElementById('rejectRequest').addEventListener('click', function() {
+    overseerAnswer(document.getElementById('rejectRequest').value);
+});
+
+document.getElementById('clearNotifications').addEventListener('click', function() {
+    clearNotifications();
 });
 

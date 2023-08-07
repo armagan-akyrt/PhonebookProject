@@ -280,4 +280,23 @@ class Conference {
 
     }
 
+    async ClearNotifications(userId)
+    {
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+
+            request.input("userId", sql.Int, userId);
+
+            let result = await request.execute("ConferenceClearNotifications");
+        } catch (error) {
+            console.error(error);
+            return false;
+        } finally {
+            conn.close();
+        }
+
+        return true;
+    }
+
 } module.exports = Conference;

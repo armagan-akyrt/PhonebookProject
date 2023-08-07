@@ -536,6 +536,25 @@ app.post('/participationAnsw', async (req, res) => {
 
 });
 
+app.post('/overseerAnsw', async (req, res) => {
+    let conference = new Conference();
+
+    conference.requestId = req.body.requestId;
+
+    let result = await conference.OverseerRequestResponse(req.body.overseerId, req.body.response);
+
+    res.json({ result: result });
+
+});
+
+app.post('/clearNotifications', async (req, res) => {
+    let conference = new Conference();
+
+    conference.userId = req.body.userId;
+
+    await conference.ClearNotifications();
+});
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });
