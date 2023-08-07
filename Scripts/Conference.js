@@ -252,4 +252,26 @@ class Conference {
         return true;
     }
 
+    async ListNotifications()
+    {
+        notifications = [];
+        try {
+            await conn.open();
+            let request = new sql.Request(conn.pool);
+
+            request.input("conferenceId", sql.Int, this.conferenceId);
+
+            let result = await request.execute("ConferenceListNotifications");
+
+            let rawNotifications = result.recordsets[0];
+
+            rawNotifications.forEach((rawNotification) => {
+                notifications.push(rawNotification);
+            });
+
+        } catch (error) {
+            
+        }
+    }
+
 } module.exports = Conference;
