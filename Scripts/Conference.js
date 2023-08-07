@@ -150,7 +150,7 @@ class Conference {
             request.input("requestId", sql.Int, this.requestId);
             request.input("participantId", sql.Int, participantId);
 
-            let result = await request.execute("ConferenceAcceptRequest");
+            let result = await request.execute(procedureString);
 
         } catch (error) {
             console.error(error);

@@ -76,12 +76,12 @@ ul li:hover ul.dropdown {
     padding: 0; /* Remove padding from the list */
     list-style-type: none; /* Remove bullet points */
 }
-#listToShowUser li, #listToShowContact li, #listToShowGuest li, #listToShowMeeting li, #listToShowParticipations li, #listToShowApprovals li, #listToShowParticipations li {
+#listToShowUser li, #listToShowContact li, #listToShowGuest li, #listToShowMeeting li, #listToShowParticipations li, #listToShowApprovals li, #listToShowParticipations li, #listToShowNotifications li {
     display: block;
     position: relative;
 }
 
-#listToShowUser li:hover, #listToShowContact li:hover, #listToShowGuest li:hover, #listToShowMeeting li:hover, #listToShowParticipations li:hover, #listToShowApprovals li:hover, #listToShowParticipations li:hover {
+#listToShowUser li:hover, #listToShowContact li:hover, #listToShowGuest li:hover, #listToShowMeeting li:hover, #listToShowParticipations li:hover, #listToShowApprovals li:hover, #listToShowParticipations li:hover, #listToShowNotifications li:hover {
     background: #81e3fc;
     border-radius: 10px;
 }

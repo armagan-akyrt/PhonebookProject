@@ -525,6 +525,17 @@ app.get('/getNotifications', async (req, res) => {
     res.json({ notificationsList: result });
 });
 
+app.post('/participationAnsw', async (req, res) => {
+    let conference = new Conference();
+
+    conference.requestId = req.body.requestId;
+
+    let result = await conference.ParticipantResponse(req.body.participantId, req.body.response);
+
+    res.json({ result: result });
+
+});
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });
