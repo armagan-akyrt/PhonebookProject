@@ -86,7 +86,7 @@
                     });
             }
             function Room({ room, toggleRoomStatus }) {
-                const { roomId, isEmpty, participants, startDate, endDate, roomCapacity } = room;
+                const { roomId, isEmpty, participants, startTime, endTime, roomCapacity } = room;
 
                 return (
                     <div
@@ -99,8 +99,8 @@
                                 <>
                                     <h5 className="card-title">Toplantı Bilgileri</h5>
                                     <p className="card-text">Katılımcılar: {participants.join(', ')}</p>
-                                    <p className="card-text">Başlangıç tarihi: {formatDate(startDate)}</p>
-                                    <p className="card-text">Bitiş tarihi: {formatDate(endDate)}</p>
+                                    <p className="card-text">Başlangıç tarihi: {formatDate(startTime)}</p>
+                                    <p className="card-text">Bitiş tarihi: {formatDate(endTime)}</p>
                                 </>
                             )}
                             <p className="card-text">Kapasite: {roomCapacity}</p>
@@ -121,6 +121,7 @@
 
                 React.useEffect(() => {
                     fetchMeetingRooms().then((data) => {
+                        console.log(data);
                         setRooms(data);
                     });
                 }, []);

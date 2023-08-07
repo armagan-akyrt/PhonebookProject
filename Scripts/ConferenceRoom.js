@@ -79,7 +79,8 @@ class ConferenceRoom {
                     room.isEmpty = false;
                     room.meetingTopic = element.topic;
                     room.meetindDescription = element.description;
-                    room.endTime = element.endTime;
+                    room.endTime = element.startDate;
+                    room.startTime = element.endDate;
                     room.description = element.description;
                 } 
                 

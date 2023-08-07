@@ -19,12 +19,11 @@ function fetchParticipationInvites()
         data.pendingParticipationsList.forEach(participation => {
             let li = document.createElement('li');
             li.textContent = `Konu: ${participation.topic}`;
-            li.value = participation.conferenceId;
+            li.value = participation.requestId;
             
             li.addEventListener('click', function() {
                 selectedParticipantRequestIndex = li.value;
                 console.log(selectedParticipantRequestIndex);
-                console.log(document.getElementById('rejectParticipation').value);
             });
             document.getElementById('listToShowParticipations').appendChild(li);
         });
@@ -66,6 +65,7 @@ function fetchNotifications() {
 }
 
 function participationAnswer(participationAnswer) {
+    console.log(selectedParticipantRequestIndex)
     if (selectedParticipantRequestIndex != null) {
         fetch('/participationAnsw', {
             method: 'POST',
