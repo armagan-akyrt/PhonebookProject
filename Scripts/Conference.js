@@ -252,14 +252,14 @@ class Conference {
         return true;
     }
 
-    async ListNotifications()
+    async ListNotifications(userId)
     {
-        notifications = [];
+        let notifications = [];
         try {
             await conn.open();
             let request = new sql.Request(conn.pool);
 
-            request.input("conferenceId", sql.Int, this.conferenceId);
+            request.input("participantId", sql.Int, userId);
 
             let result = await request.execute("ConferenceListNotifications");
 
@@ -270,8 +270,14 @@ class Conference {
             });
 
         } catch (error) {
-            
+            console.error(error);
+            return null;
+        } finally {
+            conn.close();
         }
+
+        return notifications;
+
     }
 
 } module.exports = Conference;

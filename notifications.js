@@ -4,6 +4,7 @@ window.onload = function () {
     currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     fetchParticipationInvites();
     fetchApprovalRequests();
+    fetchNotifications();
 }
 
 function fetchParticipationInvites()
@@ -32,6 +33,20 @@ function fetchApprovalRequests()
             li.textContent = `Konu: ${approval.topic}`;
             li.value = approval.requestId;
             document.getElementById('listToShowApprovals').appendChild(li);
+        });
+    });
+}
+
+function fetchNotifications() {
+    document.getElementById('listToShowNotifications').innerHTML = '';
+    fetch(`/getNotifications?userId=${currentUser.id}`)
+    .then(response => response.json())
+    .then(data => {
+        data.notificationsList.forEach(notification => {
+            let li = document.createElement('li');
+            li.textContent = `Konu: ${notification.topic}`;
+            li.value = notification.notificationId;
+            document.getElementById('listToShowNotifications').appendChild(li);
         });
     });
 }

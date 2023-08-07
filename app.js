@@ -517,6 +517,14 @@ app.get('/getApprovalRequests', async (req, res) => {
     res.json({ pendingApprovalsList: result });
 });
 
+app.get('/getNotifications', async (req, res) => {
+    
+    let conference = new Conference();
+    let result = await conference.ListNotifications(req.query.userId);
+
+    res.json({ notificationsList: result });
+});
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });
