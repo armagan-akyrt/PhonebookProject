@@ -467,6 +467,13 @@ app.get('/getRooms', async (req, res) => {
     let room = new ConferenceRoom();
 
     let rooms = await room.ListMeetingRooms()
+    for (let currentRoom of rooms) {
+        if (currentRoom.isEmpty === false) {
+            let participants = await currentRoom.ListParticipants();
+            let roomIndex = rooms.findIndex(x => x.roomId === currentRoom.roomId);
+            rooms[roomIndex].participants = participants;
+        }
+    }
 
     res.json({ roomsList: rooms });
 });
