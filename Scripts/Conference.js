@@ -1,7 +1,7 @@
 
 const Connection = require("./Connection.js");
 const ConferenceRoom = require("./ConferenceRoom.js");
-const sql = require("mssql/msnodesqlv8");
+const sql = require("mssql");
 
 conn = new Connection();
 

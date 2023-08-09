@@ -1,4 +1,4 @@
-const sql = require("mssql/msnodesqlv8");
+const sql = require("mssql");
 const Connection = require("./Connection");
 const UsefulUtilities = require("./UsefulUtilities");
 const { raw } = require("express");

@@ -1,4 +1,4 @@
-const sql = require("mssql/msnodesqlv8");
+const sql = require("mssql");
 const Connection = require("./Connection");
 const User = require("./User");
 const UsefulUtilities = require("./UsefulUtilities");

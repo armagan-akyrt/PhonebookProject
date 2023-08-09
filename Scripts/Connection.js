@@ -1,5 +1,5 @@
 // Import the necessary modules
-const sql = require('mssql/msnodesqlv8');
+const sql = require('mssql');
 
 // SQL Server config
 // const config = {
@@ -8,8 +8,14 @@ const sql = require('mssql/msnodesqlv8');
 // };
 
 const config = {
-    driver: 'msnodesqlv8',
-    connectionString: 'Driver={SQL Server Native Client 11.0};Server=database-1.caajotm0qvd6.eu-central-1.rds.amazonaws.com;Database=PhoneDirectory;Uid=admin;Pwd=5weiapz7SQL;',
+    user: 'admin',
+    password: '5weiapz7SQL',
+    server: 'database-1.caajotm0qvd6.eu-central-1.rds.amazonaws.com',
+    database: 'PhoneDirectory',
+    options: {
+        encrypt: false
+    }
+    //connectionString: 'Driver={SQL Server Native Client 11.0};Server=database-1.caajotm0qvd6.eu-central-1.rds.amazonaws.com;Database=PhoneDirectory;Uid=admin;Pwd=5weiapz7SQL;',
 };
 
 
