@@ -1,5 +1,4 @@
 const sql = require("mssql/msnodesqlv8");
-const { DateTime } = require("msnodesqlv8");
 const Connection = require("./Connection");
 const UsefulUtilities = require("./UsefulUtilities");
 
@@ -12,8 +11,8 @@ class Meeting {
         this.userId = 0;
         this.contactId = 0;
 
-        this.meetingStartDate = new DateTime();
-        this.meetingEndDate = new DateTime();
+        this.meetingStartDate = new Date();
+        this.meetingEndDate = new Date();
 
         this.meetingNotes = "";
         this.contactFullName = "";

@@ -8,8 +8,6 @@ const ConferenceRoom = require('./Scripts/ConferenceRoom');
 const Conference = require('./Scripts/Conference');
 const UsefulUtilities = require('./Scripts/UsefulUtilities');
 const session = require('express-session');
-const { DateTime } = require('msnodesqlv8');
-const sql = require('msnodesqlv8');
 
 let util = new UsefulUtilities();
 
