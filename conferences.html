@@ -80,7 +80,10 @@
                     body: JSON.stringify({ roomId: roomId })
                 })
                     .then(response => response.text())
-                    .then(data => alert(data))
+                    .then(data => {
+                        alert('Oda başarıyla silindi.');
+                        window.location.reload();
+                    })
                     .catch((error) => {
                         console.error('Error:', error);
                     });
@@ -139,7 +142,7 @@
                     const overseerId = JSON.parse(sessionStorage.getItem('currentUser')).id;
 
                     // Prompt the user for the room capacity
-                    const roomcapacity = prompt('Enter room capacity:');
+                    const roomcapacity = prompt('Lütfen oda kapasitesini giriniz:');
                     console.log(`overseerId: ${overseerId}, roomcapacity: ${roomcapacity}`);
 
                     // Make a POST request to /createRoom
@@ -151,8 +154,12 @@
                         body: JSON.stringify({ overseerId: overseerId, roomCapacity: roomcapacity })
                     })
                         .then(response => response.text())
-                        .then(data => alert(data))
+                        .then(data => {
+                                alert('Oda başarıyla eklendi.');
+                                window.location.reload();
+                        })
                         .catch((error) => {
+                            alert('Oda eklenirken bir hata oluştu.');
                             console.error('Error:', error);
                         });
                 };

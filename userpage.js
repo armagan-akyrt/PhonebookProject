@@ -72,5 +72,7 @@ document.getElementById('updateMeetingButton').addEventListener('click', functio
 
 document.getElementById('deleteMeetingButton').addEventListener('click', function(event) {
     event.preventDefault();
-    softDeleteMeeting();
+    let success = softDeleteMeeting();
+
+
 });

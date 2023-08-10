@@ -107,7 +107,12 @@ export function softDeleteMeeting() {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            let alertStr = "Toplantı silinirken bir hata oluştu.";
+            if (data.isSuccessful === true) {
+                alertStr = "Toplantı başarıyla silindi.";
+            }
+            alert(alertStr);
+            fetchMeetings('', true, '', '', selectedMeeting.userId);
         })
         .catch((error) => {
             console.error('Error:', error);

@@ -395,8 +395,26 @@ app.post('/addmeeting', async (req, res) => {
     meeting.meetingEndDate = req.body.endDate;
 
     meeting.meetingNotes = req.body.notes;
+    let alertString = 'Toplantı oluşturulamadı'
+     if (await meeting.CreateMeeting() === true)
+     {
+        alertString = 'Toplantı başarıyla oluşturuldu';
+     }
 
-    meeting.CreateMeeting();
+     res.send(`
+     <html>
+         <head>
+             <title>Meeting Response</title>
+         </head>
+         <body>
+             <script>
+                 alert('${alertString}');
+                 window.location.href = '/userpage.html'; // Redirects to the home page or any other page after alert
+             </script>
+         </body>
+     </html>
+ `);
+
 });
 
 app.get('/getMeetings', async (req, res) => {
@@ -450,7 +468,8 @@ app.post('/updateMeeting', async (req, res) => {
     
         meeting.meetingNotes = req.body.meetingNotes;
     
-        await meeting.UpdateMeeting();
+        let result = await meeting.UpdateMeeting();
+        res.json({ isSuccessful: result });
 });
 
 app.post('/softDeleteMeeting', async (req, res) => {
@@ -458,7 +477,8 @@ app.post('/softDeleteMeeting', async (req, res) => {
 
     meeting.meetingId = req.body.meetingId;
 
-    await meeting.RemoveMeeting();
+    let result = await meeting.RemoveMeeting();
+    res.json({ isSuccessful: result });
 });
 
 app.get('/getRooms', async (req, res) => {
@@ -481,13 +501,15 @@ app.post('/createRoom', async (req, res) => {
     room.overseerId = req.body.overseerId;
     room.roomCapacity = req.body.roomCapacity;
 
-    await room.CreateConferenceRoom();
+    let result = await room.CreateConferenceRoom();
+    res.json({ isSuccessful: result });
 });
 app.post('/deleteRoom', async (req, res) => {
     let room = new ConferenceRoom();
     room.roomId = req.body.roomId;
 
     let result = await room.RemoveConferenceRoom();
+    res.json({ isSuccessful: result });
 });
 
 app.post('/conferenceRequest', async (req, res) => {
@@ -503,7 +525,8 @@ app.post('/conferenceRequest', async (req, res) => {
     conferenceRequest.description = req.body.description;
     conferenceRequest.conferenceRoom.roomId = req.body.roomId;
 
-    await conferenceRequest.CreateConference();
+    let result = await conferenceRequest.CreateConference();
+    res.json({ isSuccessful: result });
 });
 
 app.get('/getPendingParticipations', async (req, res) => {
@@ -557,7 +580,8 @@ app.post('/clearNotifications', async (req, res) => {
 
     conference.userId = req.body.userId;
 
-    await conference.ClearNotifications();
+    let result = await conference.ClearNotifications();
+    res.json({ result: result });
 });
 
 app.listen(port, '0.0.0.0', () => {
