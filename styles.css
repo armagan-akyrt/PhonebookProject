@@ -269,6 +269,24 @@ header {
         box-sizing: border-box;
     }
 
+    /* Assuming the body or a main div acts as the parent container */
+    body,
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        /* Stack children vertically */
+        align-items: center;
+        /* Center children horizontally */
+    }
+
+    /* Child containers will take the full width */
+    .centre-container,
+    .navbar,
+    .dropdown,
+    .scrollable-list {
+        width: 100%;
+    }
+
 }
 
 @media (min-width: 601px) and (max-width: 900px) {
