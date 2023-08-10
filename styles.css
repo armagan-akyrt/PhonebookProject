@@ -271,7 +271,7 @@ header {
 
     /* Assuming the body or a main div acts as the parent container */
     body,
-    .main-container {
+    .flex-container, .squash-container{
         display: flex;
         flex-direction: column;
         /* Stack children vertically */
@@ -316,6 +316,7 @@ header {
         /* Center the container */
         box-sizing: border-box;
     }
+    
 }
 
 @media (min-width: 901px) {
