@@ -8,7 +8,8 @@ body {
     background-color: #bfbcbc;
     height: 100vh;
     margin: 0;
-    padding: 20px; /* Add padding to give some space around your content */
+    padding: 20px;
+    /* Add padding to give some space around your content */
 }
 
 h2 {
@@ -36,6 +37,7 @@ ul li {
     display: inline-block;
     position: relative;
 }
+
 ul li a {
     display: block;
     padding: 10px;
@@ -51,16 +53,19 @@ ul li a {
 ul li ul.dropdown li {
     display: block;
 }
+
 ul li ul.dropdown {
-    width:auto;
+    width: auto;
     position: absolute;
     z-index: 999;
     display: none;
 }
+
 ul li a:hover {
-    background:  #4ca3af;
+    background: #4ca3af;
     border-radius: 10px;
 }
+
 ul li:hover ul.dropdown {
     display: block;
     background: #81e3fc;
@@ -68,39 +73,62 @@ ul li:hover ul.dropdown {
 }
 
 .scrollable-list {
-    max-height: 500px; 
-    overflow-y: auto; 
+    max-height: 500px;
+    overflow-y: auto;
     margin-top: 20px;
 }
+
 #listToShow {
-    padding: 0; /* Remove padding from the list */
-    list-style-type: none; /* Remove bullet points */
+    padding: 0;
+    /* Remove padding from the list */
+    list-style-type: none;
+    /* Remove bullet points */
 }
-#listToShowUser li, #listToShowContact li, #listToShowGuest li, #listToShowMeeting li, #listToShowParticipations li, #listToShowApprovals li, #listToShowParticipations li, #listToShowNotifications li {
+
+#listToShowUser li,
+#listToShowContact li,
+#listToShowGuest li,
+#listToShowMeeting li,
+#listToShowParticipations li,
+#listToShowApprovals li,
+#listToShowParticipations li,
+#listToShowNotifications li {
     display: block;
     position: relative;
 }
 
-#listToShowUser li:hover, #listToShowContact li:hover, #listToShowGuest li:hover, #listToShowMeeting li:hover, #listToShowParticipations li:hover, #listToShowApprovals li:hover, #listToShowParticipations li:hover, #listToShowNotifications li:hover {
+#listToShowUser li:hover,
+#listToShowContact li:hover,
+#listToShowGuest li:hover,
+#listToShowMeeting li:hover,
+#listToShowParticipations li:hover,
+#listToShowApprovals li:hover,
+#listToShowParticipations li:hover,
+#listToShowNotifications li:hover {
     background: #81e3fc;
     border-radius: 10px;
 }
 
 #listToShow li {
-    padding: 10px; /* Add padding to each list item */
+    padding: 10px;
+    /* Add padding to each list item */
 }
 
-.centre-container1, .centre-container2, .left-container, .right-container {
+.centre-container1,
+.centre-container2,
+.left-container,
+.right-container {
     background: #fff;
     border-radius: 5px;
-    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.1);
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     max-width: 300px;
 }
+
 .centre-container {
     background: #fff;
     border-radius: 5px;
-    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.1);
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     max-width: 300px;
     margin: auto;
@@ -114,8 +142,11 @@ ul li:hover ul.dropdown {
     width: 100%;
 }
 
-.left-container, .centre-container1, .centre-container2, .right-container {
-    width: 100%; 
+.left-container,
+.centre-container1,
+.centre-container2,
+.right-container {
+    width: 100%;
 }
 
 .squash-container {
@@ -126,7 +157,9 @@ ul li:hover ul.dropdown {
     width: 60%;
 }
 
-input[type=text], input[type=password], input[type=datetime-local]{
+input[type=text],
+input[type=password],
+input[type=datetime-local] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -135,6 +168,7 @@ input[type=text], input[type=password], input[type=datetime-local]{
     box-sizing: border-box;
     border-radius: 10px;
 }
+
 select {
     width: 100%;
     padding: 12px 20px;
@@ -156,7 +190,8 @@ select {
     resize: vertical;
 }
 
-button[type=submit], button[type=button] {
+button[type=submit],
+button[type=button] {
     background-color: #4ca3af;
     color: white;
     padding: 14px 20px;
@@ -166,23 +201,25 @@ button[type=submit], button[type=button] {
     width: 100%;
     border-radius: 10px;
 }
-button[type=submit]:hover, button[type=button]:hover {
+
+button[type=submit]:hover,
+button[type=button]:hover {
     opacity: 0.8;
 }
 
 .password-container {
     display: flex;
     align-items: center;
-  }
-  
-  #passwordPrompt {
-    flex-grow: 2; 
-  }
+}
 
-  #refreshButton {
-    flex-grow: 1; 
+#passwordPrompt {
+    flex-grow: 2;
+}
+
+#refreshButton {
+    flex-grow: 1;
     margin-left: 10px;
-  }
+}
 
 
 header {
@@ -193,24 +230,27 @@ header {
 }
 
 
-  .nav-links {
+.nav-links {
     display: flex;
     margin-right: auto;
     max-height: 50px;
-  }
-  .top-container {
+}
+
+.top-container {
     background: #fff;
     border-radius: 5px;
-    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.1);
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     max-height: 50px;
-  }
+}
 
 
-  @media (max-width: 600px) {
+@media (max-width: 600px) {
+
     /* Styles for mobile */
     body {
-        font-size: 14px; /* Adjusting font size for mobile */
+        font-size: 14px;
+        /* Adjusting font size for mobile */
         padding: 5px;
     }
 
@@ -221,12 +261,22 @@ header {
     ul li a {
         font-size: 18px;
     }
+
+    .centre-container {
+        width: 100%;
+        /* Take the full width of the screen */
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
 }
 
 @media (min-width: 601px) and (max-width: 900px) {
+
     /* Styles for tablet */
     body {
-        font-size: 16px; /* Adjusting font size for tablet */
+        font-size: 16px;
+        /* Adjusting font size for tablet */
         padding: 10px;
     }
 
@@ -237,8 +287,29 @@ header {
     ul li a {
         font-size: 19px;
     }
+
+    .centre-container {
+        width: 90%;
+        /* Leave some space on the sides for aesthetics */
+        max-width: 600px;
+        /* Ensure the container doesn't stretch too much */
+        padding: 10px;
+        margin: 0 auto;
+        /* Center the container */
+        box-sizing: border-box;
+    }
 }
 
 @media (min-width: 901px) {
-    /* Styles for desktop */
+
+    .centre-container {
+        width: 80%;
+        /* Relative to the screen size */
+        max-width: 800px;
+        /* Set a reasonable maximum width */
+        padding: 20px;
+        margin: 0 auto;
+        /* Center the container */
+        box-sizing: border-box;
+    }
 }
