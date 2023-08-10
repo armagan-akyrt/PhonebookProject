@@ -123,6 +123,7 @@ ul li:hover ul.dropdown {
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     max-width: 300px;
+    max-height: 750px;
 }
 
 .centre-container {
@@ -244,8 +245,11 @@ header {
     max-height: 50px;
 }
 
+
+
 @media only screen and (max-width: 768px) {
     div {
-        display: block;
+        flex-direction: column;
+        margin: 20px;
     }
 }
