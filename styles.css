@@ -248,4 +248,8 @@ header {
     .flex-container, .squash-container {
         flex-direction: column;
     }
+    .centre-container, .centre-container1, .centre-container2, .left-container, .right-container {
+        width: 100%;
+        display: block;
+    }
 }
