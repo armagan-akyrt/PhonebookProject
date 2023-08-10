@@ -247,9 +247,10 @@ header {
 
 
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
     div {
         flex-direction: column;
         margin: 20px;
+        align-items: center;
     }
 }
