@@ -1,9 +1,11 @@
 import { fetchUsers} from './Scripts/ClientFunctionsUser.js';
+import { checkLogin } from './Scripts/ClientFunctions.js';
 
 let participants = [];
 let currentUser;
 
 window.onload = function() {
+    checkLogin();
     fetchUsers('', true);
     fetchRooms();
     currentUser = JSON.parse(sessionStorage.getItem('currentUser'));

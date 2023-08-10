@@ -1,9 +1,12 @@
+import { checkLogin } from "./Scripts/ClientFunctions.js";
+
 let currentUser = null;
 let selectedOverseerRequestIndex = null;
 let selectedParticipantRequestIndex = null;
 
 
 window.onload = function () {
+    checkLogin();
     currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     fetchParticipationInvites();
     fetchApprovalRequests();

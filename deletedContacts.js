@@ -1,3 +1,5 @@
+import { checkLogin } from "./Scripts/ClientFunctions.js";
+
 
 let contactsData = [];
 let selectedContactIndex = 0;
@@ -9,6 +11,7 @@ let selectedUserId = null;
 
 window.onload = function() { 
 
+    checkLogin();
     selectedUserId = JSON.parse(sessionStorage.getItem('selectedUserId'));
 
     fetchContacts(selectedUserId, '', false);

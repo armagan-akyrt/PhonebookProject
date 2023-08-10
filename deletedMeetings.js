@@ -1,10 +1,12 @@
 import { fetchMeetings, softDeleteMeeting } from "./Scripts/ClientFunctionsMeeting.js";
+import { checkLogin } from "./Scripts/ClientFunctions.js";
 
 let currentUser = null;
 let startInterval = new Date();
 let endInterval = new Date();
 
 window.onload = function () {
+    checkLogin();
     currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
     startInterval.setUTCFullYear(startInterval.getUTCFullYear() - 100);

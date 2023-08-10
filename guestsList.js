@@ -1,3 +1,4 @@
+import { checkLogin, checkAdmin } from './Scripts/ClientFunctions.js';
 
 let guestsData = [];
 let selectedGuestIndex = 0;
@@ -8,7 +9,7 @@ let startDate = "";
 let endDate = "";
 let isInside = document.getElementById('selectGuestType').value;
 
-import { checkLogin, checkAdmin } from './Scripts/ClientFunctions.js';
+
 
 
 window.onload = function () {

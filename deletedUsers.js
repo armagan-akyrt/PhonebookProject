@@ -1,6 +1,9 @@
 import {fetchUsers} from "./Scripts/ClientFunctionsUser.js";
+import {checkLogin, checkAdmin} from "./Scripts/ClientFunctions.js";
 
 window.onload = function () {
+    checkLogin();
+    checkAdmin();
     fetchUsers('', false);
 };
 

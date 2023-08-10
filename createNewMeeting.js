@@ -5,8 +5,8 @@ import { fetchContacts } from './Scripts/ClientFunctionsContact.js';
 let currentUser = null;
 window.onload = function() {
 
+    checkLogin();
     currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-
     fetchContacts(currentUser.id, '', true);
 }
 
