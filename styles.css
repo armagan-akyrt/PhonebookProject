@@ -244,71 +244,9 @@ header {
     max-height: 50px;
 }
 
-/* Responsive Enhancements */
-
-@media (max-width: 600px) {
-    /* Styles for mobile */
-    body {
-        font-size: 14px; /* Adjusting font size for mobile */
-        padding: 5px;
-    }
-
-    h2 {
-        font-size: 18px;
-    }
-
-    ul li a {
-        font-size: 18px;
-    }
-}
-
-@media (min-width: 601px) and (max-width: 900px) {
-    /* Styles for tablet */
-    body {
-        font-size: 16px; /* Adjusting font size for tablet */
-        padding: 10px;
-    }
-
-    h2 {
-        font-size: 20px;
-    }
-
-    ul li a {
-        font-size: 19px;
-    }
-}
-
-@media (min-width: 901px) {
-    /* Styles for desktop - this can remain empty if no specific styles are required for larger screens */
-}
-
-/* Responsive Enhancements for Stacked Layout on Mobile */
-
-@media (max-width: 600px) {
-    /* Styles for mobile */
-    
-    /* Assuming the body or a main div acts as the parent container */
-    body, .main-container {
-        display: flex;
-        flex-direction: column;  /* Stack children vertically */
-        align-items: center;  /* Center children horizontally */
-    }
-
-    /* Child containers will take the full width */
-    .centre-container, .navbar, .dropdown, .scrollable-list {
-        width: 100%;
-    }
-}
-
-/* Responsive Enhancements for Mobile */
-
-@media (max-width: 600px) {
-    /* Styles for mobile */
-
+@media only screen and (max-width: 768px) {
     .flex-container, .squash-container {
         display: flex;
-        flex-direction: column;  /* Stack children vertically */
-        align-items: center;  /* Center children horizontally */
-        width: 100%;  /* Take full width of the screen */
+        flex-direction: column;
     }
 }
