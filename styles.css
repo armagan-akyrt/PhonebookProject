@@ -245,8 +245,7 @@ header {
 }
 
 @media only screen and (max-width: 768px) {
-    .flex-container > div, .squash-container > div {
-        display: block;
-        width: 100%;
+    .flex-container, .squash-container {
+        flex-direction: column;
     }
 }
