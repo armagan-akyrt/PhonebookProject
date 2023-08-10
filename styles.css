@@ -205,3 +205,18 @@ header {
     padding: 20px;
     max-height: 50px;
   }
+
+
+/* Responsive Enhancements */
+
+@media (max-width: 600px) {
+    /* Styles for mobile */
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    /* Styles for tablet */
+}
+
+@media (min-width: 901px) {
+    /* Styles for desktop */
+}
