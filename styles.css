@@ -207,14 +207,36 @@ header {
   }
 
 
-/* Responsive Enhancements */
-
-@media (max-width: 600px) {
+  @media (max-width: 600px) {
     /* Styles for mobile */
+    body {
+        font-size: 14px; /* Adjusting font size for mobile */
+        padding: 5px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    ul li a {
+        font-size: 18px;
+    }
 }
 
 @media (min-width: 601px) and (max-width: 900px) {
     /* Styles for tablet */
+    body {
+        font-size: 16px; /* Adjusting font size for tablet */
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    ul li a {
+        font-size: 19px;
+    }
 }
 
 @media (min-width: 901px) {
