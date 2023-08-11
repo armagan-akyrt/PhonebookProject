@@ -15,25 +15,6 @@
 
     <body>
 
-        <div id="navbar-placeholder"></div>
-        <script>
-            function navbarCheck() {
-                let currUser = JSON.parse(sessionStorage.getItem('currentUser'));
-                if (currUser && currUser.role == 'USER') {
-                    document.getElementById('adminBar').style.display = "none";
-                    document.getElementById('guestBar').style.display = 'none';
-                }
-            }
-            document.addEventListener("DOMContentLoaded", function () {
-                fetch('/navbar.html')
-                    .then(response => response.text())
-                    .then(data => {
-                        document.getElementById('navbar-placeholder').innerHTML = data;
-                        navbarCheck();
-                    });
-            });
-        </script>
-
         <form action="/signup" method="post">
             <div class="centre-container">
                 <label for="name"><b>Ad</b></label>
@@ -97,36 +78,7 @@
             }
 
         </script>
-        <script>
-            // For each input element in your forms
-            document.querySelectorAll("form input").forEach(input => {
-                input.classList.add("form-control", "mb-3");
-            });
 
-            // For each button in your forms
-            document.querySelectorAll("form button").forEach(button => {
-                button.classList.add("btn", "btn-primary", "btn-block", "mb-3");
-            });
-
-            // For the select elements (if any)
-            document.querySelectorAll("form select").forEach(select => {
-                select.classList.add("form-control", "mb-3");
-            });
-
-            document.querySelectorAll(".centre-container").forEach(formDiv => {
-                let container = document.createElement("div");
-                container.classList.add("container", "mt-5");
-            
-                let centerDiv = document.createElement("div");
-                centerDiv.classList.add("mx-auto", "col-lg-4", "col-md-6", "col-sm-10");
-            
-                formDiv.parentNode.replaceChild(container, formDiv);
-                container.appendChild(centerDiv);
-                centerDiv.appendChild(formDiv);
-            });
-            
-
-        </script>
         </div>
     </body>
 

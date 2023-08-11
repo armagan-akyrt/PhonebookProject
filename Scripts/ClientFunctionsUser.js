@@ -85,7 +85,11 @@ export function softDeleteUser() {
         .then(response => response.json())
         .then(data => {
 
-            console.log(data);
+            let alertString = 'Kullanıcı silinirken bir hata oluştu. Lütfen Tekrar deneyiniz.';
+            if (data.success === true) {
+                alertString = 'Kullanıcı başarıyla silindi.';
+            }
+            alert(alertString);
         })
         .catch((error) => {
             console.error('Error:', error);

@@ -18,11 +18,11 @@ h2 {
 
 
 
-.flex-container ul {
+.flex-container ul, .squash-container ul {
     align-items: start;
     justify-content: center;
     height: 500px;
-    max-height: 5000px;
+    max-height: 500px;
     border: 1px solid #ccc;
     box-sizing: border-box;
     border-radius: 10px;
@@ -110,8 +110,7 @@ h2 {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
-    margin-right: auto;
-    width: auto;
+    width: 100%;
 }
 
 input[type=text],
@@ -210,3 +209,39 @@ header {
         align-items: center;
     }
 }
+
+/* Containers */
+.centre-container, .centre-container1, .centre-container2, .left-container, .right-container {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.centre-container:hover, .centre-container1:hover, .centre-container2:hover, .left-container:hover, .right-container:hover {
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+/* List styles */
+#listToShow li {
+    padding: 10px;
+}
+
+#listToShowUser li:hover, #listToShowContact li:hover, #listToShowGuest li:hover, #listToShowMeeting li:hover, 
+#listToShowParticipations li:hover, #listToShowApprovals li:hover, #listToShowNotifications li:hover {
+    background: #cfe8f9;
+    border-radius: 10px;
+}
+
+/* Flex container */
+.flex-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+

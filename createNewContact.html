@@ -35,12 +35,9 @@
 
         <div class="centre-container">
 
-            <label for="currentUser"><b>Mevcut Kullanıcı</b></label>
-            <input type="text" placeholder="kullancı adı" name="currentUser" required>
-
             <form action="/addcontact" method="POST">
 
-                <input type="text" name="userId" id="userId" value="">
+                <input type="hidden" name="userId" id="userId" value="">
 
                 <label for="name"><b>Ad</b></label>
                 <input type="text" placeholder="Bağlantı Adı Giriniz..." name="name" required>
@@ -79,6 +76,7 @@
                     document.getElementById('adminBar').style.display = "none";
                     document.getElementById('guestBar').style.display = 'none';
                 }
+
 
             }
         </script>

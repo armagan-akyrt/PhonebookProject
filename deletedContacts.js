@@ -85,8 +85,7 @@ function updateAndBringContact() {
     })
     .then(response => response.json())
     .then(data => {
-
-        console.log(data);
+            console.log(data);
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -103,7 +102,13 @@ function updateAndBringContact() {
     .then(response => response.json())
     .then(data => {
 
-        console.log(data);
+        let alertString = 'Bağlantı geri getirilemedi';
+        if (data.isSuccessful) {
+            alertString = 'Bağlantı geri getirildi';
+            fetchContacts(selectedUserId, '', false);
+        }
+
+        alert(alertString);
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -127,7 +132,12 @@ function hardDeleteContact() {
     .then(response => response.json())
     .then(data => {
 
-        console.log(data);
+        let alertString = 'Bağlantı silinemedi';
+        if (data.success) {
+            alertString = 'Bağlantı silindi';
+            fetchContacts(selectedUserId, '', false);
+        }
+        alert(alertString);
     })
     .catch((error) => {
         console.error('Error:', error);

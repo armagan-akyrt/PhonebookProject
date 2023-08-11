@@ -24,4 +24,8 @@ document.getElementById('listToShowUser').addEventListener('click', function (ev
     }
 });
 
+document.getElementById('createGuestButton').addEventListener('click', function () {
+    
+});
+
 

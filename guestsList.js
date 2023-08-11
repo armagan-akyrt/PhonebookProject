@@ -63,7 +63,13 @@ document.getElementById('deleteGuest').addEventListener('click', function () {
         .then(response => response.json())
         .then(data => {
 
-            console.log(data);
+            let alertString = ' Misafir silinirken bir hata oluştu.';
+
+            if (data.success == true) {
+                alertString = 'Misafir başarıyla silindi.';
+            }
+            alert(alertString);
+
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -84,7 +90,11 @@ document.getElementById('getGuestCard').addEventListener('click', function () {
         .then(response => response.json())
         .then(data => {
 
-            console.log(data);
+            let alertString = ' Kart alınırken bir hata oluştu.';
+            if (data.success == true) {
+                alertString = 'Kart başarıyla alındı.';
+            }
+            alert(alertString);
         })
         .catch((error) => {
             console.error('Error:', error);

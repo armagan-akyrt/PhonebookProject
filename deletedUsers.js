@@ -71,7 +71,11 @@ function updateAndBringBackUser() {
             .then(response => response.json())
             .then(data => {
     
-                console.log(data);
+                let alertString = 'Kullanıcı geri getirilemedi';
+                if (data.success === true) {
+                    alertString = 'Kullanıcı başarıyla geri getirildi';
+                }
+                alert(alertString);
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -93,8 +97,12 @@ function hardDeleteUser() {
     })
         .then(response => response.json())
         .then(data => {
+            let alertString = 'Kullanıcı silinemedi';
+            if (data.success === true) {
+                alertString = 'Kullanıcı silindi';
+            }
 
-            console.log(data);
+            alert(alertString);
         })
         .catch((error) => {
             console.error('Error:', error);

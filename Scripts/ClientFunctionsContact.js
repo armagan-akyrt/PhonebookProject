@@ -54,7 +54,13 @@ export function updateContact() {
         .then(response => response.json())
         .then(data => {
 
-            console.log(data);
+            let alertString = 'Bağlantı güncellenirken bir hata oluştu. Lütfen Tekrar deneyiniz.';
+            if(data.success === true)
+            {
+                alertString = 'Bağlantı başarıyla güncellendi.';
+            }
+            alert(alertString);
+
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -77,7 +83,12 @@ export function softDeleteContact() {
         .then(response => response.json())
         .then(data => {
 
-            console.log(data);
+            let alertString = 'Bağlantı silinirken bir hata oluştu. Lütfen Tekrar deneyiniz.';
+            if(data.success === true)
+            {
+                alertString = 'Bağlantı başarıyla silindi.';
+            }
+            alert(alertString);
         })
         .catch((error) => {
             console.error('Error:', error);

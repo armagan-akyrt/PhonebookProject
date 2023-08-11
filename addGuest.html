@@ -48,7 +48,14 @@
             </div>
             <div class="centre-container">
                 <h2>Misafir Bilgileri</h2>
-                <form>
+                <form action="/createGuest" method="POST">
+
+                    <input type="hidden" id="userFirstName">
+                    <input type="hidden" id="userLastName">
+                    <input type="hidden" id="userGsmNum">
+                    <input type="hidden" id="userEmail">
+                    <input type="hidden" id="userAddress">
+
                     <label for="name"><b>Ad</b></label>
                     <input type="text" name="name" id="name" required>
 

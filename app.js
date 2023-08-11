@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const User = require('./Scripts/User');
 const Contact = require('./Scripts/Contact');
 const Guest = require('./Scripts/Guest');
@@ -13,6 +14,7 @@ let util = new UsefulUtilities();
 const app = express();
 const port = 3000;
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 app.use(express.json());
 
@@ -122,11 +124,24 @@ app.post('/addcontact', async (req, res) => {
 
     let contactSuccessful = await contact.CreateContact(req.body.userId);
 
-    if (contactSuccessful) {
-        res.redirect('/createNewContact.html?contactSuccessful=true')
-    } else {
-        res.redirect('/createNewContact.html?contactFailed=true');
+    let alertString = 'Kişi eklenirken bir hata oluştu, lütfen tekrar deneyiniz.'
+
+    if (contactSuccessful === true) {
+        alertString = 'Kişi başarıyla eklendi.'
     }
+
+    res.send(`
+    <html>
+        <head>
+            <title>Response</title>
+        </head>
+        <body>
+            <script>
+                alert('${alertString}');
+            </script>
+        </body>
+    </html>
+`);
 
 });
 
@@ -163,11 +178,25 @@ app.post('/updateUser', async (req, res) => {
         // Now call the UpdateUser method
         const result = await user.UpdateUser();
 
-        if (result) {
-            res.json({ success: true, message: 'User updated successfully' });
-        } else {
-            throw new Error('User not found');
+        let alertString = 'Kullanıcı güncellenirken bir hata oluştu, lütfen tekrar deneyiniz.'
+
+        if (result === true) {
+            alertString = 'Kullanıcı başarıyla güncellendi.'
         }
+
+        res.send(`
+        <html>
+            <head>
+                <title>Response</title>
+            </head>
+            <body>
+                <script>
+                    alert('${alertString}');
+                </script>
+            </body>
+        </html>
+    `);
+
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }
@@ -324,7 +353,7 @@ app.post('/createGuest', async (req, res) => {
     let currentDate = new Date();
     let sqlDate = currentDate.toISOString().replace('T', ' ').replace('Z', '');
 
-    guest.cardAcquisitionDate = sqlDate; // 2023-07-31 17:41:43.880
+    guest.cardAcquisitionDate = sqlDate;
 
 
     guest.companyName = req.body.companyName;
@@ -332,9 +361,7 @@ app.post('/createGuest', async (req, res) => {
 
     let guestSuccessful = await guest.CreateGuest();
 
-    if (guestSuccessful) {
-    } else {
-    }
+    res.json({ success: guestSuccessful });
 
 });
 
@@ -362,9 +389,7 @@ app.post('/deleteGuest', async (req, res) => {
 
     let guestSuccessful = await guest.DeleteGuest();
 
-    if (guestSuccessful) {
-    } else {
-    }
+    res.json({ success: guestSuccessful });
 
 });
 
@@ -377,9 +402,7 @@ app.post('/obtainCard', async (req, res) => {
 
     let guestSuccessful = await guest.ObtainCard();
 
-    if (guestSuccessful) {
-    } else {
-    }
+    res.json({ success: guestSuccessful });
 
 });
 
@@ -394,12 +417,11 @@ app.post('/addmeeting', async (req, res) => {
 
     meeting.meetingNotes = req.body.notes;
     let alertString = 'Toplantı oluşturulamadı'
-     if (await meeting.CreateMeeting() === true)
-     {
+    if (await meeting.CreateMeeting() === true) {
         alertString = 'Toplantı başarıyla oluşturuldu';
-     }
+    }
 
-     res.send(`
+    res.send(`
      <html>
          <head>
              <title>Meeting Response</title>
@@ -407,7 +429,6 @@ app.post('/addmeeting', async (req, res) => {
          <body>
              <script>
                  alert('${alertString}');
-                 window.location.href = '/userpage.html'; // Redirects to the home page or any other page after alert
              </script>
          </body>
      </html>
@@ -419,7 +440,7 @@ app.get('/getMeetings', async (req, res) => {
     let meeting = new Meeting();
 
     let searchWord = util.convertTurkishToAscii(req.query.searchWord);
-    
+
     let isActiveBool = true;
 
     if (req.query.isActive == 'false') {
@@ -454,20 +475,20 @@ app.get('/getPreviousMeetings', async (req, res) => {
 });
 
 app.post('/updateMeeting', async (req, res) => {
-    
-        let meeting = new Meeting();
-    
-        meeting.meetingId = req.body.meetingId;
-        meeting.contactId = req.body.contactId;
-        meeting.userId = req.body.userId;
-    
-        meeting.meetingStartDate = req.body.meetingStartDate;
-        meeting.meetingEndDate = req.body.meetingEndDate;
-    
-        meeting.meetingNotes = req.body.meetingNotes;
-    
-        let result = await meeting.UpdateMeeting();
-        res.json({ isSuccessful: result });
+
+    let meeting = new Meeting();
+
+    meeting.meetingId = req.body.meetingId;
+    meeting.contactId = req.body.contactId;
+    meeting.userId = req.body.userId;
+
+    meeting.meetingStartDate = req.body.meetingStartDate;
+    meeting.meetingEndDate = req.body.meetingEndDate;
+
+    meeting.meetingNotes = req.body.meetingNotes;
+
+    let result = await meeting.UpdateMeeting();
+    res.json({ isSuccessful: result });
 });
 
 app.post('/softDeleteMeeting', async (req, res) => {
@@ -524,7 +545,24 @@ app.post('/conferenceRequest', async (req, res) => {
     conferenceRequest.conferenceRoom.roomId = req.body.roomId;
 
     let result = await conferenceRequest.CreateConference();
-    res.json({ isSuccessful: result });
+
+    let alertString = 'Toplantı oluşturulamadı'
+    if (result === true) {
+        alertString = 'Toplantı başarıyla oluşturuldu';
+    }
+
+
+    res.json(`
+            <html>
+    <head>
+        <title>Response</title>
+    </head>
+    <body>
+        <script>
+            alert('${alertString}');
+        </script>
+    </body>
+</html>`);
 });
 
 app.get('/getPendingParticipations', async (req, res) => {
@@ -544,7 +582,7 @@ app.get('/getApprovalRequests', async (req, res) => {
 });
 
 app.get('/getNotifications', async (req, res) => {
-    
+
     let conference = new Conference();
     let result = await conference.ListNotifications(req.query.userId);
 
