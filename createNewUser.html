@@ -1,53 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yeni Kullanıcı</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <form action="/signup" method="post">
-        <div class="centre-container">
-            <label for="name"><b>Ad</b></label>
-            <input type="text" placeholder="Adınızı Giriniz..." name="name" required>
-    
-            <label for="surname"><b>Soyad</b></label>
-            <input type="text" placeholder="Soyadınızı Giriniz..." name = "surname" required>
-    
-            <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="E-postanızı Giriniz..." name="email" required>
-    
-            <label for="gsmNumber"><b>Telefon Numarası</b></label>
-            <input type="text" placeholder="Telefon Numarası Giriniz..." name = "gsmNumber" required>
-            <label for="password"><b>Şifre</b></label>
-            <div class = "password-container">
-                <input type="text" id ="passwordPrompt" placeholder="Şifrenizi Giriniz..." name = "password" readonly>
-                <button type="button" id="refreshButton">Yenile</button>
-            </div>
-    
-            <label for="address"> <b>Adres</b></label>
-    
-            <textarea name="address" placeholder="Adresinizi Giriniz..." wrap="soft" rows="4" class="address-input"></textarea>
-    
-            <label for="userType"><b>Kullanıcı Tipi</b></label>
-            <select id="userType" name="userType" >
-                <option value="USER">Kullanıcı</option>
-                <option value="ADMIN">Yönetici</option>
-            </select>
-    
-            <button type="submit" style="margin-top: 10px;">Kayıt Ol</button>
-    </form>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Yeni Kullanıcı</title>
+        <link rel="stylesheet" href="styles.css">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    </head>
+
+    <body>
+        <form action="/signup" method="post">
+            <div class="centre-container">
+                <label for="name"><b>Ad</b></label>
+                <input type="text" placeholder="Adınızı Giriniz..." name="name" required>
+
+                <label for="surname"><b>Soyad</b></label>
+                <input type="text" placeholder="Soyadınızı Giriniz..." name="surname" required>
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="E-postanızı Giriniz..." name="email" required>
+
+                <label for="gsmNumber"><b>Telefon Numarası</b></label>
+                <input type="text" placeholder="Telefon Numarası Giriniz..." name="gsmNumber" required>
+                <label for="password"><b>Şifre</b></label>
+                <div class="password-container">
+                    <input type="text" id="passwordPrompt" placeholder="Şifrenizi Giriniz..." name="password" readonly>
+                    <button type="button" id="refreshButton">Yenile</button>
+                </div>
+
+                <label for="address"> <b>Adres</b></label>
+
+                <textarea name="address" placeholder="Adresinizi Giriniz..." wrap="soft" rows="4"
+                    class="address-input"></textarea>
+
+                <label for="userType"><b>Kullanıcı Tipi</b></label>
+                <select id="userType" name="userType">
+                    <option value="USER">Kullanıcı</option>
+                    <option value="ADMIN">Yönetici</option>
+                </select>
+
+                <button type="submit" style="margin-top: 10px;">Kayıt Ol</button>
+        </form>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            $(document).ready(function() {
-                $.get('/generatePassword', function(data) {
+            $(document).ready(function () {
+                $.get('/generatePassword', function (data) {
                     $('#passwordPrompt').val(data.password);
                 });
-            
-                $('#refreshButton').click(function() {
-                    $.get('/generatePassword', function(data) {
+
+                $('#refreshButton').click(function () {
+                    $.get('/generatePassword', function (data) {
                         $('#passwordPrompt').val(data.password);
                     });
                 });
@@ -55,20 +72,51 @@
         </script>
 
         <script type="module">
-            window.onload = function() {
+            window.onload = function () {
                 const urlParams = new URLSearchParams(window.location.search);
-                if(urlParams.has('signupSuccessful')) {
+                if (urlParams.has('signupSuccessful')) {
                     alert('Kayıt oluşturma başarıyla tamamlandı!');
                     window.location.href = 'index.html';
-                } else if(urlParams.has('signupFailed')) {
+                } else if (urlParams.has('signupFailed')) {
                     alert('Kayıt oluşturulamadı. Lütfen tekrar deneyiniz.');
                 }
-                if(urlParams.has('isAdmin')) {
-                    
+                if (urlParams.has('isAdmin')) {
+
                 }
             }
 
         </script>
-    </div>
-</body>
+        <script>
+            // For each input element in your forms
+            document.querySelectorAll("form input").forEach(input => {
+                input.classList.add("form-control", "mb-3");
+            });
+
+            // For each button in your forms
+            document.querySelectorAll("form button").forEach(button => {
+                button.classList.add("btn", "btn-primary", "btn-block", "mb-3");
+            });
+
+            // For the select elements (if any)
+            document.querySelectorAll("form select").forEach(select => {
+                select.classList.add("form-control", "mb-3");
+            });
+
+            document.querySelectorAll(".centre-container").forEach(formDiv => {
+                let container = document.createElement("div");
+                container.classList.add("container", "mt-5");
+            
+                let centerDiv = document.createElement("div");
+                centerDiv.classList.add("mx-auto", "col-lg-4", "col-md-6", "col-sm-10");
+            
+                formDiv.parentNode.replaceChild(container, formDiv);
+                container.appendChild(centerDiv);
+                centerDiv.appendChild(formDiv);
+            });
+            
+
+        </script>
+        </div>
+    </body>
+
 </html>
