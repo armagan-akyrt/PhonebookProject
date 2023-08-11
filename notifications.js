@@ -11,6 +11,8 @@ window.onload = function () {
     fetchParticipationInvites();
     fetchApprovalRequests();
     fetchNotifications();
+    
+
 }
 
 function fetchParticipationInvites()

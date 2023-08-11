@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const User = require('./Scripts/User');
 const Contact = require('./Scripts/Contact');
 const Guest = require('./Scripts/Guest');
@@ -15,7 +14,6 @@ const app = express();
 const port = 3000;
 
 app.use(express.static(__dirname));
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(session({

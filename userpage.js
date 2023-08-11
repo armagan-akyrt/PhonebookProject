@@ -20,9 +20,6 @@ window.onload = function() {
     fetchMeetings('', true, startInterval, endInterval, currentUser.id);
 
     let currUsr = JSON.parse(sessionStorage.getItem('currentUser'));
-    if (currUsr.role == "USER") {
-        document.getElementById('adminBar').style.display = "none";
-    }
         
     
 }

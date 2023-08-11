@@ -15,90 +15,26 @@
 
     <body>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-            <a class="navbar-brand" href="#">PhoneBookWeb</a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/index.html">Ana Sayfa</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Bağlantılar
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/createNewContact.html">Yeni Bağlantı Oluştur</a>
-                            <a class="dropdown-item" href="/deletedContacts.html">Silinen Bağlantılar</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/changePassword.html">Şifre Değiştir</a>
-                    </li>
-
-                    <li class="nav-item dropdown" id="adminBar">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Kullanıcı
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navberDropdown">
-                            <a class="dropdown-item" href="/userpage.html">Kullanıcı Görünümü</a>
-                            <a class="dropdown-item" href="/createNewUser.html?isAdmin=true">Yeni Kullanıcı Oluştur</a>
-                            <a class="dropdown-item" href="/deletedUsers.html">Silinen Kullanıcılar</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Toplantılar
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/previousMeetings.html">Geçmiş Toplantılar</a>
-                            <a class="dropdown-item" href="/deletedMeetings.html">Silinen Toplantılar</a>
-                            <a class="dropdown-item" href="/createNewMeeting.html">Yeni Toplantı Ekle</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Misafirler
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/addGuest.html">Misafir Ekle</a>
-                            <a class="dropdown-item" href="/guestsList.html">Tüm Misafirler</a>
-                    </li>
+        <div id="navbar-placeholder"></div>
+        <script>
+            function navbarCheck() {
+                let currUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                if (currUser && currUser.role == 'USER') {
+                    document.getElementById('adminBar').style.display = "none";
+                    document.getElementById('guestBar').style.display = 'none';
+                }
+            }
+            document.addEventListener("DOMContentLoaded", function () {
+                fetch('/navbar.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('navbar-placeholder').innerHTML = data;
+                        navbarCheck();
+                    });
+            });
+        </script>
 
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Konferanslar
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/notifications.html">Konferans Bildirimleri</a>
-                            <a class="dropdown-item" href="/createNewConference.html">Konferans Ekle</a>
-                            <a class="dropdown-item" href="/conferences.html">Konferanslar</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Çıkış Yap</a>
-                    </li>
-
-                </ul>
-            </div>
-        </nav>
 
         <div id="app-root"></div>
         <div id="dashboard"></div>
@@ -107,7 +43,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 
 
-        
+
 
 
 
@@ -213,15 +149,15 @@
                     })
                         .then(response => response.text())
                         .then(data => {
-                                alert('Oda başarıyla eklendi.');
-                                window.location.reload();
+                            alert('Oda başarıyla eklendi.');
+                            window.location.reload();
                         })
                         .catch((error) => {
                             alert('Oda eklenirken bir hata oluştu.');
                             console.error('Error:', error);
                         });
                 };
-               
+
 
                 function RoomList({ rooms }) {
                     return (
@@ -235,7 +171,7 @@
                         </div>
                     );
                 }
-                
+
                 return (
                     <div className="container mt-3">
                         <button className="btn btn-primary mb-3" onClick={addRoom}>Oda Ekle</button>
@@ -250,10 +186,13 @@
                 );
             }
 
-            
+
 
             ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
         </script>
+
+
+
     </body>
 
 </html>

@@ -8,6 +8,8 @@ window.onload = function () {
     checkAdmin();
 
     fetchUsers('', true);
+
+
 };
 
 document.getElementById('searchInputUser').addEventListener('keyup', function () {
