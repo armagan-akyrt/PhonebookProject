@@ -21,6 +21,7 @@
                 let currUser = JSON.parse(sessionStorage.getItem('currentUser'));
                 if (currUser && currUser.role == 'USER') {
                     document.getElementById('adminBar').style.display = "none";
+                    document.getElementById('adminPageItem').style.display = 'none';
                     document.getElementById('guestBar').style.display = 'none';
                 }
             }

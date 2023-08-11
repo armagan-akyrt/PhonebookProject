@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silinen Toplantılar</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Silinen Toplantılar</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<body>
+    </head>
 
-    <div id="navbar-placeholder"></div>
-    <script>
-        function navbarCheck() {
-            let currUser = JSON.parse(sessionStorage.getItem('currentUser'));
-            if (currUser && currUser.role == 'USER') {
-                document.getElementById('adminBar').style.display = "none";
-                document.getElementById('guestBar').style.display = 'none';
+    <body>
+
+        <div id="navbar-placeholder"></div>
+        <script>
+            function navbarCheck() {
+                let currUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                if (currUser && currUser.role == 'USER') {
+                    document.getElementById('adminBar').style.display = "none";
+                    document.getElementById('adminPageItem').style.display = 'none';
+                    document.getElementById('guestBar').style.display = 'none';
+                }
             }
-        }
-        document.addEventListener("DOMContentLoaded", function () {
-            fetch('/navbar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navbar-placeholder').innerHTML = data;
-                    navbarCheck();
-                });
-        });
-    </script>
+            document.addEventListener("DOMContentLoaded", function () {
+                fetch('/navbar.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('navbar-placeholder').innerHTML = data;
+                        navbarCheck();
+                    });
+            });
+        </script>
 
-    <div class="squash-container">
-        <div class="left-container">
-            <input type="text" id="searchInputMeeting" name="searchInputMeeting" placeholder="Toplantı araması...">
-            <div class="scrollable-list">
-                <ul id="listToShowMeeting">
-                    <!-- List items will be populated dynamically here -->
-                </ul>
-    
+        <div class="squash-container">
+            <div class="left-container">
+                <input type="text" id="searchInputMeeting" name="searchInputMeeting" placeholder="Toplantı araması...">
+                <div class="scrollable-list">
+                    <ul id="listToShowMeeting">
+                        <!-- List items will be populated dynamically here -->
+                    </ul>
+
+                </div>
+            </div>
+            <div class="right-container">
+                <h2>Toplantı Bilgileri</h2>
+                <label for="name"><b>Ad Soyad</b></label>
+                <input type="text" name="meetingContactFullname" , id="meetingContactFullname" required>
+
+                <label for="surname"><b>Başlangıç Tarihi</b></label>
+                <input type="datetime-local" name="meetingStartDate" id="meetingStartDate" required>
+
+                <label for="gsmNum"> <b>Bitiş Tarihi</b></label>
+                <input type="datetime-local" name="meetingEndDate" id="meetingEndDate" required>
+
+                <label for="notes"><b>Notlar</b></label>
+                <textarea name="meetingNotes" id="meetingNotes" rows="4" class="address-input"></textarea>
+
+                <button type="button" style="margin-top: 10px;" name="deleteMeetingButton"
+                    id="deleteMeetingButton">Sil</button>
+
             </div>
         </div>
-        <div class="right-container">
-            <h2>Toplantı Bilgileri</h2>
-            <label for="name"><b>Ad Soyad</b></label>
-            <input type="text" name="meetingContactFullname" , id="meetingContactFullname" required>
-    
-            <label for="surname"><b>Başlangıç Tarihi</b></label>
-            <input type="datetime-local" name="meetingStartDate" id="meetingStartDate" required>
-    
-            <label for="gsmNum"> <b>Bitiş Tarihi</b></label>
-            <input type="datetime-local" name="meetingEndDate" id="meetingEndDate" required>
-    
-            <label for="notes"><b>Notlar</b></label>
-            <textarea name="meetingNotes" id="meetingNotes" rows="4" class="address-input"></textarea>
-    
-            <button type="button" style="margin-top: 10px;" name="deleteMeetingButton"
-                id="deleteMeetingButton">Sil</button>
-    
-        </div>
-    </div>
-    <script src="deletedMeetings.js" type="module"></script>
-</body>
+        <script src="deletedMeetings.js" type="module"></script>
+    </body>
+
 </html>
-
-

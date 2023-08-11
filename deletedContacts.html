@@ -1,85 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silinen Bağlantılar</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Silinen Bağlantılar</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <div id="navbar-placeholder"></div>
-    <script>
-        function navbarCheck() {
-            let currUser = JSON.parse(sessionStorage.getItem('currentUser'));
-            if (currUser && currUser.role == 'USER') {
-                document.getElementById('adminBar').style.display = "none";
-                document.getElementById('guestBar').style.display = 'none';
+    </head>
+
+    <body>
+
+        <div id="navbar-placeholder"></div>
+        <script>
+            function navbarCheck() {
+                let currUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                if (currUser && currUser.role == 'USER') {
+                    document.getElementById('adminBar').style.display = "none";
+                    document.getElementById('adminPageItem').style.display = 'none';
+                    document.getElementById('guestBar').style.display = 'none';
+                }
             }
-        }
-        document.addEventListener("DOMContentLoaded", function () {
-            fetch('/navbar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navbar-placeholder').innerHTML = data;
-                    navbarCheck();
-                });
-        });
-    </script>
-    
-    <div class="squash-container">
-        <div class="left-container">
-            <input type="text" id="searchInputContact" name="searchInputContact" placeholder="Kullanıcı araması...">
-            <div class="scrollable-list">
-                <ul id="listToShowContact">
-                    <!-- List items will be populated dynamically here -->
-                </ul>
-    
+            document.addEventListener("DOMContentLoaded", function () {
+                fetch('/navbar.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('navbar-placeholder').innerHTML = data;
+                        navbarCheck();
+                    });
+            });
+        </script>
+
+        <div class="squash-container">
+            <div class="left-container">
+                <input type="text" id="searchInputContact" name="searchInputContact" placeholder="Kullanıcı araması...">
+                <div class="scrollable-list">
+                    <ul id="listToShowContact">
+                        <!-- List items will be populated dynamically here -->
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="centre-container">
+                <h2>Bağlantı Bilgileri</h2>
+                <label for="name"><b>Ad</b></label>
+                <input type="text" name="contactName" , id="contactFirstName" required>
+
+                <label for="surname"><b>Soyad</b></label>
+                <input type="text" name="contactSurname" id="contactLastName" required>
+
+                <label for="gsmNum"> Telefon Numarası</label>
+                <input type="text" name="contactGsmNum" id="contactGsmNum" required>
+
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" name="contactEmail" id="contactEmail" required>
+
+                <label for="address"><b>Adres</b></label>
+                <textarea name="contactAddress" id="contactAddress" rows="4" class="address-input"></textarea>
+
+
+                <button type="submit" style="margin-top: 10px;" name="updateContactButton"
+                    id="updateContactButton">Güncelle ve Geri Getir</button>
+                <button type="button" style="margin-top: 10px;" name="deleteContactButton"
+                    id="deleteContactButton">Temelli Sil</button>
+
+            </div>
+
         </div>
-    </div>
 
-    <div class="centre-container">
-        <h2>Bağlantı Bilgileri</h2>
-        <label for="name"><b>Ad</b></label>
-        <input type="text" name="contactName" , id="contactFirstName" required>
+        <script src="deletedContacts.js" type="module">
 
-        <label for="surname"><b>Soyad</b></label>
-        <input type="text" name="contactSurname" id="contactLastName" required>
+            import { checkLogin } from './Scripts/ClientFunctions.js';
 
-        <label for="gsmNum"> Telefon Numarası</label>
-        <input type="text" name="contactGsmNum" id="contactGsmNum" required>
+            window.onload = function () {
+                checkLogin();
+            };
 
+        </script>
 
-        <label for="email"><b>Email</b></label>
-        <input type="text" name="contactEmail" id="contactEmail" required>
+    </body>
 
-        <label for="address"><b>Adres</b></label>
-        <textarea name="contactAddress" id="contactAddress" rows="4" class="address-input"></textarea>
-
-
-        <button type="submit" style="margin-top: 10px;" name="updateContactButton"
-            id="updateContactButton">Güncelle ve Geri Getir</button>
-        <button type="button" style="margin-top: 10px;" name="deleteContactButton"
-            id="deleteContactButton">Temelli Sil</button>
-
-    </div>
-
-</div>
-    
-<script src="deletedContacts.js" type="module">
-
-    import { checkLogin } from './Scripts/ClientFunctions.js';
-
-    window.onload = function () {
-        checkLogin();
-    };
-
-</script>
-
-</body>
 </html>

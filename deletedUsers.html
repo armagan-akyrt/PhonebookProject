@@ -1,86 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silinen Kullanıcılar</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Silinen Kullanıcılar</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <div id="navbar-placeholder"></div>
-    <script>
-        function navbarCheck() {
-            let currUser = JSON.parse(sessionStorage.getItem('currentUser'));
-            if (currUser && currUser.role == 'USER') {
-                document.getElementById('adminBar').style.display = "none";
-                document.getElementById('guestBar').style.display = 'none';
+    </head>
+
+    <body>
+
+        <div id="navbar-placeholder"></div>
+        <script>
+            function navbarCheck() {
+                let currUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                if (currUser && currUser.role == 'USER') {
+                    document.getElementById('adminBar').style.display = "none";
+                    document.getElementById('adminPageItem').style.display = 'none';
+                    document.getElementById('guestBar').style.display = 'none';
+                }
             }
-        }
-        document.addEventListener("DOMContentLoaded", function () {
-            fetch('/navbar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navbar-placeholder').innerHTML = data;
-                    navbarCheck();
-                });
-        });
-    </script>
-    <div class="squash-container">
-        <div class="left-container">
-            <input type="text" id="searchInputUser" name="searchInputUser" placeholder="Kullanıcı araması...">
-            <div class="scrollable-list">
-                <ul id="listToShowUser">
-                    <!-- List items will be populated dynamically here -->
-                </ul>
+            document.addEventListener("DOMContentLoaded", function () {
+                fetch('/navbar.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('navbar-placeholder').innerHTML = data;
+                        navbarCheck();
+                    });
+            });
+        </script>
+        <div class="squash-container">
+            <div class="left-container">
+                <input type="text" id="searchInputUser" name="searchInputUser" placeholder="Kullanıcı araması...">
+                <div class="scrollable-list">
+                    <ul id="listToShowUser">
+                        <!-- List items will be populated dynamically here -->
+                    </ul>
 
+                </div>
+
+            </div>
+            <div class="left-container">
+                <h2>Kullanıcı Bilgileri</h2>
+                <form action="/updateUser" method="POST">
+                    <label for="name"><b>Ad</b></label>
+                    <input type="text" name="name" id="userFirstName" required>
+
+                    <label for="surname"><b>Soyad</b></label>
+                    <input type="text" name="surname" id="userLastName" required>
+
+                    <label for="gsmNum"> Telefon Numarası</label>
+                    <input type="text" name="gsmNum" id="userGsmNum" required>
+
+
+                    <label for="email"><b>Email</b></label>
+                    <input type="text" name="email" id="userEmail" required>
+
+                    <label for="address"><b>Adres</b></label>
+                    <textarea name="address" id="userAddress" rows="4" class="address-input"></textarea>
+
+
+                    <button type="submit" style="margin-top: 10px;" name="updateUserButton"
+                        id="updateUserButton">Güncelle</button>
+                    <button type="button" style="margin-top: 10px;" name="deleteUserButton"
+                        id="deleteUserButton">Sil</button>
+                </form>
             </div>
 
         </div>
-        <div class="left-container">
-            <h2>Kullanıcı Bilgileri</h2>
-            <form action="/updateUser" method="POST">
-                <label for="name"><b>Ad</b></label>
-                <input type="text" name="name" id="userFirstName" required>
 
-                <label for="surname"><b>Soyad</b></label>
-                <input type="text" name="surname" id="userLastName" required>
+        <script src="deletedUsers.js" type="module">
 
-                <label for="gsmNum"> Telefon Numarası</label>
-                <input type="text" name="gsmNum" id="userGsmNum" required>
+            import { checkLogin, checkAdmin } from './Scripts/ClientFunctions.js';
 
+            window.onload = function () {
+                checkLogin();
+                checkAdmin();
+            };
 
-                <label for="email"><b>Email</b></label>
-                <input type="text" name="email" id="userEmail" required>
+        </script>
 
-                <label for="address"><b>Adres</b></label>
-                <textarea name="address" id="userAddress" rows="4" class="address-input"></textarea>
+    </body>
 
-
-                <button type="submit" style="margin-top: 10px;" name="updateUserButton"
-                    id="updateUserButton">Güncelle</button>
-                <button type="button" style="margin-top: 10px;" name="deleteUserButton"
-                    id="deleteUserButton">Sil</button>
-            </form>
-        </div>
-
-</div>
-    
-<script src="deletedUsers.js" type="module">
-
-    import { checkLogin, checkAdmin } from './Scripts/ClientFunctions.js';
-
-    window.onload = function () {
-        checkLogin();
-        checkAdmin();
-    };
-
-</script>
-
-</body>
 </html>
