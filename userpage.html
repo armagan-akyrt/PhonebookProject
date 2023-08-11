@@ -12,23 +12,25 @@
     </head>
 
     <body>
-        
+
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-           
+
             <a class="navbar-brand" href="#">PhoneBookWeb</a>
-        
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-        
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
                         <a class="nav-link" href="/index.html">Ana Sayfa</a>
                     </li>
-        
+
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Bağlantılar
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -36,22 +38,24 @@
                             <a class="dropdown-item" href="/deletedContacts.html">Silinen Bağlantılar</a>
                         </div>
                     </li>
-        
+
                     <li class="nav-item">
                         <a class="nav-link" href="/changePassword.html">Şifre Değiştir</a>
                     </li>
-        
+
                     <li class="nav-item dropdown" id="adminBar">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Yönetici
                         </a>
                         <div class="dropdown-menu" aria-labelledby="adminDropdown">
                             <a class="dropdown-item" href="/adminpage.html">Yönetici Ekranı</a>
                         </div>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Toplantılar
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -62,7 +66,8 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Konferanslar
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -75,12 +80,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Çıkış Yap</a>
                     </li>
-        
+
                 </ul>
             </div>
         </nav>
-        
-
 
         <div class="flex-container">
             <div class="left-container">
@@ -113,10 +116,12 @@
                 <textarea name="address" id="contactAddress" rows="4" class="address-input"></textarea>
 
 
-                <button type="submit" style="margin-top: 10px;" name="updateContactButton"
-                    id="updateContactButton">Güncelle</button>
-                <button type="button" style="margin-top: 10px;" name="deleteContactButton"
-                    id="deleteContactButton">Sil</button>
+                <div class="button-container">
+                    <button type="submit" style="margin-top: 10px;" name="updateContactButton"
+                        id="updateContactButton">Güncelle</button>
+                    <button type="button" style="margin-top: 10px;" name="deleteContactButton"
+                        id="deleteContactButton">Sil</button>
+                </div>
 
             </div>
 
@@ -144,13 +149,48 @@
                 <textarea name="meetingNotes" id="meetingNotes" rows="4" class="address-input"></textarea>
 
 
-                <button type="submit" style="margin-top: 10px;" name="updateMeetingButton"
-                    id="updateMeetingButton">Güncelle</button>
-                <button type="button" style="margin-top: 10px;" name="deleteMeetingButton"
-                    id="deleteMeetingButton">Sil</button>
+                <div class="button-container">
+                    <button type="submit" style="margin-top: 10px;" name="updateMeetingButton"
+                        id="updateMeetingButton">Güncelle</button>
+                    <button type="button" style="margin-top: 10px;" name="deleteMeetingButton"
+                        id="deleteMeetingButton">Sil</button>
+                </div>
 
             </div>
-            <script src="userpage.js" type="module"></script>
+        </div>
+        <script src="userpage.js" type="module"></script>
+        <script>
+
+            const headers = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            headers.forEach(header => {
+                if (!header.className.includes('display-')) {
+                    header.classList.add('display-6');
+                }
+            });
+
+
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                if (!alert.className.includes('alert-')) {
+                    alert.classList.add('alert-primary');
+                }
+            });
+
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (!img.alt) {
+                    img.alt = 'Description not provided';
+                }
+            });
+
+            if (!document.querySelector('meta[name="viewport"]')) {
+                let meta = document.createElement('meta');
+                meta.name = "viewport";
+                meta.content = "width=device-width, initial-scale=1.0";
+                document.head.appendChild(meta);
+            }
+
+        </script>
 
     </body>
 

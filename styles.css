@@ -16,11 +16,7 @@ h2 {
     text-align: center;
 }
 
-.navbar {
-    margin-bottom: auto;
-    background-color: #ffffff;
-    border-radius: 10px;
-}
+
 
 .flex-container ul {
     align-items: start;
@@ -33,47 +29,8 @@ h2 {
 
 }
 
-ul li {
-    display: inline-block;
-    position: relative;
-}
-
-ul li a {
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    color: #000;
-    border-bottom: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 20px;
-}
-
-ul li ul.dropdown li {
-    display: block;
-}
-
-ul li ul.dropdown {
-    width: auto;
-    position: absolute;
-    z-index: 999;
-    display: none;
-}
-
-ul li a:hover {
-    background: #4ca3af;
-    border-radius: 10px;
-}
-
-ul li:hover ul.dropdown {
-    display: block;
-    background: #81e3fc;
-    border-radius: 10px;
-}
-
 .scrollable-list {
-    max-height: 500px;
+    max-height: 750px;
     overflow-y: auto;
     margin-top: 20px;
 }
@@ -122,8 +79,7 @@ ul li:hover ul.dropdown {
     border-radius: 5px;
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 300px;
-    max-height: 750px;
+    max-width: 400px;
 }
 
 .centre-container {
@@ -131,7 +87,7 @@ ul li:hover ul.dropdown {
     border-radius: 5px;
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 300px;
+    max-width: 400px;
     margin: auto;
 }
 
@@ -155,7 +111,7 @@ ul li:hover ul.dropdown {
     display: flex;
     justify-content: space-between;
     margin-right: auto;
-    width: 60%;
+    width: auto;
 }
 
 input[type=text],
