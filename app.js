@@ -137,7 +137,8 @@ app.post('/addcontact', async (req, res) => {
         </head>
         <body>
             <script>
-                alert('${alertString}');
+                alert('${alertString}');            
+                window.location.href = '/createNewContact.html';
             </script>
         </body>
     </html>
@@ -429,6 +430,7 @@ app.post('/addmeeting', async (req, res) => {
          <body>
              <script>
                  alert('${alertString}');
+                 window.location.href = '/createNewMeeting.html';
              </script>
          </body>
      </html>
@@ -552,16 +554,17 @@ app.post('/conferenceRequest', async (req, res) => {
     }
 
 
-    res.json(`
-            <html>
-    <head>
-        <title>Response</title>
-    </head>
-    <body>
-        <script>
-            alert('${alertString}');
-        </script>
-    </body>
+    res.send(`
+    <html>
+        <head>
+            <title>Response</title>
+        </head>
+        <body>
+            <script>
+                alert('${alertString}');
+                window.location.href = '/createNewConference.html'
+            </script>
+        </body>
 </html>`);
 });
 
