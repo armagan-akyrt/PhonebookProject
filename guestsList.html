@@ -36,19 +36,51 @@
         </script>
 
         <div class="squash-container">
-            <div class="left-container">
-                <select name="selectGuestType" id="selectGuestType">
-                    <option value="false"> Tümü</option>
-                    <option value="true"> İçerde</option>
-                </select>
-                <input type="text" id="searchInputUsernameGuest" name="searchInputUsernameGuest" placeholder="Kullanıcı Adıyla Ara">
-                <input type="text" id="searchInputCompanyNameGuest" name="searchInputCompanyNameGuest" placeholder="Firma Adıyla Ara">
 
-                <div class="scrollable-list">
-                    <ul id="listToShowGuest">
-                        <!-- List items will be populated dynamically here -->
-                    </ul>
+            <div class="grid-container">
+                
+                <div class="mb-4">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="usernameFilter">İsim:</label>
+                            <input type="text" class="form-control" id="usernameFilter" placeholder="Username">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="companyFilter">Firma:</label>
+                            <input type="text" class="form-control" id="companyFilter" placeholder="Company">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="startDateFilter">Kart verilme tarihi:</label>
+                            <input type="datetime-local" class="form-control" id="startDateFilter">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="endDateFilter">Kart alınma tarihi:</label>
+                            <input type="datetime-local" class="form-control" id="endDateFilter">
+                        </div>
+                        <div class="col-md-2 align-self-end">
+                            <button id="filterButton" class="btn btn-primary">Filtrele</button>
+                        </div>
+                    </div>
+                </div>
+                
 
+                <div class="container mt-5">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>İsim</th>
+                                <th>Soyisim</th>
+                                <th>Şirket</th>
+                                <th>Telefon Numarası</th>
+                                <th>Adres</th>
+                                <th>Başlangıç Tarihi</th>
+                                <th>Bitiş Tarihi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gridBody">
+                            <!-- Rows will be appended here using JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="centre-container">
@@ -84,17 +116,6 @@
                         <button type="submit" style="margin-bottom: 50px;" name="getGuestCardButton"
                         id="getGuestCard">Kartı Teslim Al</button>
                     </div>
-
-            </div>
-            <div class="centre-container">
-                <label for="startIntervalGuest"><b>Başlangıç Tarihi</b></label>
-                <input type="datetime-local" name="startIntervalGuest" id="startIntervalGuest" required>
-
-                <label for="endIntervalGuest"><b>Bitiş Tarihi</b></label>
-                <input type="datetime-local" name="endIntervalGuest" id="endIntervalGuest" required>
-
-                <button type="button" style="margin-top: 50px;" name="applyIntervalButton" id="guestApplyIntervalButton">
-                    Uygula</button>
 
             </div>
         </div>

@@ -141,26 +141,35 @@ function fetchGuests(searchWord, startDate, endDate, companyName, isInside) {
             let guestsList = document.getElementById('listToShowGuest');
             guestsList.innerHTML = '';
 
-            data.guestsList.forEach(guest => { 
-                let li = document.createElement('li');
-                li.textContent = `${guest.name} ${guest.surname} - ${guest.companyName}`;
-                guestsList.appendChild(li);
+            data.forEach(item => {
+                tbody.innerHTML += renderRow(item);
+            });
 
-                li.addEventListener('click', function () { 
-                    guestsData = data.guestsList;
-                    selectedGuestIndex = data.guestsList.indexOf(guest);
+            let selectedRow = null;
 
-                    document.getElementById('guestName').value = guest.name;
-                    document.getElementById('guestSurname').value = guest.surname;
-                    document.getElementById('guestCardId').value = guest.cardId;
-                    document.getElementById('guestCompanyName').value = guest.companyName;
-                    document.getElementById('guestVisitingUser').value = guest.visiting.id;
-                    document.getElementById('guestVisitingUserFullName').value = `${guest.visiting.name} ${guest.visiting.surname}`;
-                    document.getElementById('guestCardGrantDate').value = guest.cardAcquisitionDate.replace('T', ' ').replace('Z', '');
-                    if (guest.cardSubmitDate != null)
-                        document.getElementById('guestCardSubmitDate').value = guest.cardSubmitDate.replace('T', ' ').replace('Z', '');
-                    
-
+            function deselectRow() {
+                const previouslySelected = document.querySelector('table tbody tr.selected');
+                if (previouslySelected) {
+                    previouslySelected.classList.remove('selected');
+                }
+            }
+    
+            document.querySelectorAll('table tbody tr').forEach(row => {
+                row.addEventListener('click', function() {
+                    deselectRow();
+                    this.classList.add('selected');
+    
+                    selectedRow = {
+                        name: this.cells[0].innerText,
+                        surname: this.cells[1].innerText,
+                        company: this.cells[2].innerText,
+                        phone: this.cells[3].innerText,
+                        address: this.cells[4].innerText,
+                        startDate: this.cells[5].innerText,
+                        endDate: this.cells[6].innerText
+                    };
+    
+                    alert(`You selected ${selectedRow.name} ${selectedRow.surname} from ${selectedRow.company}`);
                 });
             });
 
@@ -169,3 +178,16 @@ function fetchGuests(searchWord, startDate, endDate, companyName, isInside) {
 
     
 }
+
+
+const tbody = document.getElementById('gridBody');
+
+        const tagsOrder = ["name", "surname", "company", "phone", "address", "startDate", "endDate"];
+
+        function renderRow(item) {
+            return `
+                <tr>
+                    ${tagsOrder.map(tag => `<td>${item[tag]}</td>`).join('')}
+                </tr>
+            `;
+        }
