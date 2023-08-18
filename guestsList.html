@@ -71,10 +71,10 @@
                                 <th>İsim</th>
                                 <th>Soyisim</th>
                                 <th>Şirket</th>
-                                <th>Telefon Numarası</th>
-                                <th>Adres</th>
+                                <th>Kart Numarası</th>
                                 <th>Başlangıç Tarihi</th>
                                 <th>Bitiş Tarihi</th>
+                                <th>Ziyaret edilen Kişi</th>
                             </tr>
                         </thead>
                         <tbody id="gridBody">
@@ -119,6 +119,19 @@
 
             </div>
         </div>
+
+        <style>
+            /* Style for the hover effect on table rows */
+            table tbody tr:hover {
+                background-color: #f5f5f5;
+                cursor: pointer;
+            }
+    
+            /* Style for the selected table row */
+            table tbody tr.selected {
+                background-color: #e0e0e0;
+            }
+        </style>
 
         <script src="guestsList.js" type="module"></script>
     </body>
