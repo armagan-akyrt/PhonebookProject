@@ -7,10 +7,19 @@ const sql = require('mssql');
 //     connectionString: 'Driver={SQL Server Native Client 11.0};Server=.;Database=PhoneDirectory;Trusted_Connection=yes;',
 // };
 
+// const config = {
+//     driver: 'msnodesqlv8',
+//     server: 'localhost',
+//     database: 'PhoneDirectory',
+//     options: {
+//         trustedConnection: true
+//     }
+// };
+
 const config = {
-    user: 'admin',
-    password: '5weiapz7SQL',
-    server: 'database-1.caajotm0qvd6.eu-central-1.rds.amazonaws.com',
+    user: 'sysadm',
+    password: '7yoi13nz',
+    server: 'localhost',
     database: 'PhoneDirectory',
     options: {
         encrypt: false
