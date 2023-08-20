@@ -40,21 +40,25 @@
             <div class="grid-container">
                 
                 <div class="mb-4">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label for="usernameFilter">İsim:</label>
+                    <div class="row justify-content-center">  <!-- Centering the content -->
+                        <div class="col-md-2 align-self-end">
+                            <label for="usernameFilter">Misafir Adı:</label>
                             <input type="text" class="form-control" id="usernameFilter" placeholder="Username">
                         </div>
-                        <div class="col-md-2">
-                            <label for="companyFilter">Firma:</label>
+                        <div class="col-md-2 align-self-end">
+                            <label for="companyFilter">Firma Adı:</label>
                             <input type="text" class="form-control" id="companyFilter" placeholder="Company">
                         </div>
-                        <div class="col-md-3">
-                            <label for="startDateFilter">Kart verilme tarihi:</label>
-                            <input type="datetime-local" class="form-control" id="startDateFilter">
+                        <div class="col-md-2 align-self-end">
+                            <label for="guestStateFilter">Misafir Durumu:</label>
+                            <select class="custom-select" id="guestStateFilter">
+                                <option value="true">Kart teslim edilmiş</option>
+                                <option value="false">Kart teslim edilmemiş</option>
+                            </select>
                         </div>
-                        <div class="col-md-3">
-                            <label for="endDateFilter">Kart alınma tarihi:</label>
+                        <div class="col-md-4">
+                            <label for="startDateFilter">Kart verilme tarihi (Başlangıç - Bitiş):</label>
+                            <input type="datetime-local" class="form-control mb-2" id="startDateFilter">
                             <input type="datetime-local" class="form-control" id="endDateFilter">
                         </div>
                         <div class="col-md-2 align-self-end">
@@ -62,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+                
                 
 
                 <div class="container mt-5">

@@ -123,16 +123,7 @@ h2 {
 
 input[type=text],
 input[type=password],
-input[type=datetime-local] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 10px;
-}
-
+input[type=datetime-local],
 select {
     width: 100%;
     padding: 12px 20px;
