@@ -18,7 +18,7 @@ const sql = require('mssql');
 
 const config = {
     user: 'sysadm',
-    password: '7yoi13nz',
+    password: 'pwd',
     server: 'localhost',
     database: 'PhoneDirectory',
     options: {
